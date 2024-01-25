@@ -12,12 +12,12 @@ class Map:
         self.group = None
 
         #swich to map0
-        self.swich_map("map0")
-    
+        self.switch_map("map0")
 
-    def swich_map(self, map):
+
+    def switch_map(self, map):
         #load the wanted map
-        self.tmx_data = pytmx.load_pygame(f"E:\\Travail\\Lycee\\T15\\NSI\\Project_3_pokemon\\assets\\map\\{map}.tmx")
+        self.tmx_data = pytmx.load_pygame(f"assets\\map\\map0.tmx")
         #get the map for pyscroll
         map_data = pyscroll.data.TiledMapData(self.tmx_data)
         #render the mapdata
