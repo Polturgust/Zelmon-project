@@ -17,7 +17,7 @@ class Map:
 
     def switch_map(self, map):
         #load the wanted map
-        self.tmx_data = pytmx.load_pygame(f"assets\\map\\map0.tmx")
+        self.tmx_data = pytmx.load_pygame(f"assets\\map\\{map}.tmx")
         #get the map for pyscroll
         map_data = pyscroll.data.TiledMapData(self.tmx_data)
         #render the mapdata

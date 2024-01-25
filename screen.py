@@ -6,7 +6,9 @@ class Screen:
     """
     def __init__(self):
         #create the display and set it's size
-        self.display = pygame.display.set_mode((1980,1080))
+        self.width=pygame.display.Info().current_w
+        self.height=pygame.display.Info().current_h
+        self.display = pygame.display.set_mode((self.width,self.height))
         #set the display's name
         pygame.display.set_caption("Pokemon")
         #creates a clock
@@ -29,7 +31,7 @@ class Screen:
     def get_size(self):
         #return screen size
         return self.display.get_size()
-    
+
     def get_display(self):
         #return display
         return self.display
