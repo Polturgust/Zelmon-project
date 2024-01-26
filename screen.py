@@ -5,7 +5,6 @@ class Screen:
     """
     Manages the screen
     """
-
     def __init__(self):
         # create the display and set it's size
         self.width = pygame.display.Info().current_w
@@ -15,7 +14,7 @@ class Screen:
         pygame.display.set_caption("Pokemon")
         # creates a clock
         self.clock = pygame.time.Clock()
-        # serts framerate to 120
+        # sets framerate to 120
         self.framerate = 120
 
     def update(self):
