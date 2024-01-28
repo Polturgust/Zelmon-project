@@ -23,7 +23,6 @@ class Game:
         print(self.screen.get_size())
         # while the game is running
         while self.running:
-
             # capture all events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:  # close the game if the cross is pressed
@@ -35,21 +34,22 @@ class Game:
 
             # Checking currently pressed keys and doing the according actions
             # Player movement
-            if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] < self.screen.width:
+            # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du carré (ses coordonnées sont le point en haut à gauche)
+            if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] < self.screen.get_size()[0] - 30:
                 self.player.move("NE")
             elif self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] > 0:
                 self.player.move("NW")
-            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < self.screen.height and self.player.pos.get()[0] < self.screen.width:
+            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30 and self.player.pos.get()[0] < self.screen.get_size()[1] - 30:
                 self.player.move("SE")
-            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < self.screen.height and self.player.pos.get()[0] > 0:
+            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30 and self.player.pos.get()[0] > 0:
                 self.player.move("SW")
             elif self.pressed.get(pygame.K_UP) and self.player.pos.get()[1] > 0:
                 self.player.move("N")
-            elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.screen.height:
+            elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30:
                 self.player.move("S")
             elif self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[0] > 0:
                 self.player.move("W")
-            elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.screen.width:
+            elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.screen.get_size()[0] - 30:
                 self.player.move("E")
 
             # update map
