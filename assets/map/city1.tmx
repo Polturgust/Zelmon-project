@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="14">
  <tileset firstgid="1" source="tileset/just_grass.tsx"/>
  <tileset firstgid="2" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21002" source="tileset/literally_everything.tsx"/>
@@ -382,4 +382,16 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="9" name="doors">
+  <object id="1" name="pokecenter_door" x="510.909" y="239.091" width="18.3636" height="16.7273"/>
+  <object id="2" name="pokemarket_door" x="398.727" y="237.818" width="18.1818" height="17.8182"/>
+  <object id="5" name="door0" x="158.727" y="221.636" width="18.1818" height="17.6364"/>
+  <object id="7" name="door1" x="318.727" y="447.091" width="19.0909" height="17.2727"/>
+  <object id="8" name="door2" x="174.364" y="559.818" width="19.2727" height="16.9091"/>
+  <object id="10" name="door3" x="574.5" y="558" width="18.5" height="18"/>
+ </objectgroup>
+ <objectgroup id="11" name="map changes">
+  <object id="11" name="to_route0" x="752" y="244.5" width="47.5" height="97.5"/>
+  <object id="13" name="to_route1" x="0" y="272" width="48" height="208"/>
+ </objectgroup>
 </map>
