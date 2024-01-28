@@ -20,6 +20,7 @@ class Game:
         self.pressed = dict()
 
     def run(self):
+        print(self.screen.get_size())
         # while the game is running
         while self.running:
 
@@ -32,16 +33,24 @@ class Game:
                 elif event.type == pygame.KEYUP:
                     self.pressed[event.key] = False  # if a key is released
 
-            # checking currently pressed keys and doing the according actions
+            # Checking currently pressed keys and doing the according actions
             # Player movement
-            if self.pressed.get(pygame.K_UP) and self.player.rect.y > 0:
-                self.player.move("up")
-            elif self.pressed.get(pygame.K_DOWN) and self.player.rect.y < self.screen.height:
-                self.player.move("down")
-            if self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
-                self.player.move("left")
-            elif self.pressed.get(pygame.K_RIGHT) and self.player.rect.x < self.screen.width:
-                self.player.move("right")
+            if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] < self.screen.width:
+                self.player.move("NE")
+            elif self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] > 0:
+                self.player.move("NW")
+            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < self.screen.height and self.player.pos.get()[0] < self.screen.width:
+                self.player.move("SE")
+            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < self.screen.height and self.player.pos.get()[0] > 0:
+                self.player.move("SW")
+            elif self.pressed.get(pygame.K_UP) and self.player.pos.get()[1] > 0:
+                self.player.move("N")
+            elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.screen.height:
+                self.player.move("S")
+            elif self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[0] > 0:
+                self.player.move("W")
+            elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.screen.width:
+                self.player.move("E")
 
             # update map
             self.map.update()
