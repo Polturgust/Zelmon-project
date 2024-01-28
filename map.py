@@ -13,7 +13,7 @@ class Map:
         self.group = None
 
         # switch to map0
-        self.switch_map("map0")
+        self.switch_map("city0(spawn)")
 
     def switch_map(self, map):
         # load the wanted map
