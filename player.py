@@ -13,9 +13,9 @@ class Player:
         self.image.fill((255, 0, 0))
         self.rect = self.image.get_rect()
 
-        # Coordonnées du joueur
-        self.x = 0
-        self.y = 0
+        # Coordonnées du joueur (au centre par défaut)
+        self.x = self.screen.dimensions[0] // 2
+        self.y = self.screen.dimensions[1] // 2
         self.pos = Vector(self.x, self.y)
 
         # Autres attributs
@@ -87,4 +87,4 @@ class Player:
         """
         Affiche le joueur à l'écran
         """
-        self.screen.get_display().blit(self.image, self.pos.tuple)
+        self.screen.get_display().blit(self.image, self.pos.get())

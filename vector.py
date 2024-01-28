@@ -5,7 +5,6 @@ class Vector:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.tuple = (self.x, self.y)
 
     @property
     def magnitude(self):
