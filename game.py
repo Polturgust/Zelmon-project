@@ -11,10 +11,11 @@ class Game:
         self.running = True
         # initialise the screen
         self.screen = Screen()
-        # initialise the map
-        self.map = Map(self.screen)
         # create a player
         self.player = Player(self, self.screen)
+        # initialise the map
+        self.map = Map(self.screen,self.player)
+
 
         # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche --> utile pour se déplacer)
         self.pressed = dict()
