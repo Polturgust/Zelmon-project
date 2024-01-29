@@ -29,7 +29,7 @@ class Map:
         self.group.add(self.player)
 
         # Center the camera on the sprite
-        self.group.center(self.player.rect.center)
+        self.group.center(self.player.pos.get())
 
         # self.collisions = pytmx.util_pygame.build_rects(self.tmx_data, "map_changes", None, )
         # print(self.collisions)
