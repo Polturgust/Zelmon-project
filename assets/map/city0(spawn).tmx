@@ -251,7 +251,7 @@
   <object id="8" name="mc_mailbox" x="528.333" y="128.333" width="15" height="29"/>
   <object id="11" name="Professor_mailbox" x="176" y="176.667" width="12" height="28.6667"/>
  </objectgroup>
- <objectgroup id="11" name="map changes">
+ <objectgroup id="11" name="map_changes">
   <object id="13" name="to_route0" x="0.125" y="212" width="46.875" height="66.5"/>
  </objectgroup>
  <objectgroup id="12" name="spawn_points">
