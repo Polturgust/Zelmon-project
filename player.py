@@ -3,10 +3,12 @@ from screen import Screen
 from vector import Vector
 
 
-class Player:
-    def __init__(self, game, screen):
+class Player(pygame.sprite.Sprite):
+    def __init__(self, game):
         self.game = game
-        self.screen = screen
+        # self.screen = screen
+
+        super().__init__()
 
         # Image du joueur
         self.image = pygame.Surface((30, 30))
@@ -14,8 +16,8 @@ class Player:
         self.rect = self.image.get_rect()
 
         # Coordonnées du joueur (au centre par défaut)
-        self.x = self.screen.dimensions[0] // 2
-        self.y = self.screen.dimensions[1] // 2
+        self.x = 300  # self.screen.dimensions[0] // 2
+        self.y = 240  # self.screen.dimensions[1] // 2
         self.pos = Vector(self.x, self.y)
 
         # Autres attributs
@@ -87,4 +89,5 @@ class Player:
         """
         Affiche le joueur à l'écran
         """
-        self.screen.get_display().blit(self.image, self.pos.get())
+        # self.screen.get_display().blit(self.image, self.pos.get())
+        pass

@@ -9,12 +9,12 @@ class Game:
     def __init__(self):
         # set the game to running
         self.running = True
+        # create a player
+        self.player = Player(self)
         # initialise the screen
         self.screen = Screen()
         # initialise the map
-        self.map = Map(self.screen)
-        # create a player
-        self.player = Player(self, self.screen)
+        self.map = Map(self.screen, self.player)
 
         # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche --> utile pour se déplacer)
         self.pressed = dict()
@@ -56,7 +56,7 @@ class Game:
             self.map.update()
 
             # update player
-            self.player.update()
+            self.screen.get_display().blit(self.player.image, self.player.pos.get())
 
             # update screen
             self.screen.update()
