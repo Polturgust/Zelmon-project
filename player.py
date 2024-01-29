@@ -13,12 +13,14 @@ class Player(pygame.sprite.Sprite):
         # Image du joueur
         self.image = pygame.Surface((30, 30))
         self.image.fill((255, 0, 0))
-        self.rect = self.image.get_rect()
 
         # Coordonnées du joueur (au centre par défaut)
         self.x = 300  # self.screen.dimensions[0] // 2
         self.y = 240  # self.screen.dimensions[1] // 2
         self.pos = Vector(self.x, self.y)
+
+        # Hitbox
+        self.rect = self.image.get_rect()
 
         # Autres attributs
         self.velocity = 1

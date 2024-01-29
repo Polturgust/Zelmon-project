@@ -2,8 +2,6 @@ import pygame
 import pytmx
 import pyscroll
 
-from screen import Screen
-
 
 class Map:
     def __init__(self, screen, player):
@@ -24,7 +22,7 @@ class Map:
         # get the map for pyscroll
         self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         # render the mapdata
-        self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=4)
+        self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
         self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
 
@@ -38,6 +36,8 @@ class Map:
 
     def update(self):
         # show the map on screen
+        self.group.center(self.player.pos.get())
+        # print(self.player.rect.center)
         self.group.draw(self.screen.get_display())
 
     def get_size(self):
