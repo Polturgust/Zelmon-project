@@ -15,9 +15,9 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255, 0, 0))
 
         # Coordonnées du joueur (au centre par défaut)
-        self.x = 300  # self.screen.dimensions[0] // 2
-        self.y = 240  # self.screen.dimensions[1] // 2
-        self.pos = Vector(self.x, self.y)
+        # self.x = 300  # self.screen.dimensions[0] // 2
+        # self.y = 240  # self.screen.dimensions[1] // 2
+        self.pos = Vector(300, 240)
 
         # Hitbox
         self.rect = self.image.get_rect()

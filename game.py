@@ -14,7 +14,8 @@ class Game:
         # initialise the screen
         self.screen = Screen()
         # initialise the map
-        self.map = Map(self.screen, self.player)
+        self.map = Map(self.screen, self.player
+                       )
 
         # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche --> utile pour se déplacer)
         self.pressed = dict()
@@ -56,7 +57,17 @@ class Game:
             self.map.update()
 
             # update player
-            self.screen.get_display().blit(self.player.image, self.player.pos.get())
+            # if the screen still scrolls make the player appear in the center
+            if self.screen.get_size()[0] // 4 < self.player.pos.get()[0] < 3 * self.screen.get_size()[0] // 4 and self.screen.get_size()[1] // 4 < self.player.pos.get()[1] < 3 * self.screen.get_size()[1] // 4:
+                self.screen.get_display().blit(self.player.image, (self.screen.get_size()[0] // 2, self.screen.get_size()[1] // 2))
+            elif self.screen.get_size()[0] // 4 < self.player.pos.get()[0] < 3 * self.screen.get_size()[0] // 4:
+                self.screen.get_display().blit(self.player.image, (self.player.pos.get()[0], self.screen.get_size()[1]//2))
+            elif self.screen.get_size()[1] // 4 < self.player.pos.get()[1] < 3 * self.screen.get_size()[1] // 4:
+                self.screen.get_display().blit(self.player.image, (self.screen.get_size()[0]//2, self.player.pos.get()[1]))
+
+            # else move the player himself
+            else:
+                self.screen.get_display().blit(self.player.image, (self.player.pos.get()))
 
             # update screen
             self.screen.update()
