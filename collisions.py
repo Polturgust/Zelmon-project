@@ -8,13 +8,9 @@ class Collisions(pygame.sprite.Sprite):
         super().__init__()
         self.width = width
         self.height = height
-        self.img = img
-        self.img.fill("WHITE")
-        self.rect=self.img.get_rect()
+        self.image = img
+        self.image.fill((255, 255, 0))
+        self.rect=self.image.get_rect()
         self.x=x
         self.y=y
         self.pos = Vector(x, y)
-
-    def update(self):
-        pygame.draw.rect(self.img,"WHITE",[self.x,self.y,self.width,self.height])
-        print(self.x,self.y)

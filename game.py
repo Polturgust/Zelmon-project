@@ -69,9 +69,14 @@ class Game:
             else:
                 self.screen.get_display().blit(self.player.image, (self.player.pos.get()))
 
-            # update screen
-            self.screen.update()
+
 
             for i in self.map.sprite_list:
-                i.update()
+                if abs(self.player.pos.get()[0]-i.pos.get()[0])<240:
+                    self.screen.get_display().blit(i.image,i.pos.get())
+
+            print(self.player.pos.get())
+
+            # update screen
+            self.screen.update()
         pygame.quit()

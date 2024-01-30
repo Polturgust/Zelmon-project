@@ -44,8 +44,6 @@ class Map:
             self.sprite_list.append(self.temp)
         for j in self.sprite_list:
             j.add(self.group)
-        for q in self.group.sprites():
-            print(q)
 
 
     def update(self):
