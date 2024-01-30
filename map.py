@@ -1,6 +1,8 @@
 import pygame
 import pytmx
 import pyscroll
+from collisions import Collisions
+
 
 
 class Map:
@@ -34,15 +36,17 @@ class Map:
         self.group.center(self.player.pos.get())
 
         print(self.tmx_data.objects)
+        self.sprite_list=[]
         for i in self.tmx_data.objects:
-            self.temp_rect = pygame.Rect(i.x, i.y, i.width, i.height)
             self.image = pygame.Surface((i.width, i.height))
             self.image.fill((255, 0, 0))
-            self.rect = self.image.get_rect()
-            self.rect.x = i.x
-            self.rect.y = i.y
-            self.screen.get_display().blit(self.image, (self.rect.x, self.rect.y))
-            print(self.rect.x, self.rect.y)
+            self.temp=Collisions(i.width,i.height,self.image,i.x,i.y)
+            self.sprite_list.append(self.temp)
+        for j in self.sprite_list:
+            j.add(self.group)
+        for q in self.group.sprites():
+            print(q)
+
 
     def update(self):
         # show the map on screen with the player centered

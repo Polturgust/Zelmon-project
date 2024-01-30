@@ -71,4 +71,7 @@ class Game:
 
             # update screen
             self.screen.update()
+
+            for i in self.map.sprite_list:
+                i.update()
         pygame.quit()
