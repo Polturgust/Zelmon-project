@@ -15,7 +15,7 @@ class Map:
         self.map_data = None
 
         # switch to map0
-        self.switch_map("city0(spawn)")
+        self.switch_map("route0")
 
     def switch_map(self, map):
         # load the wanted map
