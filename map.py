@@ -23,29 +23,27 @@ class Map:
         # get the map for pyscroll
         self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         # render the mapdata
-        self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
+        self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=1)
         # puts everything together
         self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
         self.map_layer._x_offset = 240
-        print(self.map_layer.get_center_offset())
 
         self.group.add(self.player)
 
-        # Center the camera on the sprite
-        self.group.center(self.player.pos.get())
-
-        print(self.tmx_data.objects)
+        # print(self.tmx_data.objects)
         self.sprite_list = []
         for i in self.tmx_data.visible_layers:
             print(i)
 
-            if isinstance(i,pytmx.TiledObjectGroup):
+            if isinstance(i, pytmx.TiledObjectGroup):
                 for j in i:
-                    if i.name=="collisions":
-                        self.sprite_list.append(Collisions(j.width,j.height,None,j.x,j.y))
+                    if i.name == "collisions":
+                        self.sprite_list.append(Collisions(j.width, j.height, None, j.x, j.y))
 
         for j in self.sprite_list:
             j.add(self.group)
+
+        self.group.center(self.player.pos.get())
 
     def update(self):
         # show the map on screen with the player centered

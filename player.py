@@ -11,7 +11,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Image du joueur
-        self.image = pygame.Surface((30, 30))
+        self.image = pygame.Surface((10, 30))
         self.image.fill((255, 0, 0))
 
         # Coordonnées du joueur (au centre par défaut)
@@ -86,7 +86,7 @@ class Player(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
-        self.rect.x,self.rect.y=self.pos.get()
+        self.rect.x, self.rect.y = self.pos.get()
 
     def update(self):
         """

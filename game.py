@@ -9,16 +9,17 @@ class Game:
     def __init__(self):
         # set the game to running
         self.running = True
-        # create a player
-        self.player = Player(self)
         # initialise the screen
         self.screen = Screen()
+        # create a player
+        self.player = Player(self)
         # initialise the map
-        self.map = Map(self.screen, self.player
-                       )
+        self.map = Map(self.screen, self.player)
 
-        self.last_move=""
-        self.inverse={"NW":"SE","NE":"SW","SW":"NE","SE":"NW","N":"S","S":"N","E":"W","W":"E"}
+        self.player.move("E")
+
+        self.last_move = ""
+        self.inverse = {"NW": "SE", "NE": "SW", "SW": "NE", "SE": "NW", "N": "S", "S": "N", "E": "W", "W": "E"}
         # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche --> utile pour se déplacer)
         self.pressed = dict()
 
@@ -37,18 +38,18 @@ class Game:
 
             # Checking currently pressed keys and doing the according actions
 
-
             # Player movement
             # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du carré (ses coordonnées sont le point en haut à gauche)
             if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] < self.screen.get_size()[0] - 30:
                 self.player.move("NE")
-                self.last_move="NE"
+                self.last_move = "NE"
             elif self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] > 0:
                 self.player.move("NW")
                 self.last_move = "NW"
-            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30 and self.player.pos.get()[0] < self.screen.get_size()[1] - 30:
+            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30 and self.player.pos.get()[0] < self.screen.get_size()[0] - 30:
                 self.player.move("SE")
                 self.last_move = "SE"
+                print(self.player.pos.get())
             elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30 and self.player.pos.get()[0] > 0:
                 self.player.move("SW")
                 self.last_move = "SW"
@@ -61,7 +62,7 @@ class Game:
             elif self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[0] > 0:
                 self.player.move("W")
                 self.last_move = "W"
-            elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.screen.get_size()[0] - 30:
+            elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.screen.get_size()[0]:
                 self.player.move("E")
                 self.last_move = "E"
 
@@ -73,19 +74,10 @@ class Game:
             # update map
             self.map.update()
 
-
-
             # update player
             # if the screen still scrolls make the player appear in the center
-            if self.screen.get_size()[0] // 4 < self.player.pos.get()[0] < 3 * self.screen.get_size()[0] // 4 and self.screen.get_size()[1] // 4 < self.player.pos.get()[1] < 3 * self.screen.get_size()[1] // 4:
-                self.screen.get_display().blit(self.player.image, (self.screen.get_size()[0] // 2, self.screen.get_size()[1] // 2))
-            elif self.screen.get_size()[0] // 4 < self.player.pos.get()[0] < 3 * self.screen.get_size()[0] // 4:
-                self.screen.get_display().blit(self.player.image, (self.player.pos.get()[0], self.screen.get_size()[1]//2))
-            elif self.screen.get_size()[1] // 4 < self.player.pos.get()[1] < 3 * self.screen.get_size()[1] // 4:
-                self.screen.get_display().blit(self.player.image, (self.screen.get_size()[0]//2, self.player.pos.get()[1]))
-            # else move the player himself
-            else:
-                self.screen.get_display().blit(self.player.image, (self.player.pos.get()))
+
+            # self.screen.get_display().blit(self.player.image, (self.player.pos.get()))
 
 
 
