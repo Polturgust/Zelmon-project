@@ -86,6 +86,7 @@ class Player(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+        self.rect.x,self.rect.y=self.pos.get()
 
     def update(self):
         """
