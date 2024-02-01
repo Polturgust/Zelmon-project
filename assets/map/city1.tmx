@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="63">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="69">
  <tileset firstgid="1" source="tileset/just_grass.tsx"/>
  <tileset firstgid="2" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21002" source="tileset/literally_everything.tsx"/>
@@ -383,7 +383,7 @@
 </data>
  </layer>
  <objectgroup id="14" name="collisions">
-  <object id="17" name="trees2" x="638" y="-2" width="160" height="256"/>
+  <object id="17" name="trees2" x="640" y="0" width="160" height="256"/>
   <object id="18" name="trees0" x="0" y="0" width="144" height="288"/>
   <object id="19" name="trees1" x="144" y="0" width="496" height="160"/>
   <object id="20" name="trees3" x="640" y="336" width="160" height="464"/>
@@ -440,5 +440,11 @@
  <objectgroup id="12" name="spawn points">
   <object id="14" name="spawn from route0" x="720.25" y="288" width="16" height="16"/>
   <object id="15" name="spawn_from_route1" x="64" y="368.25" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="15" name="map borders">
+  <object id="64" name="top" x="0" y="0" width="800"/>
+  <object id="66" name="left" x="0" y="0" height="800"/>
+  <object id="67" name="right" x="800" y="0" height="800"/>
+  <object id="68" name="bottom" x="0" y="800" width="800"/>
  </objectgroup>
 </map>
