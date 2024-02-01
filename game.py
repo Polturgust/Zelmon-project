@@ -69,13 +69,9 @@ class Game:
             else:
                 self.screen.get_display().blit(self.player.image, (self.player.pos.get()))
 
-
-
-            for i in self.map.sprite_list:
-                if abs(self.player.pos.get()[0]-i.pos.get()[0])<240:
-                    self.screen.get_display().blit(i.image,i.pos.get())
-
-            print(self.player.pos.get())
+            for i in self.map.group:
+                if self.player.rect.colliderect(i) and not isinstance(i,Player):
+                    print("OUCH")
 
             # update screen
             self.screen.update()

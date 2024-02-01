@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="17">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="27">
  <tileset firstgid="1" source="tileset/just_grass.tsx"/>
  <tileset firstgid="2" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21002" source="tileset/literally_everything.tsx"/>
@@ -246,6 +246,16 @@
   <object id="3" name="professor_door" x="206.333" y="191.667" width="19" height="17.3333"/>
   <object id="4" name="door0" x="144.333" y="320.333" width="15" height="17.3333"/>
   <object id="6" name="door1" x="416.333" y="368.333" width="15" height="16"/>
+ </objectgroup>
+ <objectgroup id="13" name="collisions">
+  <object id="17" name="house1" x="388.5" y="319.75" width="55.5" height="63.25"/>
+  <object id="19" name="fence_1" x="296.75" y="274.5" width="6.25" height="44.5"/>
+  <object id="20" name="fence_2" x="296.75" y="272.75" width="118.75" height="15"/>
+  <object id="22" name="mc_house" x="550" y="95.5" width="67.75" height="63"/>
+  <object id="23" name="flowers_field" x="537.25" y="289.5" width="93.25" height="59.5"/>
+  <object id="24" name="house_0" x="116" y="272.25" width="56" height="62.25"/>
+  <object id="25" name="prof_house" x="192.5" y="144.25" width="78.75" height="62.5"/>
+  <object id="26" name="ground_item" x="132" y="196.25" width="8" height="7.75"/>
  </objectgroup>
  <objectgroup id="10" name="mailboxes">
   <object id="8" name="mc_mailbox" x="528.333" y="128.333" width="15" height="29"/>
