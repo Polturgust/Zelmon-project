@@ -38,25 +38,12 @@ class Map:
         self.sprite_list = []
         for i in self.tmx_data.visible_layers:
             print(i)
-            '''
-            if isinstance(i, pytmx.TiledTileLayer):
-                print("Layer !")
-                for j in i.iter_data():
-                    print(j)
-                    #self.sprite_list.append(Collisions(j[2].get_width(),j[2].get_height(),j[2],j[0],j[1]))
-                    print(self.tmx_data.get_tile_properties_by_layer(j))'''
 
             if isinstance(i,pytmx.TiledObjectGroup):
                 for j in i:
-                    self.sprite_list.append(Collisions(j.width,j.height,None,j.x,j.y))
+                    if i.name=="collisions":
+                        self.sprite_list.append(Collisions(j.width,j.height,None,j.x,j.y))
 
-
-
-        """for i in self.tmx_data.objects:
-            self.image = pygame.Surface((i.width, i.height))
-            self.image.fill((255, 0, 0))
-            self.temp=Collisions(i.width,i.height,self.image,i.x,i.y)
-            self.sprite_list.append(self.temp)"""
         for j in self.sprite_list:
             j.add(self.group)
 
