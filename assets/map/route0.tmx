@@ -331,7 +331,7 @@
   <object id="45" name="trees6" x="208" y="256" width="80" height="80"/>
   <object id="46" name="trees7" x="240" y="320" width="80" height="32"/>
  </objectgroup>
- <objectgroup id="3" name="map changes">
+ <objectgroup id="3" name="map_changes">
   <object id="1" name="to_city_1" x="-1" y="238.25" width="76" height="111.5"/>
   <object id="3" name="to_city0" x="2177.92" y="207.833" width="61.5" height="79"/>
  </objectgroup>

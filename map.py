@@ -2,6 +2,7 @@ import pygame
 import pytmx
 import pyscroll
 from collisions import Collisions
+from vector import Vector
 
 
 class Map:
@@ -13,9 +14,10 @@ class Map:
         self.map_layer = None
         self.group = None
         self.map_data = None
+        self.zonearr="city0"
 
         # switch to map0
-        self.switch_map("city1")
+        self.switch_map("city0")
 
     def switch_map(self, map):
         # load the wanted map
@@ -23,7 +25,7 @@ class Map:
         # get the map for pyscroll
         self.map_data = pyscroll.data.TiledMapData(self.tmx_data)
         # render the mapdata
-        self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=1)
+        self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
         self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
         self.map_layer._x_offset = 240
@@ -31,18 +33,31 @@ class Map:
         self.group.add(self.player)
 
         # print(self.tmx_data.objects)
-        self.sprite_list = []
+        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer,default_layer=20)
+        self.changes=pyscroll.PyscrollGroup(map_layer=self.map_layer,default_layer=20)
+
         for i in self.tmx_data.visible_layers:
-            print(i)
 
             if isinstance(i, pytmx.TiledObjectGroup):
                 for j in i:
                     if i.name == "collisions":
-                        self.sprite_list.append(Collisions(j.width, j.height, None, j.x, j.y))
+                        self.collisions.add(Collisions(j.width, j.height, j.x, j.y,""))
 
-        for j in self.sprite_list:
-            j.add(self.group)
+                    if i.name == "map_changes":
+                        if "to_route" in j.name:
+                            dest=j.name.split("to_route")
+                            self.changes.add(Collisions(j.width, j.height, j.x, j.y,"route"+dest[1]))
 
+                    if i.name=="spawn_points":
+                        print(self.zonearr,j.name)
+                        if "spawn" in j.name:
+                            if self.zonearr!=None and self.zonearr in j.name:
+                                self.player.rect.x,self.player.rect.y=j.x,j.y
+                                self.player.pos=Vector(j.x,j.y)
+                                self.player.move("S")
+                                print("Changed zone yay")
+
+        self.zonearr=map
         self.group.center(self.player.pos.get())
 
     def update(self):

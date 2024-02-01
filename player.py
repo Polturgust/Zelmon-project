@@ -11,7 +11,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Image du joueur
-        self.image = pygame.Surface((10, 30))
+        self.image = pygame.Surface((20, 20))
         self.image.fill((255, 0, 0))
 
         # Coordonnées du joueur (au centre par défaut)
