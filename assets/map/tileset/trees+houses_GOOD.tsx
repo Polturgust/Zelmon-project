@@ -61,4 +61,38 @@
    <object id="1" x="0.0869565" y="0.0869565" width="14.913" height="15.913"/>
   </objectgroup>
  </tile>
+ <wangsets>
+  <wangset name="frozen_water" type="corner" tile="-1">
+   <wangcolor name="frozen_water" color="#ff0000" tile="-1" probability="1"/>
+   <wangtile tileid="3570" wangid="0,0,0,1,0,0,0,0"/>
+   <wangtile tileid="3571" wangid="0,0,0,1,0,1,0,0"/>
+   <wangtile tileid="3572" wangid="0,0,0,0,0,1,0,0"/>
+   <wangtile tileid="3710" wangid="0,1,0,1,0,0,0,0"/>
+   <wangtile tileid="3711" wangid="0,1,0,1,0,1,0,1"/>
+   <wangtile tileid="3712" wangid="0,0,0,0,0,1,0,1"/>
+   <wangtile tileid="3850" wangid="0,1,0,0,0,0,0,0"/>
+   <wangtile tileid="3851" wangid="0,1,0,0,0,0,0,1"/>
+   <wangtile tileid="3852" wangid="0,0,0,0,0,0,0,1"/>
+   <wangtile tileid="3990" wangid="0,1,0,0,0,1,0,1"/>
+   <wangtile tileid="3991" wangid="0,1,0,1,0,0,0,1"/>
+   <wangtile tileid="4130" wangid="0,0,0,1,0,1,0,1"/>
+   <wangtile tileid="4131" wangid="0,1,0,1,0,1,0,0"/>
+  </wangset>
+  <wangset name="rasers" type="corner" tile="-1">
+   <wangcolor name="snowy_razer" color="#ff0000" tile="-1" probability="1"/>
+   <wangtile tileid="4484" wangid="0,0,0,1,0,0,0,0"/>
+   <wangtile tileid="4485" wangid="0,0,0,1,0,1,0,0"/>
+   <wangtile tileid="4486" wangid="0,0,0,0,0,1,0,0"/>
+   <wangtile tileid="4624" wangid="0,1,0,1,0,0,0,0"/>
+   <wangtile tileid="4625" wangid="0,1,0,1,0,1,0,1"/>
+   <wangtile tileid="4626" wangid="0,0,0,0,0,1,0,1"/>
+   <wangtile tileid="4764" wangid="0,1,0,0,0,0,0,0"/>
+   <wangtile tileid="4765" wangid="0,1,0,0,0,0,0,1"/>
+   <wangtile tileid="4766" wangid="0,0,0,0,0,0,0,1"/>
+   <wangtile tileid="4904" wangid="0,1,0,0,0,1,0,1"/>
+   <wangtile tileid="4905" wangid="0,1,0,1,0,0,0,1"/>
+   <wangtile tileid="5044" wangid="0,0,0,1,0,1,0,1"/>
+   <wangtile tileid="5045" wangid="0,1,0,1,0,1,0,0"/>
+  </wangset>
+ </wangsets>
 </tileset>

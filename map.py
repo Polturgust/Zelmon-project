@@ -15,11 +15,11 @@ class Map:
         self.group = None
         self.map_data = None
         self.zonearr = None
-        self.changes=None
-        self.collisions=None
+        self.changes = None
+        self.collisions = None
 
         # switch to map0
-        self.switch_map("route0")
+        self.switch_map("city1")
 
     def switch_map(self, map):
         # load the wanted map
