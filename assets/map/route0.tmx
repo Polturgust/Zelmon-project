@@ -336,7 +336,6 @@
  <objectgroup id="3" name="map_changes">
   <object id="1" name="to_city1" x="-1" y="238.25" width="76" height="111.5"/>
   <object id="3" name="to_city0" x="2177.92" y="207.833" width="61.5" height="79"/>
-  <object id="125" x="28" y="1070" width="403" height="45"/>
  </objectgroup>
  <objectgroup id="10" name="spawn_points">
   <object id="6" name="spawn_from_city1" x="80" y="287.818" width="16" height="16"/>
