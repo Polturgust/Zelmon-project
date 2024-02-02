@@ -17,7 +17,7 @@ class Map:
         self.map_layer = None # Contiendra les données de la couche que l'on affiche
         self.group = None # Contiendra le groupe de lutins permettant de centrer l'écran sur le joueur
         self.map_data = None # Contiendra les données du fichier carte utilisables par pyscroll
-        self.zonearr = None # Contiendra la zone d'origine du joueur (pour la changement de carte)
+        self.zonearr = None # Contiendra la zone d'origine du joueur (pour le changement de carte)
         self.changes = None # Contiendra les collisions
         self.collisions = None # Contiendra les collisions qui font changer le joueur de carte
 

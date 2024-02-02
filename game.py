@@ -1,9 +1,9 @@
 import pygame
+from random import randint
 
 from screen import Screen
 from map import Map
 from player import Player
-from random import randint
 from vector import Vector
 from combat import Combat
 
@@ -17,8 +17,6 @@ class Game:
         # create a player
         self.player = Player(self)
         # initialise the screen
-        self.screen = Screen()
-        # initialise the map
         self.map = Map(self.screen, self.player)
 
         # On initialise les variables pour le mouvement du joueur :
@@ -97,15 +95,14 @@ class Game:
                     self.cooldown -= 1
 
             if self.cooldown == 0:
-                if self.chance_rencontre() == True:
-                    self.playerinfo = self.player.pos.get()
+                if self.chance_rencontre() is True:
                     self.origin = self.map.zonearr
                     self.map.switch_map("combat")
-                    self.pressed={}
-                    self.combat=Combat("Pokémon sauvage",self.screen,self.player,self.map,self.origin,self.playerinfo)
-                    if self.combat.lancer_combat()==False:
-                        self.running=False
-                    self.cooldown=120
+                    self.pressed = {}
+                    self.combat = Combat("Pokémon sauvage", self.screen, self.player, self.map, self.origin)
+                    if self.combat.lancer_combat() is False:
+                        self.running = False
+                    self.cooldown = 120
 
             # Vérifie si le joueur est en collision avec un élément du décor
             for i in self.map.collisions:
@@ -121,11 +118,6 @@ class Game:
 
             # update map
             self.map.update()
-
-            # update player
-            # if the screen still scrolls make the player appear in the center
-
-            # self.screen.get_display().blit(self.player.image, (self.player.pos.get()))
 
             # update screen
             self.screen.update()
