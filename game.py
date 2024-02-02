@@ -5,6 +5,7 @@ from map import Map
 from player import Player
 from random import randint
 from vector import Vector
+from combat import Combat
 
 
 class Game:
@@ -100,7 +101,11 @@ class Game:
                     self.playerinfo = self.player.pos.get()
                     self.origin = self.map.zonearr
                     self.map.switch_map("combat")
-                    self.lancer_combat("Pokemon Sauvage")
+                    self.pressed={}
+                    self.combat=Combat("Pokémon sauvage",self.screen,self.player,self.map,self.origin,self.playerinfo)
+                    if self.combat.lancer_combat()==False:
+                        self.running=False
+                    self.cooldown=120
 
             # Vérifie si le joueur est en collision avec un élément du décor
             for i in self.map.collisions:
@@ -134,38 +139,3 @@ class Game:
                     return True
         return False
 
-    def lancer_combat(self, name):
-        self.name = name
-        print(self.name + " veut se battre !")
-        self.winner = 0
-        while self.winner == 0 and self.running:
-            self.screen.update()
-            self.map.update()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:  # On ferme le jeu si l'utilisateur ferme la fenêtre
-                    self.running = False
-                elif event.type == pygame.KEYDOWN:  # Si une touche est pressée, on l'ajoute au dictionnaire des touches pressées
-                    self.pressed[event.key] = True
-                elif event.type == pygame.KEYUP:
-                    self.pressed[
-                        event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
-
-            self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load("assets\\images\\player.jpg"), (40, 40)),
-                (40, self.screen.get_display().get_size()[1] - 70))
-            self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load("assets\\images\\pokemon.jpg"), (40, 40)),
-                (self.screen.get_display().get_size()[0] - 70, 40))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render("You", False, (0, 0, 0)),
-                                           (40, self.screen.get_display().get_size()[1] - 120))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.name, False, (0, 0, 0)),
-                                           (self.screen.get_display().get_size()[0] - 200, 10))
-
-            if pygame.K_a in self.pressed.keys() and self.pressed[pygame.K_a] == True:
-                print(self.pressed)
-                self.pressed[pygame.K_a] = False
-                self.winner = 1
-        self.map.switch_map(self.origin)
-        self.player.pos = Vector(self.playerinfo[0], self.playerinfo[1])
-        self.cooldown = 120
-        return None
