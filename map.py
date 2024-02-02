@@ -22,7 +22,7 @@ class Map:
         self.collisions = None # Contiendra les collisions qui font changer le joueur de carte
 
         # Lance le jeu sur la carte donnée (sera adapté plus tard)
-        self.switch_map("city2")
+        self.switch_map("route0")
 
     def switch_map(self, map):
         # load the wanted map
@@ -41,6 +41,7 @@ class Map:
         # Crée deux groupe de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
         self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
         self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
+        self.weeds=pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
@@ -78,6 +79,10 @@ class Map:
                             self.player.pos = Vector(j.x, j.y)
                             self.player.move("S")
                             self.player.move("N")
+
+                    if i.name=="weeds":
+                        self.weeds.add(Collisions(j.width,j.height,j.x,j.y,""))
+
 
         # On change la zone d'origine du joueur à la zone actuelle
         self.zonearr = map

@@ -7,6 +7,8 @@ import os
 from game import Game
 
 pygame.init()
+pygame.font.init()
+
 
 
 if __name__ == "__main__":
