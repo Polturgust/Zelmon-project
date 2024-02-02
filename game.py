@@ -18,64 +18,67 @@ class Game:
         # initialise the map
         self.map = Map(self.screen, self.player)
 
-        self.player.move("E")
-
+        # On initialise les variables pour le mouvement du joueur :
+        # Son dernier mouvement (qui par défaut est un déplacement vers la droite)
         self.last_move = "E"
+        # La liste des mouvements inverses, utile dans la gestion des collisions
         self.inverse = {"NW": "SE", "NE": "SW", "SW": "NE", "SE": "NW", "N": "S", "S": "N", "E": "W", "W": "E"}
         # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche --> utile pour se déplacer)
         self.pressed = dict()
 
     def run(self):
         print(self.screen.get_size())
-        # while the game is running
+        # Tant que le jeu tourne :
         while self.running:
-            # capture all events
+            # On récupère toutes les actions de l'utilisateur
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:  # close the game if the cross is pressed
+                if event.type == pygame.QUIT:  # On ferme le jeu si l'utilisateur ferme la fenêtre
                     self.running = False
-                elif event.type == pygame.KEYDOWN:  # if a key is pressed
+                elif event.type == pygame.KEYDOWN:  # Si une touche est pressée, on l'ajoute au dictionnaire des touches pressées
                     self.pressed[event.key] = True
                 elif event.type == pygame.KEYUP:
-                    self.pressed[event.key] = False  # if a key is released
+                    self.pressed[event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
 
             # Checking currently pressed keys and doing the according actions
 
 
             # Player movement
             # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du carré (ses coordonnées sont le point en haut à gauche)
-            if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] < self.screen.get_size()[0] - 30:
+            if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] < self.map.map_data.map_size[0]*16 - 30:
                 self.player.move("NE")
                 self.last_move = "NE"
             elif self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] > 0:
                 self.player.move("NW")
                 self.last_move = "NW"
-            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30 and self.player.pos.get()[0] < self.screen.get_size()[0] - 30:
+            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < self.map.map_data.map_size[1]*16 - 30 and self.player.pos.get()[0] < self.map.map_data.map_size[0]*16 - 30:
                 self.player.move("SE")
                 self.last_move = "SE"
-            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30 and self.player.pos.get()[0] > 0:
+            elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < self.map.map_data.map_size[1]*16 - 30 and self.player.pos.get()[0] > 0:
                 self.player.move("SW")
                 self.last_move = "SW"
             elif self.pressed.get(pygame.K_UP) and self.player.pos.get()[1] > 0:
                 self.player.move("N")
                 self.last_move = "N"
-            elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.screen.get_size()[1] - 30:
+            elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.map.map_data.map_size[1]*16 - 30:
                 self.player.move("S")
                 self.last_move = "S"
             elif self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[0] > 0:
                 self.player.move("W")
                 self.last_move = "W"
-            elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.screen.get_size()[0]:
+            elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.map.map_data.map_size[0]*16:
                 self.player.move("E")
                 self.last_move = "E"
 
             # Vérifie si le joueur est en collision avec un élément du décor
             for i in self.map.collisions:
                 if self.player.rect.colliderect(i.rect) and not isinstance(i, Player):
+                    # Si oui, on effectue le mouvement inverse de celui que vient d'effectuer le joueur.
                     self.player.move(self.inverse[self.last_move])
 
+            # Vérifie si le joueur touche une zone qui doit le faire changer d'endroit
             for i in self.map.changes:
                 if self.player.rect.colliderect(i.rect):
-                    print("Switching zone...")
+                    # Si oui, on change la carte affichée en appelant la méthode switch_map() de la classe Map avec le nom de la carte associée à la collision
                     self.map.switch_map(i.command)
             # update map
             self.map.update()
