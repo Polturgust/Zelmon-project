@@ -5,7 +5,7 @@
   <wangset name="paths" type="corner" tile="-1">
    <wangcolor name="dirt_path" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="grey_brics_path" color="#00ff00" tile="-1" probability="1"/>
-   <wangcolor name="pebles_pat" color="#0000ff" tile="-1" probability="1"/>
+   <wangcolor name="pebles_path" color="#0000ff" tile="-1" probability="1"/>
    <wangcolor name="white_stone_path" color="#ff7700" tile="-1" probability="1"/>
    <wangcolor name="mossy_path" color="#00e9ff" tile="-1" probability="1"/>
    <wangtile tileid="11" wangid="0,0,0,1,0,0,0,0"/>
