@@ -97,28 +97,42 @@
   <wangset name="paths" type="corner" tile="-1">
    <wangcolor name="yello_tilted_bricks" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="tilted_bricks" color="#00ff00" tile="-1" probability="1"/>
+   <wangcolor name="snow" color="#0000ff" tile="-1" probability="1"/>
+   <wangtile tileid="2128" wangid="0,0,0,3,0,0,0,0"/>
+   <wangtile tileid="2129" wangid="0,0,0,3,0,3,0,0"/>
+   <wangtile tileid="2130" wangid="0,0,0,0,0,3,0,0"/>
    <wangtile tileid="2134" wangid="0,0,0,1,0,0,0,0"/>
    <wangtile tileid="2135" wangid="0,0,0,1,0,1,0,0"/>
    <wangtile tileid="2136" wangid="0,0,0,0,0,1,0,0"/>
    <wangtile tileid="2137" wangid="0,0,0,2,0,0,0,0"/>
    <wangtile tileid="2138" wangid="0,0,0,2,0,2,0,0"/>
    <wangtile tileid="2139" wangid="0,0,0,0,0,2,0,0"/>
+   <wangtile tileid="2268" wangid="0,3,0,3,0,0,0,0"/>
+   <wangtile tileid="2269" wangid="0,3,0,3,0,3,0,3"/>
+   <wangtile tileid="2270" wangid="0,0,0,0,0,3,0,3"/>
    <wangtile tileid="2274" wangid="0,1,0,1,0,0,0,0"/>
    <wangtile tileid="2275" wangid="0,1,0,1,0,1,0,1"/>
    <wangtile tileid="2276" wangid="0,0,0,0,0,1,0,1"/>
    <wangtile tileid="2277" wangid="0,2,0,2,0,0,0,0"/>
    <wangtile tileid="2278" wangid="0,2,0,2,0,2,0,2"/>
    <wangtile tileid="2279" wangid="0,0,0,0,0,2,0,2"/>
+   <wangtile tileid="2408" wangid="0,3,0,0,0,0,0,0"/>
+   <wangtile tileid="2409" wangid="0,3,0,0,0,0,0,3"/>
+   <wangtile tileid="2410" wangid="0,0,0,0,0,0,0,3"/>
    <wangtile tileid="2414" wangid="0,1,0,0,0,0,0,0"/>
    <wangtile tileid="2415" wangid="0,1,0,0,0,0,0,1"/>
    <wangtile tileid="2416" wangid="0,0,0,0,0,0,0,1"/>
    <wangtile tileid="2417" wangid="0,2,0,0,0,0,0,0"/>
    <wangtile tileid="2418" wangid="0,2,0,0,0,0,0,2"/>
    <wangtile tileid="2419" wangid="0,0,0,0,0,0,0,2"/>
+   <wangtile tileid="2548" wangid="0,3,0,0,0,3,0,3"/>
+   <wangtile tileid="2549" wangid="0,3,0,3,0,0,0,3"/>
    <wangtile tileid="2554" wangid="0,1,0,0,0,1,0,1"/>
    <wangtile tileid="2555" wangid="0,1,0,1,0,0,0,1"/>
    <wangtile tileid="2557" wangid="0,2,0,0,0,2,0,2"/>
    <wangtile tileid="2558" wangid="0,2,0,2,0,0,0,2"/>
+   <wangtile tileid="2688" wangid="0,0,0,3,0,3,0,3"/>
+   <wangtile tileid="2689" wangid="0,3,0,3,0,3,0,0"/>
    <wangtile tileid="2694" wangid="0,0,0,1,0,1,0,1"/>
    <wangtile tileid="2695" wangid="0,1,0,1,0,1,0,0"/>
    <wangtile tileid="2697" wangid="0,0,0,2,0,2,0,2"/>

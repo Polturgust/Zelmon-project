@@ -434,12 +434,12 @@
   <object id="10" name="door3" x="574.5" y="558" width="18.5" height="18"/>
  </objectgroup>
  <objectgroup id="11" name="map_changes">
-  <object id="11" name="to_route0" x="750.167" y="244.5" width="49.3333" height="97.5"/>
-  <object id="13" name="to_route1" x="0" y="272" width="61.5" height="208"/>
+  <object id="11" name="to_road0" x="750.167" y="244.5" width="49.3333" height="97.5"/>
+  <object id="13" name="to_road1" x="0" y="272" width="61.5" height="208"/>
  </objectgroup>
  <objectgroup id="12" name="spawn_points">
-  <object id="15" name="spawn_from_route1" x="64" y="368.25" width="16" height="16"/>
+  <object id="15" name="from_road1" x="64" y="368.25" width="16" height="16"/>
   <object id="64" name="default_spawn" x="512" y="272" width="16" height="16"/>
-  <object id="71" name="spawn_from_route0" x="720" y="288" width="16" height="16"/>
+  <object id="71" name="from_road0" x="720" y="288" width="16" height="16"/>
  </objectgroup>
 </map>

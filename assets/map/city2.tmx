@@ -4962,7 +4962,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
   </layer>
-  <layer id="128" name="26a" width="70" height="70">
+  <layer id="128" name="26.5a" width="70" height="70">
    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -5036,7 +5036,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
   </layer>
-  <layer id="129" name="26b" width="70" height="70">
+  <layer id="129" name="26.5b" width="70" height="70">
    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -6295,29 +6295,29 @@
 </data>
   </layer>
  </group>
- <objectgroup id="68" name="doors" visible="0">
+ <objectgroup id="68" name="doors">
   <object id="13" name="pokecenter_door" x="398.909" y="287.091" width="18.0909" height="19"/>
   <object id="14" name="arena_door" x="549" y="287" width="21.0909" height="18.3636"/>
   <object id="15" name="pokemart_door" x="687" y="286" width="17.9091" height="19.1818"/>
   <object id="16" name="house1_door" x="848.091" y="847.909" width="16.0909" height="21"/>
   <object id="17" name="house0_door" x="208.091" y="576" width="16" height="17.3636"/>
  </objectgroup>
- <objectgroup id="65" name="map_borders" visible="0">
+ <objectgroup id="65" name="map_borders">
   <object id="2" name="top" x="0" y="0" width="1120"/>
   <object id="4" name="right" x="1120" y="0" height="1120"/>
   <object id="5" name="bottom" x="0" y="1120" width="1120"/>
   <object id="6" name="left" x="0" y="0" height="1120"/>
  </objectgroup>
- <objectgroup id="66" name="map_changes" visible="0">
-  <object id="7" name="to_road?" x="0" y="320" width="61.5" height="144"/>
-  <object id="8" name="to_route?1" x="480" y="1058.25" width="176" height="61.75"/>
-  <object id="11" name="from_route?1" x="552" y="1040" width="16" height="16"/>
+ <objectgroup id="66" name="map_changes">
+  <object id="7" name="to_road3" x="0" y="320" width="61.5" height="144"/>
+  <object id="8" name="to_road2" x="480" y="1058.25" width="176" height="61.75"/>
+  <object id="11" name="from_route2" x="552" y="1040" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="67" name="spawn_points" visible="0">
-  <object id="9" name="from_road?" x="64" y="400" width="16" height="16"/>
+ <objectgroup id="67" name="spawn_points">
+  <object id="9" name="from_road3" x="64" y="400" width="16" height="16"/>
   <object id="103" name="default_spawn" x="400" y="336" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="73" name="collisions" visible="0">
+ <objectgroup id="73" name="collisions">
   <object id="18" name="trees1" x="0" y="0" width="1120" height="176"/>
   <object id="19" name="trees2" x="0" y="176" width="304" height="64"/>
   <object id="20" name="trees3" x="800" y="176" width="320" height="64"/>

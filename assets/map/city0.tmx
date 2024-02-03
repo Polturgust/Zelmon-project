@@ -292,10 +292,10 @@
   <object id="69" name="food_bowl" x="146.125" y="179.188" width="12" height="12.1875"/>
  </objectgroup>
  <objectgroup id="11" name="map_changes">
-  <object id="13" name="to_route0" x="0.125" y="212" width="46.875" height="66.5"/>
+  <object id="13" name="to_road0" x="0.125" y="212" width="46.875" height="66.5"/>
  </objectgroup>
  <objectgroup id="12" name="spawn_points">
-  <object id="16" name="spawn_from_route0" x="48.1818" y="240" width="16" height="16"/>
+  <object id="16" name="from_road0" x="48.1818" y="240" width="16" height="16"/>
   <object id="75" name="default_spawn" x="400" y="240" width="16" height="16"/>
  </objectgroup>
 </map>
