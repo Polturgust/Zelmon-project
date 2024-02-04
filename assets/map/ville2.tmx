@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="147" nextobjectid="104">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="147" nextobjectid="105">
  <tileset firstgid="1" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21001" source="tileset/literally_everything.tsx"/>
  <tileset firstgid="25257" source="tileset/houses_arenas.tsx"/>
@@ -6392,10 +6392,10 @@
  <objectgroup id="66" name="changements_de_map">
   <object id="7" name="vers_route3" x="0" y="320" width="61.5" height="144"/>
   <object id="8" name="vers_route2" x="480" y="1058.25" width="176" height="61.75"/>
-  <object id="11" name="depuis_route2" x="552" y="1040" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="67" name="points_de_spawn">
-  <object id="9" name="depuis_route3" x="64" y="400" width="16" height="16"/>
+  <object id="9" name="depuis_route3" x="80" y="400" width="16" height="16" visible="0"/>
   <object id="103" name="default_spawn" x="400" y="336" width="16" height="16"/>
+  <object id="104" name="depuis_route3" x="552.208" y="1039.9" width="16" height="16"/>
  </objectgroup>
 </map>

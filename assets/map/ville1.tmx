@@ -440,9 +440,9 @@
   <object id="13" name="vers_route1" x="0" y="272" width="61.5" height="208"/>
  </objectgroup>
  <objectgroup id="12" name="points_de_spawn">
-  <object id="15" name="depuis_route1" x="64" y="368.25" width="16" height="16"/>
+  <object id="15" name="depuis_route1" x="80" y="368" width="16" height="16"/>
   <object id="64" name="spawn_default" x="512" y="272" width="16" height="16"/>
-  <object id="71" name="depuis_route0" x="720" y="288" width="16" height="16"/>
+  <object id="71" name="depuis_route0" x="704" y="288" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="15" name="bords_map">
   <object id="74" name="haut" x="0" y="0" width="800"/>

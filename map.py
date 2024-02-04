@@ -22,7 +22,7 @@ class Map:
         self.collisions = None # Contiendra les collisions qui font changer le joueur de carte
 
         # Lance le jeu sur la carte donnée (sera adapté plus tard)
-        self.switch_map("route0")
+        self.switch_map("ville0")
 
     def switch_map(self, map):
         # load the wanted map
@@ -32,16 +32,16 @@ class Map:
         # render the mapdata
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
-        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
         self.map_layer._x_offset = 240
 
         self.group.add(self.player)
 
         # print(self.tmx_data.objects)
         # Crée deux groupe de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
-        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
-        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
-        self.weeds=pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
+        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
+        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
+        self.weeds=pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
@@ -65,7 +65,7 @@ class Map:
 
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
-                    if i.name == "spawn_points":
+                    if i.name == "points_de_spawn":
                         print(self.zonearr, j.name)
                         # Si le nom correspond à la zone d'où vient le joueur, on déplace le joueur vers cette zone
                         if self.zonearr != None and self.zonearr in j.name:

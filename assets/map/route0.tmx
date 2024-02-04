@@ -313,7 +313,7 @@
  </layer>
  <objectgroup id="11" name="collisions">
   <object id="26" name="arbres3" x="0" y="464" width="2240" height="176"/>
-  <object id="27" name="arbres2" x="2096" y="272" width="144" height="192"/>
+  <object id="27" name="arbres2" x="2096" y="287.25" width="144" height="176.75"/>
   <object id="28" name="arbres1" x="2096" y="160" width="144" height="64"/>
   <object id="29" name="arbres5" x="0" y="160" width="160" height="96"/>
   <object id="30" name="arbres4" x="0" y="336" width="160" height="128"/>
@@ -339,8 +339,8 @@
  </objectgroup>
  <objectgroup id="10" name="points_de_spawn">
   <object id="6" name="depuis_ville1" x="80" y="287.818" width="16" height="16"/>
-  <object id="129" name="vers_ville0" x="2160" y="240" width="16" height="16"/>
-  <object id="130" name="spawn_default" x="2160" y="240" width="16" height="16"/>
+  <object id="129" name="vers_ville0" x="2144" y="240" width="16" height="16"/>
+  <object id="130" name="spawn_default" x="2144" y="240" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="13" name="herbes">
   <object id="61" x="160" y="192" width="256" height="32"/>

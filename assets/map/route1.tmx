@@ -7469,10 +7469,10 @@
  <objectgroup id="70" name="changements_de_map" opacity="0.9">
   <object id="1" name="vers_ville1" x="577.5" y="1264" width="62.5" height="200"/>
   <object id="4" name="vers_route2" x="578" y="144" width="62" height="176"/>
-  <object id="5" name="depuis_route2" x="560" y="224" width="16" height="16"/>
+  <object id="5" name="depuis_route2" x="544" y="224" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="71" name="points_de_spawn">
-  <object id="3" name="depuis_ville1" x="560" y="1360" width="16" height="16"/>
+  <object id="3" name="depuis_ville1" x="544" y="1360" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="83" name="bords_map">
   <object id="122" name="haut" x="0" y="0" width="640"/>
