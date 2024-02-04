@@ -8,6 +8,7 @@
    <wangcolor name="pebles_path" color="#0000ff" tile="-1" probability="1"/>
    <wangcolor name="white_stone_path" color="#ff7700" tile="-1" probability="1"/>
    <wangcolor name="mossy_path" color="#00e9ff" tile="-1" probability="1"/>
+   <wangcolor name="grass_path" color="#ff00d8" tile="-1" probability="1"/>
    <wangtile tileid="11" wangid="0,0,0,1,0,0,0,0"/>
    <wangtile tileid="12" wangid="0,0,0,1,0,1,0,0"/>
    <wangtile tileid="13" wangid="0,0,0,0,0,1,0,0"/>
@@ -21,6 +22,19 @@
    <wangtile tileid="29" wangid="0,0,0,0,0,0,0,1"/>
    <wangtile tileid="30" wangid="0,1,0,1,0,0,0,1"/>
    <wangtile tileid="31" wangid="0,1,0,0,0,1,0,1"/>
+   <wangtile tileid="96" wangid="0,0,0,6,0,0,0,0"/>
+   <wangtile tileid="97" wangid="0,0,0,6,0,6,0,0"/>
+   <wangtile tileid="98" wangid="0,0,0,0,0,6,0,0"/>
+   <wangtile tileid="104" wangid="0,6,0,6,0,0,0,0"/>
+   <wangtile tileid="105" wangid="0,6,0,6,0,6,0,6"/>
+   <wangtile tileid="106" wangid="0,0,0,0,0,6,0,6"/>
+   <wangtile tileid="112" wangid="0,6,0,0,0,0,0,0"/>
+   <wangtile tileid="113" wangid="0,6,0,0,0,0,0,6"/>
+   <wangtile tileid="114" wangid="0,0,0,0,0,0,0,6"/>
+   <wangtile tileid="121" wangid="0,6,0,0,0,6,0,6"/>
+   <wangtile tileid="122" wangid="0,6,0,6,0,0,0,6"/>
+   <wangtile tileid="129" wangid="0,0,0,6,0,6,0,6"/>
+   <wangtile tileid="130" wangid="0,6,0,6,0,6,0,0"/>
    <wangtile tileid="165" wangid="0,0,0,3,0,0,0,0"/>
    <wangtile tileid="166" wangid="0,0,0,3,0,3,0,0"/>
    <wangtile tileid="167" wangid="0,0,0,0,0,3,0,0"/>
