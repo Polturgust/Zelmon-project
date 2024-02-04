@@ -32,16 +32,16 @@ class Map:
         # render the mapdata
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
-        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
         self.map_layer._x_offset = 240
 
         self.group.add(self.player)
 
         # print(self.tmx_data.objects)
         # Crée deux groupe de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
-        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
-        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
-        self.weeds=pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
+        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.weeds=pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
