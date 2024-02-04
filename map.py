@@ -32,7 +32,7 @@ class Map:
         # render the mapdata
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
-        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=1)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=20)
         self.map_layer._x_offset = 240
 
         self.group.add(self.player)
