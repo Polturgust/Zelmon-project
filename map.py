@@ -55,13 +55,13 @@ class Map:
                         self.collisions.add(Collisions(j.width, j.height, j.x, j.y, ""))
 
                     # Si c'est un objet de la couche qui contient les changements de carte, on crée une collision et on l'ajoute au groupe des changements de carte
-                    if i.name == "map_changes":
-                        if j.name != None and "to_route" in j.name:
-                            dest = j.name.split("to_route")
+                    if i.name == "changements_de_map":
+                        if j.name != None and "vers_route" in j.name:
+                            dest = j.name.split("vers_route")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "route" + dest[1]))
-                        elif j.name != None and "to_city" in j.name:
-                            dest=j.name.split("to_city")
-                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "city" + dest[1]))
+                        elif j.name != None and "vers_ville" in j.name:
+                            dest=j.name.split("vers_ville")
+                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "ville" + dest[1]))
 
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
@@ -74,13 +74,13 @@ class Map:
                             self.player.move("S")
                             self.player.move("N")
                         # Sinon, si le joueur ne vient de nulle part (ex après avoir chargé une sauvegarde), on le place à l'endroit d'apparition par défaut
-                        elif self.zonearr == None and j.name == "default_spawn":
+                        elif self.zonearr == None and j.name == "spawn_default":
                             self.player.rect.x, self.player.rect.y = j.x, j.y
                             self.player.pos = Vector(j.x, j.y)
                             self.player.move("S")
                             self.player.move("N")
 
-                    if i.name=="weeds":
+                    if i.name=="herbes":
                         self.weeds.add(Collisions(j.width,j.height,j.x,j.y,""))
 
 
