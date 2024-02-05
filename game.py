@@ -63,8 +63,7 @@ class Game:
                     self.cooldown -= 1
 
             elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < \
-                    self.map.map_data.map_size[1] * 16 - 30 and self.player.pos.get()[0] < self.map.map_data.map_size[
-                0] * 16 - 30:
+                    self.map.map_data.map_size[1] * 16 - 30 and self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
                 self.player.move("SE")
                 self.last_move = "SE"
                 self.player.is_moving = True
@@ -117,8 +116,13 @@ class Game:
             # Vérifie si le joueur est en collision avec un élément du décor
             for i in self.map.collisions:
                 if self.player.rect.colliderect(i.rect) and not isinstance(i, Player):
-                    # Si oui, on effectue le mouvement inverse de celui que vient d'effectuer le joueur.
+                    # Si oui, on effectue deux fois le mouvement inverse de celui que vient d'effectuer le joueur puis une fois le même.
+                    # De cette façon, le joueur ne peut avancer et l'animation ne le montre pas comme allant dans le sens opposé à celui de la collision.
                     self.player.move(self.inverse[self.last_move])
+                    self.player.move(self.inverse[self.last_move])
+                    self.player.move(self.last_move)
+
+
 
             # Vérifie si le joueur touche une zone qui doit le faire changer d'endroit
             for i in self.map.changes:

@@ -1,7 +1,9 @@
 import pygame
+
 from screen import Screen
 from vector import Vector
 from animation import Animation
+from spritesheet import SpriteSheet
 
 
 class Player(pygame.sprite.Sprite):
@@ -17,8 +19,8 @@ class Player(pygame.sprite.Sprite):
         self.pos = Vector(300, 240)
 
         # On définit les sprites
-        self.animation = Animation()
-        self.image = self.animation.get_current_image()
+        self.animation = Animation(SpriteSheet("assets/Spritesheets/Walking-North_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Walking-South_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Walking-West_Link.png").images(1, 10))
+        self.image = pygame.image.load("assets/Spritesheets/Idle-South_Link.png").convert_alpha()
 
         # Hitbox
         self.rect = self.image.get_rect()
@@ -98,10 +100,14 @@ class Player(pygame.sprite.Sprite):
         Met à jour l'animation du joueur à l'écran
         """
         if self.is_moving:  # Si le joueur se déplace
-            self.animation.frame_rate = 8
             self.animation.update(1)
             self.image = self.animation.get_current_image()
         else:
-            self.animation.frame_rate = 24
-            self.animation.update(3)
-            self.image = self.animation.get_current_image()
+            if self.animation.direction == "N":
+                self.image = pygame.image.load("assets/Spritesheets/Idle-North_Link.png")
+            elif self.animation.direction == "E":
+                self.image = pygame.transform.flip(pygame.image.load("assets/Spritesheets/Idle-West_Link.png"), True, False)
+            elif self.animation.direction == "S":
+                self.image = pygame.image.load("assets/Spritesheets/Idle-South_Link.png")
+            elif self.animation.direction == "W":
+                self.image = pygame.image.load("assets/Spritesheets/Idle-West_Link.png")

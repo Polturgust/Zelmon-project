@@ -13,13 +13,13 @@ class Map:
 
         # On initialise les différentes variables utiles :
 
-        self.tmx_data = None # Contiendra le fichier carte utilisable par pygame
-        self.map_layer = None # Contiendra les données de la couche que l'on affiche
-        self.group = None # Contiendra le groupe de lutins permettant de centrer l'écran sur le joueur
-        self.map_data = None # Contiendra les données du fichier carte utilisables par pyscroll
-        self.zonearr = None # Contiendra la zone d'origine du joueur (pour le changement de carte)
-        self.changes = None # Contiendra les collisions
-        self.collisions = None # Contiendra les collisions qui font changer le joueur de carte
+        self.tmx_data = None  # Contiendra le fichier carte utilisable par pygame
+        self.map_layer = None  # Contiendra les données de la couche que l'on affiche
+        self.group = None  # Contiendra le groupe de lutins permettant de centrer l'écran sur le joueur
+        self.map_data = None  # Contiendra les données du fichier carte utilisables par pyscroll
+        self.zonearr = None  # Contiendra la zone d'origine du joueur (pour le changement de carte)
+        self.changes = None  # Contiendra les collisions
+        self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
         # Lance le jeu sur la carte donnée (sera adapté plus tard)
         self.switch_map("ville0")
@@ -41,7 +41,7 @@ class Map:
         # Crée deux groupe de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
         self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
         self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
-        self.weeds=pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
@@ -60,9 +60,8 @@ class Map:
                             dest = j.name.split("vers_route")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "route" + dest[1]))
                         elif j.name != None and "vers_ville" in j.name:
-                            dest=j.name.split("vers_ville")
+                            dest = j.name.split("vers_ville")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "ville" + dest[1]))
-
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
                     if i.name == "points_de_spawn":
@@ -80,9 +79,8 @@ class Map:
                             self.player.move("S")
                             self.player.move("N")
 
-                    if i.name=="herbes":
-                        self.weeds.add(Collisions(j.width,j.height,j.x,j.y,""))
-
+                    if i.name == "herbes":
+                        self.weeds.add(Collisions(j.width, j.height, j.x, j.y, ""))
 
         # On change la zone d'origine du joueur à la zone actuelle
         self.zonearr = map
@@ -93,7 +91,6 @@ class Map:
         # show the map on screen with the player centered
         self.group.center(self.player.pos.get())
         self.group.draw(self.screen.get_display())
-
 
     def get_size(self):
         """
