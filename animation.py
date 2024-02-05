@@ -42,14 +42,14 @@ class Animation:
             current_image = self.player_waking_images_south[self.walking_index]
         return current_image
 
-    def update(self):
+    def update(self, step):
         """
         Fonction qui permet de faire défiler les images pour créer l'animation
         """
         self.current_frame += 1
-        if self.current_frame == self.frame_rate:
+        if self.current_frame >= self.frame_rate:
             self.current_frame = 0
-            if self.walking_index < 10:
-                self.walking_index += 1
+            if self.walking_index < 10-step:
+                self.walking_index += step
             else:
                 self.walking_index = 0

@@ -1,6 +1,7 @@
 import pygame
 from screen import Screen
 from vector import Vector
+from animation import Animation
 
 
 class Player(pygame.sprite.Sprite):
@@ -10,14 +11,14 @@ class Player(pygame.sprite.Sprite):
 
         super().__init__()
 
-        # Image du joueur
-        self.image = pygame.Surface((20, 20))
-        self.image.fill((255, 0, 0))
-
         # Coordonnées du joueur (au centre par défaut)
         # self.x = 300  # self.screen.dimensions[0] // 2
         # self.y = 240  # self.screen.dimensions[1] // 2
         self.pos = Vector(300, 240)
+
+        # On définit les sprites
+        self.animation = Animation()
+        self.image = self.animation.get_current_image()
 
         # Hitbox
         self.rect = self.image.get_rect()
@@ -65,6 +66,7 @@ class Player(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "N"
         elif direction == "S":
             dest = Vector(self.pos.get()[0], self.pos.get()[1] + self.velocity)
 
@@ -72,6 +74,7 @@ class Player(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "S"
         elif direction == "W":
             dest = Vector(self.pos.get()[0] - self.velocity, self.pos.get()[1])
 
@@ -79,6 +82,7 @@ class Player(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "W"
         elif direction == "E":
             dest = Vector(self.pos.get()[0] + self.velocity, self.pos.get()[1])
 
@@ -86,11 +90,18 @@ class Player(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "E"
         self.rect.x, self.rect.y = self.pos.get()
 
     def update(self):
         """
-        Affiche le joueur à l'écran
+        Met à jour l'animation du joueur à l'écran
         """
-        # self.screen.get_display().blit(self.image, self.pos.get())
-        pass
+        if self.is_moving:  # Si le joueur se déplace
+            self.animation.frame_rate = 8
+            self.animation.update(1)
+            self.image = self.animation.get_current_image()
+        else:
+            self.animation.frame_rate = 24
+            self.animation.update(3)
+            self.image = self.animation.get_current_image()

@@ -51,12 +51,14 @@ class Game:
                     self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
                 self.player.move("NE")
                 self.last_move = "NE"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
             elif self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] > 0 and \
                     self.player.pos.get()[0] > 0:
                 self.player.move("NW")
                 self.last_move = "NW"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
 
@@ -65,34 +67,42 @@ class Game:
                 0] * 16 - 30:
                 self.player.move("SE")
                 self.last_move = "SE"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
             elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < \
                     self.map.map_data.map_size[1] * 16 - 30 and self.player.pos.get()[0] > 0:
                 self.player.move("SW")
                 self.last_move = "SW"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
             elif self.pressed.get(pygame.K_UP) and self.player.pos.get()[1] > 0:
                 self.player.move("N")
                 self.last_move = "N"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
             elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.map.map_data.map_size[1] * 16 - 30:
                 self.player.move("S")
                 self.last_move = "S"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
             elif self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[0] > 0:
                 self.player.move("W")
                 self.last_move = "W"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
             elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16:
                 self.player.move("E")
                 self.last_move = "E"
+                self.player.is_moving = True
                 if self.cooldown != 0:
                     self.cooldown -= 1
+            else:
+                self.player.is_moving = False
 
             if self.cooldown == 0:
                 if self.chance_rencontre() is True:
@@ -118,6 +128,9 @@ class Game:
 
             # update map
             self.map.update()
+
+            # update player animation
+            self.player.update()
 
             # update screen
             self.screen.update()
