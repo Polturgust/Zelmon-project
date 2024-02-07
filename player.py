@@ -1,5 +1,6 @@
 import pygame
 
+from screen import Screen
 from vector import Vector
 from animation import Animation
 from spritesheet import SpriteSheet
@@ -10,7 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         # self.screen = screen
 
-        super().__init__()  # On initialise la classe parente
+        super().__init__()
 
         # Coordonnées du joueur (au centre par défaut)
         # self.x = 300  # self.screen.dimensions[0] // 2

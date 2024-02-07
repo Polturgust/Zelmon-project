@@ -45,6 +45,11 @@ class Animation:
                 self.prev_dir = "S"
                 self.walking_index = 0
             current_image = self.walking_south[self.walking_index]
+        elif self.direction is None:
+            if self.prev_dir is not None:
+                self.prev_dir = None
+                self.walking_index = 0
+            current_image = self.idle[self.walking_index]
         return current_image
 
     def update(self, step):
@@ -81,6 +86,11 @@ class Animation:
                     self.walking_index = 0
             elif self.direction == "S":
                 if self.walking_index < len(self.walking_south)-step:
+                    self.walking_index += step
+                else:
+                    self.walking_index = 0
+            elif self.direction is None:
+                if self.walking_index < len(self.idle)-step:
                     self.walking_index += step
                 else:
                     self.walking_index = 0

@@ -16,6 +16,7 @@ class Map:
         self.tmx_data = None  # Contiendra le fichier carte utilisable par pygame
         self.map_layer = None  # Contiendra les données de la couche que l'on affiche
         self.group = None  # Contiendra le groupe de lutins permettant de centrer l'écran sur le joueur
+        self.pnjs = list()  # Groupe qui contiendra tous les personnages non joueurs
         self.map_data = None  # Contiendra les données du fichier carte utilisables par pyscroll
         self.zonearr = None  # Contiendra la zone d'origine du joueur (pour le changement de carte)
         self.changes = None  # Contiendra les collisions
@@ -37,11 +38,13 @@ class Map:
 
         self.group.add(self.player)
 
-        # print(self.tmx_data.objects)
-        # Crée deux groupe de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
+        # Crée deux groupes de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
         self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
         self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        # Crée un groupe qui contient les hautes herbes -> quand un Pokémon sauvage peut apparaître
         self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        # Crée un groupe pour les personnages
+        # self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
@@ -67,17 +70,17 @@ class Map:
                     if i.name == "points_de_spawn":
                         print(self.zonearr, j.name)
                         # Si le nom correspond à la zone d'où vient le joueur, on déplace le joueur vers cette zone
-                        if self.zonearr != None and self.zonearr in j.name:
+                        if self.zonearr is not None and self.zonearr in j.name:
                             self.player.rect.x, self.player.rect.y = j.x, j.y
                             self.player.pos = Vector(j.x, j.y)
-                            self.player.move("S")
                             self.player.move("N")
+                            self.player.move("S")
                         # Sinon, si le joueur ne vient de nulle part (ex après avoir chargé une sauvegarde), on le place à l'endroit d'apparition par défaut
-                        elif self.zonearr == None and j.name == "spawn_default":
+                        elif self.zonearr is None and j.name == "spawn_default":
                             self.player.rect.x, self.player.rect.y = j.x, j.y
                             self.player.pos = Vector(j.x, j.y)
-                            self.player.move("S")
                             self.player.move("N")
+                            self.player.move("S")
 
                     if i.name == "herbes":
                         self.weeds.add(Collisions(j.width, j.height, j.x, j.y, ""))
@@ -86,6 +89,21 @@ class Map:
         self.zonearr = map
         # On centre le groupe du joueur sur le joueur
         self.group.center(self.player.pos.get())
+
+    def add_pnj(self, pnj):
+        """
+        Fonction qui permet d'ajouter un PNJ au groupe pnjs afin de l'afficher à l'écran
+
+        Pré-conditions:
+            pnj est une instance de PNJ ou d'une de ses classes filles
+        Post-conditions:
+            le pnj a bien été ajouté au groupe et sera affiché lors du prochain appel de la fonction update
+        """
+        self.group.add(pnj)
+        pnj.move("N")
+        pnj.move("S")
+        self.pnjs.append(pnj)
+        print("pnj ajouté")
 
     def update(self):
         # show the map on screen with the player centered

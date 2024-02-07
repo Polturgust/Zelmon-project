@@ -359,10 +359,10 @@
   <object id="69" name="bol_de_nourriture" x="146.125" y="179.188" width="12" height="12.1875"/>
  </objectgroup>
  <objectgroup id="11" name="changements_de_map">
-  <object id="13" name="vers_route0" x="0.125" y="212" width="46.875" height="66.5"/>
+  <object id="13" name="vers_route0" x="0.125" y="212" width="32.375" height="66.5"/>
  </objectgroup>
  <objectgroup id="12" name="points_de_spawn">
-  <object id="16" name="depuis_route0" x="64" y="240" width="16" height="16"/>
+  <object id="16" name="depuis_route0" x="48" y="240" width="16" height="16"/>
   <object id="75" name="spawn_default" x="400" y="240" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="14" name="bords_map">

@@ -6,6 +6,9 @@ from map import Map
 from player import Player
 from vector import Vector
 from combat import Combat
+from animation import Animation
+from spritesheet import SpriteSheet
+from pnj import *
 
 
 class Game:
@@ -18,6 +21,9 @@ class Game:
         self.player = Player(self)
         # initialise the screen
         self.map = Map(self.screen, self.player)
+
+        # On tente de créer un chat
+        self.map.add_pnj(GreyCat(self, 290, 240))
 
         # On initialise les variables pour le mouvement du joueur :
         # Son dernier mouvement (qui par défaut est un déplacement vers la droite)
@@ -135,6 +141,10 @@ class Game:
 
             # update player animation
             self.player.update()
+
+            # update pnjs animation
+            for pnj in self.map.pnjs:
+                pnj.get_current_frame()
 
             # update screen
             self.screen.update()

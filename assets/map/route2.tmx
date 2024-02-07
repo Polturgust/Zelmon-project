@@ -4096,14 +4096,14 @@
   <object id="73" name="bloqueur6" x="1216" y="224" width="16" height="32"/>
  </objectgroup>
  <objectgroup id="175" name="changements_de_map">
-  <object id="1" name="vers_route1" x="0" y="320" width="79.6666" height="176"/>
-  <object id="6" name="vers_ville2" x="1312" y="0" width="176" height="62.3333"/>
-  <object id="9" name="vers_grotte_de_lumière" x="192" y="0" width="80" height="62"/>
+  <object id="1" name="vers_route1" x="0" y="320" width="29.9999" height="176"/>
+  <object id="6" name="vers_ville2" x="1312" y="0" width="176" height="30.3333"/>
+  <object id="9" name="vers_grotte_de_lumière" x="192" y="0" width="80" height="30.3333"/>
  </objectgroup>
  <objectgroup id="176" name="points_de_spawn">
-  <object id="5" name="depuis_route1" x="96" y="400" width="16" height="16"/>
-  <object id="8" name="depuis_ville2" x="1384" y="80" width="16" height="16"/>
-  <object id="10" name="depuis_grotte_de_lumière" x="224" y="80" width="16" height="16"/>
+  <object id="5" name="depuis_route1" x="48" y="400" width="16" height="16"/>
+  <object id="8" name="depuis_ville2" x="1384" y="48.6667" width="16" height="16"/>
+  <object id="10" name="depuis_grotte_de_lumière" x="224" y="48" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="187" name="arbre_coupable">
   <object id="11" name="arbre_coupable" x="496.02" y="284.244" width="16.0313" height="22.25"/>
