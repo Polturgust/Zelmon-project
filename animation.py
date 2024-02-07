@@ -1,13 +1,11 @@
 import pygame
 
-from spritesheet import SpriteSheet
-
 
 class Animation:
     def __init__(self, walking_north=None, walking_south=None, walking_west=None, walking_east=None, idle=None):
         self.prev_dir = None  # Direction du dernier mouvement. Permet de savoir si le joueur à changé de direction
         self.direction = "S"  # par défaut le joueur regarde vers le bas (permet au joueur de voir son visage -> position neutre)
-        self.frame_rate = 8  # l'animation change toutes les 8 frames
+        self.frame_interval = 8  # l'animation change toutes les 8 frames
         self.current_frame = 0
         self.walking_north = walking_north
         self.walking_south = walking_south
@@ -54,7 +52,7 @@ class Animation:
         Fonction qui permet de faire défiler les images pour créer l'animation
         """
         self.current_frame += 1
-        if self.current_frame >= self.frame_rate:
+        if self.current_frame >= self.frame_interval:
             self.current_frame = 0
             if self.direction == "E" and self.walking_east is not None:
                 if self.walking_index < len(self.walking_east)-step:

@@ -19,8 +19,8 @@ class Player(pygame.sprite.Sprite):
         self.pos = Vector(300, 240)
 
         # On définit les sprites
-        self.animation = Animation(SpriteSheet("assets/Spritesheets/Walking-North_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Walking-South_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Walking-West_Link.png").images(1, 10))
-        self.image = pygame.image.load("assets/Spritesheets/Idle-South_Link.png").convert_alpha()
+        self.animation = Animation(SpriteSheet("assets/Spritesheets/Link/Walking-North_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Link/Walking-South_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Link/Walking-West_Link.png").images(1, 10))
+        self.image = pygame.image.load("assets/Spritesheets/Link/Idle-South_Link.png").convert_alpha()
 
         # Hitbox
         self.rect = self.image.get_rect()
@@ -104,10 +104,10 @@ class Player(pygame.sprite.Sprite):
             self.image = self.animation.get_current_image()
         else:
             if self.animation.direction == "N":
-                self.image = pygame.image.load("assets/Spritesheets/Idle-North_Link.png")
+                self.image = pygame.image.load("assets/Spritesheets/Link/Idle-North_Link.png")
             elif self.animation.direction == "E":
-                self.image = pygame.transform.flip(pygame.image.load("assets/Spritesheets/Idle-West_Link.png"), True, False)
+                self.image = pygame.transform.flip(pygame.image.load("assets/Spritesheets/Link/Idle-West_Link.png"), True, False)
             elif self.animation.direction == "S":
-                self.image = pygame.image.load("assets/Spritesheets/Idle-South_Link.png")
+                self.image = pygame.image.load("assets/Spritesheets/Link/Idle-South_Link.png")
             elif self.animation.direction == "W":
-                self.image = pygame.image.load("assets/Spritesheets/Idle-West_Link.png")
+                self.image = pygame.image.load("assets/Spritesheets/Link/Idle-West_Link.png")
