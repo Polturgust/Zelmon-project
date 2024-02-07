@@ -10,7 +10,7 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         # self.screen = screen
 
-        super().__init__()
+        super().__init__()  # On initialise la classe parente
 
         # Coordonnées du joueur (au centre par défaut)
         # self.x = 300  # self.screen.dimensions[0] // 2
