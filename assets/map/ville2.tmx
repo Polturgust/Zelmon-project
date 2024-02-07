@@ -6530,12 +6530,12 @@
   <object id="6" name="left" x="0" y="0" height="1120"/>
  </objectgroup>
  <objectgroup id="66" name="changements_de_map">
-  <object id="7" name="vers_route3" x="0" y="320" width="61.5" height="152"/>
-  <object id="8" name="vers_route2" x="480" y="1058.25" width="176" height="61.75"/>
+  <object id="7" name="vers_route3" x="0" y="320" width="31.5" height="152"/>
+  <object id="8" name="vers_route2" x="480" y="1089.25" width="176" height="30.75"/>
  </objectgroup>
  <objectgroup id="67" name="points_de_spawn">
-  <object id="9" name="depuis_route3" x="80" y="400" width="16" height="16"/>
+  <object id="9" name="depuis_route3" x="48" y="400" width="16" height="16"/>
   <object id="103" name="default_spawn" x="400" y="336" width="16" height="16"/>
-  <object id="104" name="depuis_route3" x="552.208" y="1039.9" width="16" height="16"/>
+  <object id="104" name="depuis_route3" x="551" y="1056" width="16" height="16"/>
  </objectgroup>
 </map>
