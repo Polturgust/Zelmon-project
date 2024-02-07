@@ -1482,12 +1482,12 @@
 </data>
  </layer>
  <objectgroup id="35" name="changements_de_map">
-  <object id="2" name="vers_route?" x="320" y="896" width="176" height="64"/>
-  <object id="3" name="vers_route?1" x="656" y="0" width="240" height="64"/>
+  <object id="2" name="vers_route?" x="320" y="929" width="176" height="31"/>
+  <object id="3" name="vers_route?1" x="656" y="0" width="240" height="31"/>
  </objectgroup>
  <objectgroup id="36" name="points_de_spawn">
-  <object id="4" name="depusi_route?" x="400" y="864" width="16" height="16"/>
-  <object id="5" name="depuis_route?1" x="720" y="80" width="16" height="16"/>
+  <object id="4" name="depuis_route?" x="400" y="896" width="16" height="16"/>
+  <object id="5" name="depuis_route?1" x="720" y="48" width="16" height="16"/>
   <object id="6" name="spawn_default" x="520" y="304" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="37" name="portes">
