@@ -1,6 +1,5 @@
 import pygame
 
-from screen import Screen
 from vector import Vector
 from animation import Animation
 from spritesheet import SpriteSheet
