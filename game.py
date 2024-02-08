@@ -143,8 +143,9 @@ class Game:
             self.player.update()
 
             # update pnjs animation
-            for pnj in self.map.pnjs:
+            for pnj in self.map.pnjs_list:
                 pnj.get_current_frame()
+                self.screen.get_display().blit(pnj.image, pnj.pos.get())
 
             # update screen
             self.screen.update()

@@ -16,7 +16,8 @@ class Map:
         self.tmx_data = None  # Contiendra le fichier carte utilisable par pygame
         self.map_layer = None  # Contiendra les données de la couche que l'on affiche
         self.group = None  # Contiendra le groupe de lutins permettant de centrer l'écran sur le joueur
-        self.pnjs = list()  # Groupe qui contiendra tous les personnages non joueurs
+        self.pnjs = None  # Groupe qui contiendra tous les personnages non joueurs
+        self.pnjs_list = list()
         self.map_data = None  # Contiendra les données du fichier carte utilisables par pyscroll
         self.zonearr = None  # Contiendra la zone d'origine du joueur (pour le changement de carte)
         self.changes = None  # Contiendra les collisions
@@ -44,7 +45,7 @@ class Map:
         # Crée un groupe qui contient les hautes herbes -> quand un Pokémon sauvage peut apparaître
         self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
         # Crée un groupe pour les personnages
-        # self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
@@ -99,10 +100,10 @@ class Map:
         Post-conditions:
             le pnj a bien été ajouté au groupe et sera affiché lors du prochain appel de la fonction update
         """
-        self.group.add(pnj)
+        self.pnjs.add(pnj)
         pnj.move("N")
         pnj.move("S")
-        self.pnjs.append(pnj)
+        self.pnjs_list.append(pnj)
         print("pnj ajouté")
 
     def update(self):
