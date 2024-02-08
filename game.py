@@ -4,10 +4,7 @@ from random import randint
 from screen import Screen
 from map import Map
 from player import Player
-from vector import Vector
 from combat import Combat
-from animation import Animation
-from spritesheet import SpriteSheet
 from pnj import *
 
 
@@ -23,7 +20,7 @@ class Game:
         self.map = Map(self.screen, self.player)
 
         # On tente de créer un chat
-        self.map.add_pnj(GreyCat(self, 290, 240))
+        self.map.add_pnj(GreyCat(self, 200, 240))
 
         # On initialise les variables pour le mouvement du joueur :
         # Son dernier mouvement (qui par défaut est un déplacement vers la droite)
@@ -145,7 +142,7 @@ class Game:
             # update pnjs animation
             for pnj in self.map.pnjs_list:
                 pnj.get_current_frame()
-                self.screen.get_display().blit(pnj.image, pnj.pos.get())
+                # self.screen.get_display().blit(pnj.image, pnj.pos.get())
 
             # update screen
             self.screen.update()

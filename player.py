@@ -1,6 +1,5 @@
 import pygame
 
-from screen import Screen
 from vector import Vector
 from animation import Animation
 from spritesheet import SpriteSheet
@@ -9,7 +8,6 @@ from spritesheet import SpriteSheet
 class Player(pygame.sprite.Sprite):
     def __init__(self, game):
         self.game = game
-        # self.screen = screen
 
         super().__init__()
 

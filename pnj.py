@@ -9,6 +9,7 @@ from spritesheet import SpriteSheet
 class PNJ(pygame.sprite.Sprite):
     def __init__(self, game):
         self.game = game
+
         super().__init__()
 
         self.velocity = None
@@ -98,9 +99,10 @@ class GreyCat(PNJ):
         # On définit ses animations
         self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/chat/grey_walking_west.png").images(1, 8))
         self.animation.direction = None
+        self.animation.frame_interval = 24
 
-        # On récupère son image
-        self.image = SpriteSheet("assets/Spritesheets/chat/grey_walking_west.png").images(1, 8)[0]
+        # On récupère son image de base
+        self.image = pygame.image.load("assets/Spritesheets/chat/grey_walking_west_single.png").convert_alpha()
 
         # On définit sa hitbox
         self.rect = self.image.get_rect()

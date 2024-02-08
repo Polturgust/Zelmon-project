@@ -34,7 +34,7 @@ class Map:
         # render the mapdata
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
-        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=2)
         self.map_layer._x_offset = 240
 
         self.group.add(self.player)
@@ -100,7 +100,7 @@ class Map:
         Post-conditions:
             le pnj a bien été ajouté au groupe et sera affiché lors du prochain appel de la fonction update
         """
-        self.pnjs.add(pnj)
+        self.group.add(pnj)
         pnj.move("N")
         pnj.move("S")
         self.pnjs_list.append(pnj)
