@@ -96,11 +96,11 @@ class GreyCat(PNJ):
         self.velocity = 1
 
         # On définit ses animations
-        self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/chat/grey_idle.png").images(1, 8))
+        self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/chat/grey_walking_west.png").images(1, 8))
         self.animation.direction = None
 
         # On récupère son image
-        self.image = SpriteSheet("assets/Spritesheets/chat/grey_idle.png").images(1, 8)[0]
+        self.image = SpriteSheet("assets/Spritesheets/chat/grey_walking_west.png").images(1, 8)[0]
 
         # On définit sa hitbox
         self.rect = self.image.get_rect()
