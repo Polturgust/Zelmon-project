@@ -12,7 +12,7 @@ class Screen:
         self.dimensions = (600, 480)
         self.display = pygame.display.set_mode(self.dimensions)
         # set the display's name
-        pygame.display.set_caption("Zelmon")
+        pygame.display.set_caption("The Legend of Pokémon: Zelda's corruption")
         # creates a clock
         self.clock = pygame.time.Clock()
         # sets framerate to 120

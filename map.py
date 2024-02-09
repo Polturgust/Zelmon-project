@@ -101,8 +101,10 @@ class Map:
             le pnj a bien été ajouté au groupe et sera affiché lors du prochain appel de la fonction update
         """
         self.group.add(pnj)
+        base_direction = pnj.animation.direction
         pnj.move("N")
         pnj.move("S")
+        pnj.animation.direction = base_direction
         self.pnjs_list.append(pnj)
         print("pnj ajouté")
 

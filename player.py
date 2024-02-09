@@ -11,9 +11,7 @@ class Player(pygame.sprite.Sprite):
 
         super().__init__()
 
-        # Coordonnées du joueur (au centre par défaut)
-        # self.x = 300  # self.screen.dimensions[0] // 2
-        # self.y = 240  # self.screen.dimensions[1] // 2
+        # Coordonnées du joueur (au centre de l'écran par défaut)
         self.pos = Vector(300, 240)
 
         # On définit les sprites
@@ -30,6 +28,11 @@ class Player(pygame.sprite.Sprite):
     def move(self, direction):
         """
         Permet au joueur de se déplacer dans la direction voulue
+
+        Pré-condition :
+            direction est une chaîne de caractères parmi (N, NE, E, SE, S, SW, W, NW)
+        Post-conditions :
+            Le PNJ se déplace dans la direction voulue
         """
         if direction == "NE":
             dest = Vector(self.pos.get()[0] + self.velocity, self.pos.get()[1] - self.velocity)
@@ -95,7 +98,9 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         """
-        Met à jour l'animation du joueur à l'écran
+        Met à jour l'animation du joueur à l'écran selon son état :
+            - Si le joueur ne marche pas, on définit une image statique selon la direction de son dernier déplacement
+            - Si le joueur bouge, on fait appel à la classe Animation pour faire défiler la Spritesheet correspondant à la direction du mouvement
         """
         if self.is_moving:  # Si le joueur se déplace
             self.animation.update(1)

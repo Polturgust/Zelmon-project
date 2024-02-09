@@ -5,19 +5,27 @@ from animation import Animation
 from spritesheet import SpriteSheet
 
 
-# On crée une classe PNJ qui sert de "moule" commun à tous nos PNJs. Une "super classe".
 class PNJ(pygame.sprite.Sprite):
     def __init__(self, game):
         self.game = game
 
         super().__init__()
 
-        self.velocity = None
-        self.pos = None
+        # Coordonnées du joueur (au centre par défaut)
+        self.pos = Vector(200, 220)
+
+        # Autres attributs
+        self.velocity = 1
+        self.is_moving = False
 
     def move(self, direction):
         """
-        Fonction qui permet aux PNJs de se déplacer dans la direction voulue, au même titre que le joueur
+        Permet au PNJ de se déplacer dans la direction voulue au même titre que le joueur
+
+        Pré-condition :
+            direction est une chaîne de caractères parmi (N, NE, E, SE, S, SW, W, NW)
+        Post-conditions :
+            Le PNJ se déplace dans la direction voulue
         """
         if direction == "NE":
             dest = Vector(self.pos.get()[0] + self.velocity, self.pos.get()[1] - self.velocity)
@@ -54,6 +62,7 @@ class PNJ(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "N"
         elif direction == "S":
             dest = Vector(self.pos.get()[0], self.pos.get()[1] + self.velocity)
 
@@ -61,6 +70,7 @@ class PNJ(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "S"
         elif direction == "W":
             dest = Vector(self.pos.get()[0] - self.velocity, self.pos.get()[1])
 
@@ -68,6 +78,7 @@ class PNJ(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "W"
         elif direction == "E":
             dest = Vector(self.pos.get()[0] + self.velocity, self.pos.get()[1])
 
@@ -75,40 +86,33 @@ class PNJ(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
+            self.animation.direction = "E"
+        self.rect.x, self.rect.y = self.pos.get()
 
-    def update(self, animation, step):
+    def update(self):
         """
-        Fonction qui met à jour l'animation du PNJ à l'écran
+        Met à jour l'animation du PNJ à l'écran an faisant appel à la classe Animation pour faire défiler la Spritesheet
+
+        Post-condition :
+            self.image contient désormais la nouvelle image à afficher
         """
-        animation.update(step)
-        return animation.get_current_image()
+        self.animation.update(1)
+        self.image = self.animation.get_current_image()
 
 
-# On crée une classe enfant qui est spécifique aux chats et qui dépend de la classe PNJ.
 class GreyCat(PNJ):
     def __init__(self, game, x, y):
-        self.game = game
-        super().__init__(self.game)
-
-        # On définit l'emplacement du chat
+        # Coordonnées du joueur (au centre par défaut)
+        super().__init__(game)
         self.pos = Vector(x, y)
-
-        # On définit la vitesse des chats
-        self.velocity = 1
 
         # On définit ses animations
         self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/chat/grey_walking_west.png").images(1, 8))
-        self.animation.direction = None
         self.animation.frame_interval = 24
+        self.animation.direction = None
 
         # On récupère son image de base
         self.image = pygame.image.load("assets/Spritesheets/chat/grey_walking_west_single.png").convert_alpha()
 
-        # On définit sa hitbox
         self.rect = self.image.get_rect()
 
-    def get_current_frame(self):
-        """
-        Fonction qui appelle la méthode update de la superclasse PNJ pour récupérer la nouvelle image
-        """
-        self.image = self.update(self.animation, 1)

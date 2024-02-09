@@ -20,7 +20,7 @@ class Game:
         self.map = Map(self.screen, self.player)
 
         # On tente de créer un chat
-        self.map.add_pnj(GreyCat(self, 200, 240))
+        self.map.add_pnj(GreyCat(self, 200, 220))
 
         # On initialise les variables pour le mouvement du joueur :
         # Son dernier mouvement (qui par défaut est un déplacement vers la droite)
@@ -43,8 +43,7 @@ class Game:
                 elif event.type == pygame.KEYDOWN:  # Si une touche est pressée, on l'ajoute au dictionnaire des touches pressées
                     self.pressed[event.key] = True
                 elif event.type == pygame.KEYUP:
-                    self.pressed[
-                        event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
+                    self.pressed[event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
 
             # Checking currently pressed keys and doing the according actions
 
@@ -141,8 +140,7 @@ class Game:
 
             # update pnjs animation
             for pnj in self.map.pnjs_list:
-                pnj.get_current_frame()
-                # self.screen.get_display().blit(pnj.image, pnj.pos.get())
+                pnj.update()
 
             # update screen
             self.screen.update()
