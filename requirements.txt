@@ -1,0 +1,3 @@
+Pour lancer ce projet, il vous faut:
+	- Un interpreteur python 3.9 ou plus
+	- Les modules pygame, pytmx, pyscroll et sqlite3
