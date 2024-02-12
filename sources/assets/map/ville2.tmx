@@ -6536,6 +6536,6 @@
  <objectgroup id="67" name="points_de_spawn">
   <object id="9" name="depuis_route3" x="48" y="400" width="16" height="16"/>
   <object id="103" name="spawn_default" x="400" y="336" width="16" height="16"/>
-  <object id="104" name="depuis_route3" x="551" y="1056" width="16" height="16"/>
+  <object id="104" name="depuis_route2" x="551" y="1056" width="16" height="16"/>
  </objectgroup>
 </map>
