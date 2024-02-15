@@ -40,12 +40,12 @@ class Map:
         self.group.add(self.player)
 
         # Crée deux groupes de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
-        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
-        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
+        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
         # Crée un groupe qui contient les hautes herbes -> quand un Pokémon sauvage peut apparaître
-        self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
         # Crée un groupe pour les personnages
-        self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=4)
+        self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
