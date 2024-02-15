@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
 
         # Hitbox
         self.rect = self.image.get_rect()
+        self.rect.inflate_ip(-16, 0)  # On réduit la taille de la hitbox du joueur pour résoudre le problème lié aux pixels entre deux frames
 
         # Autres attributs
         self.velocity = 1
