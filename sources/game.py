@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+from moviepy.editor import VideoFileClip
 
 from screen import Screen
 from map import Map
@@ -34,6 +35,10 @@ class Game:
         self.cooldown = 0
 
     def run(self):
+        # Lance la vidéo d'introduction au lancement du jeu --> appuyer sur Esc permet d'interrompre la vidéo
+        clip = VideoFileClip("assets/videos/Pokemon Heart Gold  Opening US_480p.mp4").resize((600, 480))
+        clip.preview()
+
         # Tant que le jeu tourne :
         while self.running:
             # On récupère toutes les actions de l'utilisateur

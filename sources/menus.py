@@ -2,11 +2,13 @@ import pygame
 
 
 class Menus:
-    def __init__(self, screen, map):
+    def __init__(self, screen, map, origin):
         self.screen = screen
         self.map = map
         self.running = True
         self.pressed = {}
+
+        # ---- On crée les boutons du menu ---- #
 
     def update(self):
         while self.running:
