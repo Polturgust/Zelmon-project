@@ -24,7 +24,7 @@ class Map:
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
         # Lance le jeu sur la carte donnée (sera adapté plus tard)
-        self.switch_map("ville0")
+        self.switch_map("route3")
 
     def switch_map(self, map):
         # load the wanted map
@@ -34,7 +34,7 @@ class Map:
         # render the mapdata
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
-        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=2)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
         self.map_layer._x_offset = 240
 
         self.group.add(self.player)
