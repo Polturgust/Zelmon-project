@@ -524,12 +524,12 @@
  </objectgroup>
  <objectgroup id="11" name="changements_de_map">
   <object id="13" name="vers_route0" x="0.125" y="212" width="32.375" height="66.5"/>
-  <object id="80" name="vers_interrieur0_ville0_maison0" x="144" y="320.969" width="16" height="22.1051"/>
+  <object id="80" name="vers_interieur0_ville0_maison0" x="144" y="320.969" width="16" height="22.1051"/>
  </objectgroup>
  <objectgroup id="12" name="points_de_spawn">
   <object id="16" name="depuis_route0" x="48" y="240" width="16" height="16"/>
   <object id="75" name="spawn_default" x="400" y="240" width="16" height="16"/>
-  <object id="83" name="depuis_interrieur0_ville0_maison0" x="144" y="352" width="16" height="16"/>
+  <object id="83" name="depuis_interieur0_ville0_maison0" x="144" y="352" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="14" name="bords_map">
   <object id="76" name="haut" x="0" y="0" width="800"/>

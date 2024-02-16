@@ -66,10 +66,10 @@ class Map:
                         elif j.name != None and "vers_ville" in j.name:
                             dest = j.name.split("vers_ville")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "ville" + dest[1]))
-                        elif j.name != None and "vers_interrieur" in j.name:
-                            dest = j.name.split("vers_interrieur")
-                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interrieur" + dest[1]))
-                            print(self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interrieur" + dest[1])))
+                        elif j.name != None and "vers_interieur" in j.name:
+                            dest = j.name.split("vers_interieur")
+                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur" + dest[1]))
+                            print(self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur" + dest[1])))
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
                     if i.name == "points_de_spawn":
