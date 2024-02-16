@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="24" nextobjectid="89">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="24" nextobjectid="104">
  <tileset firstgid="1" source="tileset/just_grass.tsx"/>
  <tileset firstgid="2" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21002" source="tileset/literally_everything.tsx"/>
@@ -787,37 +787,46 @@
   <object id="43" name="lac9" x="464" y="560" width="32" height="48"/>
   <object id="44" name="lac10" x="464" y="544" width="16" height="16"/>
   <object id="45" name="banc" x="480.813" y="528" width="13.1875" height="32"/>
-  <object id="47" name="maison3" x="559.636" y="519.606" width="64.1818" height="55.4849"/>
+  <object id="47" name="maison3" x="559.636" y="519.606" width="64.1818" height="39.3599"/>
   <object id="48" name="boite_aux_lettres" x="544" y="544" width="16" height="28.5455"/>
   <object id="49" name="maison0_1" x="187.818" y="176.102" width="52.1818" height="79.8977"/>
-  <object id="50" name="maison0_0" x="146.909" y="176.102" width="40.7273" height="63.3523"/>
+  <object id="50" name="maison0_0" x="150" y="176.102" width="37.6364" height="45.8068"/>
   <object id="51" name="pot_de_fleurs" x="192.182" y="252.182" width="32" height="16.7273"/>
-  <object id="52" name="pokemart" x="387.75" y="191.875" width="66" height="64.125"/>
-  <object id="54" name="pokecenter0" x="506.125" y="177.25" width="27.875" height="79"/>
-  <object id="55" name="pokecenter1" x="480.75" y="177.125" width="78.125" height="68"/>
+  <object id="52" name="pokemart" x="387.75" y="191.875" width="66" height="63.0341"/>
+  <object id="55" name="pokecenter" x="480.75" y="177.125" width="78.125" height="68"/>
   <object id="56" name="signe_mart" x="367.818" y="236.807" width="16.0909" height="15.1023"/>
   <object id="57" name="signe_centre" x="559.818" y="235.193" width="16.0909" height="16.8977"/>
-  <object id="58" name="maison1" x="304.182" y="399.841" width="63.8182" height="64.1591"/>
-  <object id="59" name="maison2" x="160.432" y="506" width="63.5682" height="70"/>
+  <object id="58" name="maison1" x="304.182" y="399.841" width="63.8182" height="46.9773"/>
+  <object id="59" name="maison2" x="160.432" y="506" width="63.5682" height="54"/>
   <object id="61" name="pot_vert1" x="368" y="448" width="16" height="16"/>
   <object id="62" name="pot_vert0" x="288" y="448" width="16" height="16"/>
   <object id="72" name="barrieres1" x="688" y="256" width="96" height="16"/>
   <object id="73" name="barrieres0" x="688" y="320" width="96" height="16"/>
+  <object id="91" name="maison1_1" x="306" y="446.844" width="12" height="16.0938"/>
+  <object id="92" name="maison1_0" x="337.938" y="446.781" width="28.0938" height="16.1875"/>
+  <object id="93" name="maison2_1" x="193.957" y="560.043" width="28.087" height="15.9565"/>
+  <object id="94" name="maison2_0" x="162" y="560.043" width="11.9565" height="15.913"/>
+  <object id="97" name="maison3_0" x="561.957" y="558.957" width="11.8125" height="15.875"/>
+  <object id="98" name="maison3_1" x="593.957" y="559.02" width="27.875" height="15.8125"/>
+  <object id="99" name="maison0_2" x="150.091" y="222" width="8.81818" height="16"/>
+  <object id="100" name="maison0_3" x="177" y="221.909" width="10.8182" height="16.0909"/>
  </objectgroup>
  <objectgroup id="11" name="changements_de_map">
   <object id="11" name="vers_route0" x="768.508" y="244.5" width="30.9924" height="97.5"/>
   <object id="13" name="vers_route1" x="0" y="272" width="31.25" height="208"/>
-  <object id="86" name="vers_interieur_simple2" x="318.031" y="446.844" width="19.9091" height="20.5336"/>
-  <object id="87" name="vers_interieur_simple3" x="174.031" y="560.026" width="19.9091" height="18.8844"/>
-  <object id="88" name="vers_interieur_simple4" x="573.906" y="558.992" width="20" height="19.7283"/>
+  <object id="86" name="vers_interieur_simple2" x="318.031" y="446.844" width="19.9091" height="17.1595"/>
+  <object id="87" name="vers_interieur_simple3" x="174.031" y="560.026" width="19.9091" height="16.3219"/>
+  <object id="88" name="vers_interieur_simple4" x="573.906" y="558.992" width="20" height="17.0136"/>
+  <object id="101" name="vers_interieur_grand0" x="159" y="221.909" width="17.9091" height="19.9091"/>
  </objectgroup>
  <objectgroup id="12" name="points_de_spawn">
   <object id="15" name="depuis_route1" x="48" y="368" width="16" height="16"/>
   <object id="64" name="spawn_default" x="512" y="272" width="16" height="16"/>
   <object id="71" name="depuis_route0" x="736" y="288" width="16" height="16"/>
-  <object id="83" name="depuis_interieur_simple2" x="320" y="480" width="16" height="16"/>
-  <object id="84" name="depuis_interieur_simple3" x="176" y="592" width="16" height="16"/>
-  <object id="85" name="depuis_interieur_simple4" x="576" y="592" width="16" height="16"/>
+  <object id="83" name="depuis_interieur_simple2" x="314" y="467" width="16" height="16"/>
+  <object id="84" name="depuis_interieur_simple3" x="170" y="580" width="16" height="16"/>
+  <object id="85" name="depuis_interieur_simple4" x="570" y="579" width="16" height="16"/>
+  <object id="103" name="depuis_interieur_grand0" x="154" y="250" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="15" name="bords_map">
   <object id="74" name="haut" x="0" y="0" width="800"/>
