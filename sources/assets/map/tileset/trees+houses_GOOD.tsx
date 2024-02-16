@@ -11624,11 +11624,7 @@
  <tile id="11595"/>
  <tile id="11596"/>
  <tile id="11597"/>
- <tile id="11598">
-  <objectgroup draworder="index" id="2">
-   <object id="2" x="-0.0434783" y="0.0434783" width="2.04348" height="13.8261"/>
-  </objectgroup>
- </tile>
+ <tile id="11598"/>
  <tile id="11599"/>
  <tile id="11600"/>
  <tile id="11601"/>

@@ -84,8 +84,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,1160,0,0,0,0,0,
-0,0,0,0,1215,1238,1236,1237,0,0,0,1265,1216,1183,1184,0,0,0,0,
-0,0,0,0,1223,1246,1244,1245,0,0,0,1273,1224,1191,1192,0,0,0,0,
+0,0,0,0,1238,1236,1237,1215,0,0,0,1183,1184,1265,1216,0,0,0,0,
+0,0,0,0,1246,1244,1245,1223,0,0,0,1191,1192,1273,1224,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1201,1202,1178,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,1284,1209,1210,1186,1281,0,0,0,0,0,
@@ -103,10 +103,10 @@
   <object id="5" name="chaise3" x="208.938" y="150.301" width="14" height="9.71072"/>
   <object id="6" name="chaise0" x="145.125" y="134.008" width="13.875" height="9.55188"/>
   <object id="7" name="chaise2" x="145" y="149.917" width="14" height="9.71072"/>
-  <object id="8" name="biblioteque1" x="208.938" y="67.125" width="30" height="28.5625"/>
-  <object id="9" name="biblioteque0" x="192.938" y="67.25" width="15.0625" height="28.75"/>
-  <object id="10" name="plante" x="178.063" y="78.938" width="11.9375" height="16.0625"/>
-  <object id="11" name="cuisine" x="65.0289" y="79" width="60.9716" height="16.0341"/>
+  <object id="8" name="biblioteque1" x="176.938" y="67.125" width="30" height="28.5625"/>
+  <object id="9" name="biblioteque0" x="223.938" y="67.25" width="15.0625" height="28.75"/>
+  <object id="10" name="plante" x="210.063" y="78.938" width="11.9375" height="16.0625"/>
+  <object id="11" name="cuisine" x="65.0289" y="79" width="62.9716" height="16.9906"/>
   <object id="13" name="mur" x="63.6364" y="48" width="176.364" height="32"/>
   <object id="15" name="dehors_map3" x="0" y="192" width="304" height="48"/>
   <object id="16" name="dehors_map0" x="0" y="0" width="304" height="48"/>
@@ -117,7 +117,7 @@
   <object id="19" name="vers_ville0" x="98.875" y="180.75" width="25.906" height="11.0313"/>
  </objectgroup>
  <objectgroup id="12" name="points_de_spawn">
-  <object id="1" name="spawn_default" x="96" y="144" width="16" height="16"/>
-  <object id="20" name="depuis_ville0" x="96" y="144" width="16" height="16"/>
+  <object id="1" name="spawn_default" x="96" y="152" width="16" height="16"/>
+  <object id="20" name="depuis_ville0" x="96" y="152" width="16" height="16"/>
  </objectgroup>
 </map>
