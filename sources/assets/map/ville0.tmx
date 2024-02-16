@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="80">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="84">
  <tileset firstgid="1" source="tileset/just_grass.tsx"/>
  <tileset firstgid="2" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21002" source="tileset/literally_everything.tsx"/>
@@ -517,12 +517,6 @@
   <object id="73" name="collision_boite_aux_lettres_proffesseur" x="175.938" y="176.688" width="12.0625" height="28.75"/>
   <object id="74" name="collision_boite_aux_lettres_mc" x="528.125" y="128.602" width="15" height="28.2727"/>
  </objectgroup>
- <objectgroup id="9" name="portes">
-  <object id="2" name="porte_mc" x="558.667" y="142.667" width="18" height="19"/>
-  <object id="3" name="porte_prof" x="206.333" y="191.667" width="19" height="17.3333"/>
-  <object id="4" name="porte0" x="144.333" y="320.333" width="15" height="17.3333"/>
-  <object id="6" name="porte1" x="416.333" y="368.333" width="15" height="16"/>
- </objectgroup>
  <objectgroup id="10" name="boites_aux_lettres">
   <object id="8" name="boite_aux_lettres_mc" x="528.333" y="128.685" width="15" height="28.6477"/>
   <object id="11" name="boite_aux_lettres_proffesseur" x="176" y="176.667" width="12" height="28.6667"/>
@@ -530,10 +524,12 @@
  </objectgroup>
  <objectgroup id="11" name="changements_de_map">
   <object id="13" name="vers_route0" x="0.125" y="212" width="32.375" height="66.5"/>
+  <object id="80" name="vers_interrieur0_ville0_maison0" x="144" y="320.969" width="16" height="22.1051"/>
  </objectgroup>
  <objectgroup id="12" name="points_de_spawn">
   <object id="16" name="depuis_route0" x="48" y="240" width="16" height="16"/>
   <object id="75" name="spawn_default" x="400" y="240" width="16" height="16"/>
+  <object id="83" name="depuis_interrieur0_ville0_maison0" x="144" y="352" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="14" name="bords_map">
   <object id="76" name="haut" x="0" y="0" width="800"/>
