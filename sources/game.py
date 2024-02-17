@@ -71,7 +71,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:  # On ferme le jeu si l'utilisateur ferme la fenêtre
                     self.running = False
-                elif event.type == pygame.KEYDOWN and self.playing is False:  # Dans le menu de sélection de lancement, on n'ajoute pas au dictionnaire afin d'empêcher le joueur de rester appuyé, ce qui permet de choisir sa sauvegarde plus facilement
+                elif event.type == pygame.KEYDOWN and self.playing is False:
+                    # Dans le menu de sélection de lancement, on n'ajoute pas au dictionnaire afin d'empêcher le joueur de rester appuyé, ce qui permet de choisir sa sauvegarde plus facilement
+                    print(selection_height)
                     if event.key == pygame.K_DOWN and selection_height < nb_sauvegardes * 100 and selection_height < 200:
                         selection_height += 100
                     elif event.key == pygame.K_UP and selection_height > 0:
@@ -200,13 +202,13 @@ class Game:
                 elif self.save_selected is None and nb_sauvegardes == 2:
                     self.screen.get_display().blit(background, (0, 0))
                     self.screen.get_display().blit(save1_btn, (25, 25))
-                    self.screen.get_display().blit(save_selection, (0, 0))
+                    self.screen.get_display().blit(save_selection, (0, selection_height))
                     self.screen.get_display().blit(save2_btn, (25, 125))
                     self.screen.get_display().blit(new_save_btn, (25, 225))
                 elif self.save_selected is None and nb_sauvegardes == 3:
                     self.screen.get_display().blit(background, (0, 0))
                     self.screen.get_display().blit(save1_btn, (25, 25))
-                    self.screen.get_display().blit(save_selection, (0, 0))
+                    self.screen.get_display().blit(save_selection, (0, selection_height))
                     self.screen.get_display().blit(save2_btn, (25, 125))
                     self.screen.get_display().blit(save3_btn, (25, 225))
 
