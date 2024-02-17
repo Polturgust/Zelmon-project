@@ -9,7 +9,7 @@ class Screen:
         # create the display and set it's size
         # self.width = pygame.display.Info().current_w
         # self.height = pygame.display.Info().current_h
-        self.dimensions = (608, 480)
+        self.dimensions = (640, 480)
         self.display = pygame.display.set_mode(self.dimensions)
         # set the display's name
         pygame.display.set_caption("The Legend of Pokémon: Zelda's corruption")

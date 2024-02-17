@@ -40,7 +40,7 @@ class Game:
 
     def run(self):
         # Lance la vidéo d'introduction au lancement du jeu → appuyer sur Esc permet d'interrompre la vidéo
-        VideoFileClip("assets/videos/Pokemon Heart Gold  Opening US_480p.mp4").resize((608, 480)).preview()
+        VideoFileClip("assets/videos/Pokemon Heart Gold  Opening US_480p.mp4").resize((640, 480)).preview()
 
         # On vérifie si on a des sauvegardes, sinon on crée une sauvegarde nommée sauvegarde1
         nb_sauvegardes = len(os.listdir("databases")) - 1
@@ -50,7 +50,7 @@ class Game:
             nb_sauvegardes += 1
 
         background = pygame.image.load("assets/images/zelda.webp")
-        background = pygame.transform.scale(background, (600, 480))
+        background = pygame.transform.scale(background, (640, 480))
 
         save_selection = pygame.image.load("assets/images/Sélecteur.png").convert_alpha()
         save_selection = pygame.transform.scale(save_selection, (450, 100))
