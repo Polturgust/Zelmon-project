@@ -36,7 +36,7 @@ class Game:
 
     def run(self):
         # Lance la vidéo d'introduction au lancement du jeu --> appuyer sur Esc permet d'interrompre la vidéo
-        clip = VideoFileClip("assets/videos/Pokemon Heart Gold  Opening US_480p.mp4").resize((600, 480))
+        clip = VideoFileClip("assets/videos/Pokemon Heart Gold  Opening US_480p.mp4").resize((640, 480))
         clip.preview()
 
         # Tant que le jeu tourne :
