@@ -24,7 +24,7 @@ class Map:
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
         # Lance le jeu sur la carte donnée (sera adapté plus tard)
-        self.switch_map("ville0")
+        self.switch_map("ville1")
 
     def switch_map(self, map):
         # load the wanted map

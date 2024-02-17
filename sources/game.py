@@ -62,6 +62,10 @@ class Game:
         save3_btn = pygame.transform.scale(save3_btn, (400, 50))
         new_save_btn = pygame.image.load("assets/images/Nouvelle_sauvegarde_btn.png").convert_alpha()
         new_save_btn = pygame.transform.scale(new_save_btn, (400, 50))
+        return_instruction = pygame.image.load("assets/images/return-instruction.png").convert_alpha()
+        return_instruction = pygame.transform.scale(return_instruction, (125, 125))
+        suppr_instruction = pygame.image.load("assets/images/suppr-instruction.png")
+        suppr_instruction = pygame.transform.scale(suppr_instruction, (125, 125))
 
         selection_height = 0
 
@@ -73,7 +77,6 @@ class Game:
                     self.running = False
                 elif event.type == pygame.KEYDOWN and self.playing is False:
                     # Dans le menu de sélection de lancement, on n'ajoute pas au dictionnaire afin d'empêcher le joueur de rester appuyé, ce qui permet de choisir sa sauvegarde plus facilement
-                    print(selection_height)
                     if event.key == pygame.K_DOWN and selection_height < nb_sauvegardes * 100 and selection_height < 200:
                         selection_height += 100
                     elif event.key == pygame.K_UP and selection_height > 0:
@@ -84,15 +87,32 @@ class Game:
                             self.save_selected = Database("databases/sauvegarde1.db")
                         elif selection_height == 100 and nb_sauvegardes == 1:
                             create_save(2)
+                            nb_sauvegardes += 1
                             self.save_selected = Database("databases/sauvegarde2.db")
                         elif selection_height == 100 and (nb_sauvegardes == 2 or nb_sauvegardes == 3):
                             self.save_selected = Database("databases/sauvegarde2.db")
                         elif selection_height == 200 and nb_sauvegardes == 2:
                             create_save(3)
+                            nb_sauvegardes += 1
                             self.save_selected = Database("databases/sauvegarde3.db")
                         elif selection_height == 200 and nb_sauvegardes == 3:
                             self.save_selected = Database("databases/sauvegarde3.db")
                         self.playing = True  # Une fois qu'une sauvegarde a été sélectionnée ou créée, on lance le jeu
+                    elif event.key == pygame.K_DELETE:
+                        # On récupère l'élément sélectionné comme pour quand on presse entrée et on supprime la sauvegarde correspondante
+                        if selection_height == 0:
+                            delete_save(1)
+                            nb_sauvegardes -= 1
+                            if nb_sauvegardes == 0:  # Si c'était la dernière sauvegarde, on en crée une nouvelle
+                                create_save(1)
+                                nb_sauvegardes += 1
+                        elif selection_height == 100 and nb_sauvegardes > 1:
+                            delete_save(2)
+                            nb_sauvegardes -= 1
+                        elif selection_height == 200 and nb_sauvegardes == 3:
+                            delete_save(3)
+                            nb_sauvegardes -= 1
+
                 elif event.type == pygame.KEYDOWN:  # Si une touche est pressée, on l'ajoute au dictionnaire des touches pressées
                     self.pressed[event.key] = True
                 elif event.type == pygame.KEYUP:
@@ -196,21 +216,23 @@ class Game:
                 # On affiche les boutons selon le nombre de sauvegardes existantes
                 if self.save_selected is None and nb_sauvegardes == 1:
                     self.screen.get_display().blit(background, (0, 0))
-                    self.screen.get_display().blit(save1_btn, (25, 25))
-                    self.screen.get_display().blit(save_selection, (0, selection_height))
-                    self.screen.get_display().blit(new_save_btn, (25, 125))
+                    self.screen.get_display().blit(save1_btn, (120, 25))
+                    self.screen.get_display().blit(save_selection, (95, selection_height))
+                    self.screen.get_display().blit(new_save_btn, (120, 125))
                 elif self.save_selected is None and nb_sauvegardes == 2:
                     self.screen.get_display().blit(background, (0, 0))
-                    self.screen.get_display().blit(save1_btn, (25, 25))
-                    self.screen.get_display().blit(save_selection, (0, selection_height))
-                    self.screen.get_display().blit(save2_btn, (25, 125))
-                    self.screen.get_display().blit(new_save_btn, (25, 225))
+                    self.screen.get_display().blit(save1_btn, (120, 25))
+                    self.screen.get_display().blit(save_selection, (95, selection_height))
+                    self.screen.get_display().blit(save2_btn, (120, 125))
+                    self.screen.get_display().blit(new_save_btn, (120, 225))
                 elif self.save_selected is None and nb_sauvegardes == 3:
                     self.screen.get_display().blit(background, (0, 0))
-                    self.screen.get_display().blit(save1_btn, (25, 25))
-                    self.screen.get_display().blit(save_selection, (0, selection_height))
-                    self.screen.get_display().blit(save2_btn, (25, 125))
-                    self.screen.get_display().blit(save3_btn, (25, 225))
+                    self.screen.get_display().blit(save1_btn, (120, 25))
+                    self.screen.get_display().blit(save_selection, (95, selection_height))
+                    self.screen.get_display().blit(save2_btn, (120, 125))
+                    self.screen.get_display().blit(save3_btn, (120, 225))
+                self.screen.get_display().blit(return_instruction, (125, 320))
+                self.screen.get_display().blit(suppr_instruction, (400, 320))
 
 
             # update screen
