@@ -24,7 +24,7 @@ class Map:
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
         # Lance le jeu sur la carte donnée (sera adapté plus tard)
-        self.switch_map("interieur_mc_chambre0")
+        self.switch_map("ville2")
 
     def switch_map(self, map):
         # load the wanted map
@@ -42,7 +42,7 @@ class Map:
         # Crée deux groupes de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
         self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
         self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
-        # Crée un groupe qui contient les hautes herbes -> quand un Pokémon sauvage peut apparaître
+        # Crée un groupe qui contient les hautes herbes → quand un Pokémon sauvage peut apparaître
         self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
         # Crée un groupe pour les personnages
         self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
@@ -112,13 +112,14 @@ class Map:
         # On centre le groupe du joueur sur le joueur
         self.group.center(self.player.pos.get())
 
-    def add_pnj(self, pnj):
+    def add_pnj(self, pnj, name):
         """
         Fonction qui permet d'ajouter un PNJ au groupe pnjs afin de l'afficher à l'écran
 
-        Pré-conditions:
+        Pré-conditions :
             pnj est une instance de PNJ ou d'une de ses classes filles
-        Post-conditions:
+            name est une string qui correspond au nom du pnj
+        Post-conditions :
             le pnj a bien été ajouté au groupe et sera affiché lors du prochain appel de la fonction update
         """
         self.group.add(pnj)
@@ -126,8 +127,22 @@ class Map:
         pnj.move("N")
         pnj.move("S")
         pnj.animation.direction = base_direction
-        self.pnjs_list.append(pnj)
+        self.pnjs_list.append((pnj, name))
         print("pnj ajouté")
+
+    def remove_pnj(self, pnj, name):
+        """
+        Fonction qui permet de retirer un pnj du groupe afin qu'il ne soit pas affiché à l'écran
+
+        Pré-conditions :
+            pnj est une instance de PNJ ou d'une de ses classes filles
+            name est une string qui correspond au nom du pnj
+        Post-conditions :
+            le pnj est retiré du groupe et de la liste des pnjs à l'écran
+        """
+        self.group.remove(pnj)
+        self.pnjs_list.remove((pnj, name))
+        print("pnj retiré")
 
     def update(self):
         # show the map on screen with the player centered

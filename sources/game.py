@@ -24,7 +24,8 @@ class Game:
         self.map = Map(self.screen, self.player)
 
         # On tente de créer un chat
-        self.map.add_pnj(GreyCat(self, 200, 220))
+        # On crée un dictionnaire qui contient tous les pnjs sous la forme : {"Nom-pnj" : Instance_classe_pnj}
+        self.pnjs = dict()
 
         # On initialise les variables pour le mouvement du joueur :
         # Son dernier mouvement (qui par défaut est un déplacement vers la droite)
@@ -68,6 +69,14 @@ class Game:
         suppr_instruction = pygame.transform.scale(suppr_instruction, (125, 125))
 
         selection_height = 0
+
+        # On crée les pnjs
+        create_all_pnjs(self)
+
+        # On affiche les pnjs présents sur la map de spawn
+        for name, instance in self.pnjs.items():
+            if instance.map == self.map.zonearr:
+                self.map.add_pnj(instance, name)
 
         # Tant que le jeu tourne :
         while self.running:
@@ -200,17 +209,26 @@ class Game:
                 for i in self.map.changes:
                     if self.player.rect.colliderect(i.rect):
                         # Si oui, on change la carte affichée en appelant la méthode switch_map() de la classe Map avec le nom de la carte associée à la collision
+                        previous = self.map.zonearr
                         self.map.switch_map(i.command)
+                        # On ajoute les pnjs qui doivent être sur cette carte
+                        for name, instance in self.pnjs.items():
+                            if instance.map == i.command:
+                                self.map.add_pnj(instance, name)
+                        # On retire les pnjs de la carte actuelle
+                        for name, instance in self.pnjs.items():
+                            if instance.map == previous:
+                                self.map.remove_pnj(instance, name)
+
+                # update pnjs animation
+                for pnj in self.map.pnjs_list:
+                    pnj[0].update()
 
                 # update map
                 self.map.update()
 
                 # update player animation
                 self.player.update()
-
-                # update pnjs animation
-                for pnj in self.map.pnjs_list:
-                    pnj.update()
 
             else:  # Si on n'est pas encore dans le jeu (menu de lancement)
                 # On affiche les boutons selon le nombre de sauvegardes existantes
@@ -233,7 +251,6 @@ class Game:
                     self.screen.get_display().blit(save3_btn, (120, 225))
                 self.screen.get_display().blit(return_instruction, (125, 320))
                 self.screen.get_display().blit(suppr_instruction, (400, 320))
-
 
             # update screen
             self.screen.update()

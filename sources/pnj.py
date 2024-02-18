@@ -101,10 +101,11 @@ class PNJ(pygame.sprite.Sprite):
 
 
 class GreyCat(PNJ):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, map):
         # Coordonnées du joueur (au centre par défaut)
         super().__init__(game)
         self.pos = Vector(x, y)
+        self.map = map  # La map sur laquelle il doit apparaitre
 
         # On définit ses animations
         self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/chat/grey_walking_west.png").images(1, 8))
@@ -116,3 +117,12 @@ class GreyCat(PNJ):
 
         self.rect = self.image.get_rect()
 
+
+def create_all_pnjs(game):
+    """
+    Fonction à appeler au lancement du jeu pour créer tous les pnjs
+
+    Post-conditions :
+        Crée tous les pnjs du jeu
+    """
+    game.pnjs["chat de test"] = GreyCat(game, 200, 220, "ville0")

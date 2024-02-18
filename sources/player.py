@@ -17,10 +17,12 @@ class Player(pygame.sprite.Sprite):
         # On définit les sprites
         self.animation = Animation(SpriteSheet("assets/Spritesheets/Link/Walking-North_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Link/Walking-South_Link.png").images(1, 10), SpriteSheet("assets/Spritesheets/Link/Walking-West_Link.png").images(1, 10))
         self.image = pygame.image.load("assets/Spritesheets/Link/Idle-South_Link.png").convert_alpha()
+        self.bottom_link = pygame.image.load("assets/Spritesheets/Link/bottom_Link.png").convert_alpha()
 
         # Hitbox
         self.rect = self.image.get_rect()
         self.rect.inflate_ip(-5, 0)  # On réduit la taille de la hitbox du joueur pour résoudre le problème lié aux pixels entre deux frames
+        # self.rect.move_ip(0, 60)  # Souhaite déplacer la hitbox vers le bas pour que seuls les pieds aient des collisions
 
         # Autres attributs
         self.velocity = 1
@@ -115,3 +117,4 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-South_Link.png")
             elif self.animation.direction == "W":
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-West_Link.png")
+        # pygame.draw.rect(self.game.screen.get_display(), (255, 0, 0), self.rect)
