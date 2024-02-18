@@ -24,7 +24,7 @@ class Map:
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
         # Lance le jeu sur la carte donnée (sera adapté plus tard)
-        self.switch_map("ville1")
+        self.switch_map("interieur_mc_chambre0")
 
     def switch_map(self, map):
         # load the wanted map
@@ -75,6 +75,15 @@ class Map:
                         elif j.name != None and "vers_pokecentre" in j.name:
                             dest = j.name.split("vers_pokecentre")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "pokecentre" + dest[1]))
+                        elif j.name != None and "vers_pokemart" in j.name:
+                            dest = j.name.split("vers_pokemart")
+                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "pokemart" + dest[1]))
+                        elif j.name != None and "vers_interieur_mc_chambre" in j.name:
+                            dest = j.name.split("vers_interieur_mc_chambre")
+                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_mc_chambre" + dest[1]))
+                        elif j.name != None and "vers_interieur_mc_salon" in j.name:
+                            dest = j.name.split("vers_interieur_mc_salon")
+                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_mc_salon" + dest[1]))
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
                     if i.name == "points_de_spawn":

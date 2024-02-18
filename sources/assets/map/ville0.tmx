@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="87">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="90">
  <tileset firstgid="1" source="tileset/just_grass.tsx"/>
  <tileset firstgid="2" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21002" source="tileset/literally_everything.tsx"/>
@@ -503,7 +503,7 @@
   <object id="48" name="maison_prof0" x="192" y="128" width="96" height="80"/>
   <object id="52" name="maison_prof1" x="288" y="180.031" width="3.96875" height="27.9688"/>
   <object id="54" name="maison_prof2" x="188.063" y="148" width="3.9375" height="56.875"/>
-  <object id="56" name="maison_mc0" x="550" y="92.7273" width="67.8182" height="67.2727"/>
+  <object id="56" name="maison_mc0" x="550" y="92.7273" width="67.8182" height="67.1477"/>
   <object id="57" name="maison_mc2" x="546.727" y="92.8182" width="3.27273" height="51.1818"/>
   <object id="58" name="maison_mc1" x="618" y="92.8182" width="2.90909" height="51.1818"/>
   <object id="60" name="fleurs" x="536.75" y="296.545" width="94.375" height="54.9545"/>
@@ -525,12 +525,14 @@
   <object id="13" name="vers_route0" x="0.125" y="212" width="32.375" height="66.5"/>
   <object id="80" name="vers_interieur_simple0" x="144" y="320.969" width="16" height="18.7415"/>
   <object id="84" name="vers_interieur_simple1" x="416" y="368" width="16" height="19.1051"/>
+  <object id="87" name="vers_interieur_mc_salon0" x="558.75" y="142.875" width="18.25" height="19.625"/>
  </objectgroup>
  <objectgroup id="12" name="points_de_spawn">
   <object id="16" name="depuis_route0" x="48" y="240" width="16" height="16"/>
   <object id="75" name="spawn_default" x="400" y="240" width="16" height="16"/>
   <object id="83" name="depuis_interieur_simple0" x="144" y="352" width="16" height="16"/>
   <object id="86" name="depuis_interieur_simple1" x="416" y="400" width="16" height="16"/>
+  <object id="89" name="depuis_interieur_mc_salon0" x="554" y="171" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="14" name="bords_map">
   <object id="76" name="haut" x="0" y="0" width="800"/>
