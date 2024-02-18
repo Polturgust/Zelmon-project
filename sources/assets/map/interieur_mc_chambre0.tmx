@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="37">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="40">
  <tileset firstgid="1" source="tileset/interior1.tsx"/>
  <tileset firstgid="4625" source="tileset/interior_floors.tsx"/>
  <layer id="3" name="sol" width="20" height="15">
@@ -149,10 +149,12 @@
   <object id="31" name="bureau" x="80.0908" y="141.909" width="15.8182" height="34.0909"/>
   <object id="32" name="plante0" x="81.6363" y="132.091" width="12.2727" height="9.72727"/>
   <object id="33" name="escalier" x="80.0001" y="120.727" width="31.0909" height="7.27273"/>
-  <object id="34" name="vers_interieur_mc_salon0" x="101.091" y="96.3636" width="13.6364" height="23.8182"/>
-  <object id="35" name="depuis_interieur_mc_salon0" x="138" y="96" width="16" height="16"/>
-  <object id="36" name="spawn_default" x="192" y="144" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="9" name="changements_de_map"/>
- <objectgroup id="10" name="points_de_spawn"/>
+ <objectgroup id="9" name="changements_de_map">
+  <object id="39" name="vers_interieur_mc_salon0" x="99.5454" y="96.6364" width="13.6364" height="23.8182"/>
+ </objectgroup>
+ <objectgroup id="10" name="points_de_spawn">
+  <object id="37" name="spawn_default" x="186" y="144" width="16" height="16"/>
+  <object id="38" name="depuis_interieur_mc_salon0" x="117" y="96" width="16" height="16"/>
+ </objectgroup>
 </map>

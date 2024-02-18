@@ -178,7 +178,7 @@
   <object id="22" name="vers_interieur_mc_chambre0" x="235.818" y="74.0909" width="12.2727" height="16.7273"/>
  </objectgroup>
  <objectgroup id="11" name="points_de_spawn">
-  <object id="23" name="depuis_interieur_mc_chambre0" x="200" y="72" width="16" height="16"/>
+  <object id="23" name="depuis_interieur_mc_chambre0" x="208" y="72" width="16" height="16"/>
   <object id="24" name="depuis_ville0" x="114" y="167" width="16" height="16"/>
   <object id="25" name="spawn_default" x="114.25" y="167.125" width="16" height="16"/>
  </objectgroup>
