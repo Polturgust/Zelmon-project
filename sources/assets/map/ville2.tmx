@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="154" nextobjectid="127">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="154" nextobjectid="138">
  <tileset firstgid="1" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21001" source="tileset/literally_everything.tsx"/>
  <tileset firstgid="25257" source="tileset/houses_arenas.tsx"/>
@@ -6829,8 +6829,8 @@
   <object id="31" name="pokecentre" x="369.25" y="224.125" width="77.875" height="72.75"/>
   <object id="32" name="pokemart" x="676" y="239.875" width="65.875" height="64.125"/>
   <object id="33" name="arene" x="502.125" y="239.875" width="115.75" height="62"/>
-  <object id="34" name="maison0" x="192" y="544" width="64" height="48"/>
-  <object id="35" name="house1" x="816" y="800" width="80" height="64"/>
+  <object id="34" name="maison0" x="193.909" y="544" width="59.9091" height="46.8182"/>
+  <object id="35" name="house1" x="817.818" y="800" width="76" height="59.8182"/>
   <object id="36" name="lampadaire0" x="466.909" y="287.659" width="9.9886" height="14.1591"/>
   <object id="37" name="lampadaire1" x="642.591" y="286.898" width="10.5682" height="15.1023"/>
   <object id="57" name="lac4" x="528.875" y="497" width="62.125" height="253.875"/>
@@ -6885,6 +6885,9 @@
   <object id="117" name="lampadaire12" x="498.909" y="815.273" width="10.1818" height="14.9091"/>
   <object id="118" name="lampadaire14" x="627.091" y="911.091" width="10" height="14.9091"/>
   <object id="119" name="lampadaire15" x="883.273" y="910.909" width="9.27273" height="14.7273"/>
+  <object id="128" name="house1_1" x="833" y="859.818" width="15.0909" height="7.09091"/>
+  <object id="129" name="house1_0" x="864" y="860" width="15.9091" height="7.09091"/>
+  <object id="132" name="maison0_0" x="231.727" y="590.636" width="15.1818" height="4.27273"/>
  </objectgroup>
  <objectgroup id="65" name="map_borders">
   <object id="2" name="top" x="0" y="0" width="1120"/>
@@ -6897,6 +6900,8 @@
   <object id="8" name="vers_route2" x="480" y="1089.25" width="176" height="30.75"/>
   <object id="121" name="vers_pokemart1" x="686.938" y="286" width="18.0938" height="19.375"/>
   <object id="122" name="vers_pokecentre1" x="394.063" y="287" width="27.9375" height="16.9375"/>
+  <object id="130" name="vers_interieur_grand1" x="848" y="848" width="15.9375" height="21.4432"/>
+  <object id="133" name="vers_interieur_grand3" x="208" y="576" width="15.9091" height="17.2727"/>
  </objectgroup>
  <objectgroup id="67" name="points_de_spawn">
   <object id="9" name="depuis_route3" x="48" y="400" width="16" height="16"/>
@@ -6904,5 +6909,7 @@
   <object id="104" name="depuis_route2" x="551" y="1056" width="16" height="16"/>
   <object id="124" name="depuis_pokecentre1" x="394" y="306" width="16" height="16"/>
   <object id="126" name="depuis_pokemart1" x="682" y="307" width="16" height="16"/>
+  <object id="136" name="depuis_interieur_grand3" x="202" y="594" width="16" height="16"/>
+  <object id="137" name="depuis_interieur_grand1" x="842" y="872" width="16" height="16"/>
  </objectgroup>
 </map>
