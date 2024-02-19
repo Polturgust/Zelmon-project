@@ -240,7 +240,7 @@ class Game:
                     print(self.map.zonearr,self.save_selected.get_pnj_sur_carte(self.map.zonearr))
 
                 if self.pressed.get(pygame.K_0):
-                    print(self.save_selected.deplacer_equipe_vers_PC(0))
+                    print(self.save_selected.deplacer_PC_vers_equipe(0,0))
                 # update map
                 self.map.update()
 

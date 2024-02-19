@@ -109,12 +109,22 @@ class Database:
         self.c.execute("""DELETE FROM Equipe WHERE id_pokemon=?""",(id_pokemon,))
         self.database.commit()
 
-    def deplacer_PC_vers_ID(self,id_pokemon):
-        self.info_pokemon=self.get_info_pokemon(id_pokemon)
-        self.c.execute("""INSERT INTO Equipe VALUES (?,?)""",(id_pokemon,self.info_pokemon["ID"]))
-        self.database.commit()
-        self.c.execute("""DELETE FROM PC WHERE id_pokemon=?""",(id_pokemon,))
-        self.database.commit()
+    def deplacer_PC_vers_equipe(self,id_pokemon,id_joueur):
+        self.c=self.database.cursor()
+        self.c.execute("""SELECT COUNT(id_pokemon) FROM Equipe WHERE id_joueur=?""",(id_joueur,))
+        self.results=self.c.fetchall()
+        print(self.results)
+        if self.results[0][0]<6:
+            self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joeuur=?""",(id_joueur,))
+            self.results=self.c.fetchall()
+            print(self.results)
+            self.info_pokemon=self.get_info_pokemon(id_pokemon)
+            self.c.execute("""INSERT INTO Equipe VALUES (?,?)""",(id_pokemon,self.info_pokemon["ID"]))
+            self.database.commit()
+            self.c.execute("""DELETE FROM PC WHERE id_pokemon=?""",(id_pokemon,))
+            self.database.commit()
+        else :
+            return None
 
     def sauvegarder(self, player, map):
         self.c = self.database.cursor()
