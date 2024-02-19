@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="150" nextobjectid="152">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="150" nextobjectid="159">
  <tileset firstgid="1" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21001" source="tileset/literally_everything.tsx"/>
  <layer id="1" name="sol" width="40" height="100">
@@ -8794,17 +8794,17 @@
   <object id="52" x="368" y="576" width="32" height="16"/>
  </objectgroup>
  <objectgroup id="144" name="bloqueurs">
-  <object id="55" x="256" y="1248" width="16" height="64"/>
-  <object id="56" x="304" y="1120" width="16" height="48"/>
-  <object id="57" x="176" y="1168" width="144" height="16"/>
-  <object id="58" x="240" y="1056" width="128" height="16"/>
-  <object id="59" x="240" y="1008" width="16" height="48"/>
-  <object id="60" x="176" y="880" width="240" height="16"/>
-  <object id="61" x="400" y="848" width="16" height="32"/>
-  <object id="62" x="240" y="688" width="16" height="48"/>
-  <object id="63" x="240" y="736" width="240" height="16"/>
-  <object id="64" x="256" y="1312" width="240" height="16"/>
-  <object id="65" x="480" y="1296" width="16" height="16"/>
+  <object id="55" name="gauche" x="256" y="1248" width="16" height="64"/>
+  <object id="56" name="droite" x="304" y="1120" width="16" height="48"/>
+  <object id="57" name="bas" x="176" y="1168" width="128" height="16"/>
+  <object id="58" name="bas" x="256.125" y="1056" width="111.875" height="16"/>
+  <object id="59" name="gauche" x="240" y="1008" width="16" height="48"/>
+  <object id="60" name="bas" x="176" y="880" width="224.125" height="16"/>
+  <object id="61" name="droit" x="400" y="848" width="16" height="32"/>
+  <object id="62" name="gauche" x="240" y="688" width="16" height="48"/>
+  <object id="63" name="bas" x="256" y="736" width="224" height="16"/>
+  <object id="64" name="bas" x="272.182" y="1312" width="208" height="16"/>
+  <object id="65" name="droite" x="480" y="1296" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="146" name="collisions">
   <object id="66" name="terrain31" x="0" y="0" width="640" height="144"/>
@@ -8877,6 +8877,12 @@
   <object id="143" name="terrain2" x="357.938" y="495.938" width="7" height="3.0625"/>
   <object id="144" name="terrain1" x="294.063" y="512.063" width="7" height="2.875"/>
   <object id="145" name="terrain0" x="246" y="528.063" width="7.125" height="3"/>
+  <object id="152" name="coin_bloqueur5" x="240" y="736" width="16" height="16"/>
+  <object id="154" name="coin_bloqueur4" x="400" y="880" width="16" height="16"/>
+  <object id="155" name="coin_bloqueur3" x="240" y="1056" width="16" height="16"/>
+  <object id="156" name="coin_bloqueur2" x="304" y="1168" width="16" height="16"/>
+  <object id="157" name="coin_bloqueur1" x="256" y="1312" width="16" height="16"/>
+  <object id="158" name="coin_bloqueur0" x="480" y="1312" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="148" name="points_de_spawn">
   <object id="148" name="depuis_route4" x="288" y="176" width="16" height="16"/>
