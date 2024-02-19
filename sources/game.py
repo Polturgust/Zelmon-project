@@ -9,6 +9,7 @@ from player import Player
 from combat import Combat
 from pnj import *
 from SQL_requests import *
+from audio import SoundManager
 
 
 class Game:
