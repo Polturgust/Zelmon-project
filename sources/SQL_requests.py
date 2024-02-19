@@ -72,6 +72,13 @@ class Database:
         for i in self.results:
             self.a_renvoyer.append(self.get_details_objet(i[1]))
         return self.a_renvoyer
+
+    def sauvegarder(self,player,map):
+        self.c = self.database.cursor()
+        self.c.execute("""UPDATE Joueurs SET (coord_x,coord_y,carte)=(?,?,?)""", (player.pos.get()[0],player.pos.get()[1],map.zonearr))
+        self.database.commit()
+        print(map.zonearr,player.pos.get())
+
 def create_save(nb):
     """
     Fonction qui permet de créer une nouvelle sauvegarde vide

@@ -120,3 +120,6 @@ class Player(pygame.sprite.Sprite):
             elif self.animation.direction == "W":
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-West_Link.png")
         # pygame.draw.rect(self.game.screen.get_display(), (255, 0, 0), self.rect)
+
+    def set_coordonnees(self,x,y):
+        self.pos=Vector(x,y)

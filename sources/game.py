@@ -106,6 +106,13 @@ class Game:
                             self.save_selected = Database("databases/sauvegarde3.db")
                         elif selection_height == 200 and nb_sauvegardes == 3:
                             self.save_selected = Database("databases/sauvegarde3.db")
+
+                        self.loaded_info=self.save_selected.get_info_joueur(0)
+                        print(self.loaded_info)
+                        self.player.set_coordonnees(self.loaded_info["X"],self.loaded_info["Y"])
+                        self.map.switch_map(self.loaded_info["Carte"])
+                        self.player.move("N")
+                        self.player.move("S")
                         self.playing = True  # Une fois qu'une sauvegarde a été sélectionnée ou créée, on lance le jeu
                     elif event.key == pygame.K_DELETE:
                         # On récupère l'élément sélectionné comme pour quand on presse entrée et on supprime la sauvegarde correspondante
@@ -217,13 +224,17 @@ class Game:
                                 self.map.add_pnj(instance, name)
                         # On retire les pnjs de la carte actuelle
                         for name, instance in self.pnjs.items():
-                            if instance.map == previous:
+                            if instance.map == previous and len(self.map.group)>1:
                                 self.map.remove_pnj(instance, name)
 
                 # update pnjs animation
                 for pnj in self.map.pnjs_list:
                     pnj[0].update()
 
+                # Sauvegarde quand on appuie sur "*"
+                if self.pressed.get(pygame.K_ASTERISK):
+                    self.save_selected.sauvegarder(self.player,self.map)
+                    print("Sauvagarde effectuée !")
                 # update map
                 self.map.update()
 
