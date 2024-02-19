@@ -235,6 +235,12 @@ class Game:
                 if self.pressed.get(pygame.K_ASTERISK):
                     self.save_selected.sauvegarder(self.player,self.map)
                     print("Sauvagarde effectuée !")
+
+                if self.pressed.get(pygame.K_DELETE):
+                    print(self.map.zonearr,self.save_selected.get_pnj_sur_carte(self.map.zonearr))
+
+                if self.pressed.get(pygame.K_0):
+                    print(self.save_selected.deplacer_equipe_vers_PC(0))
                 # update map
                 self.map.update()
 
