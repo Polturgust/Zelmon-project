@@ -107,13 +107,34 @@ class GreyCat(PNJ):
         self.pos = Vector(x, y)
         self.map = map  # La map sur laquelle il doit apparaitre
 
+        self.can_update = True
+
         # On définit ses animations
-        self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/chat/grey_walking_west.png").images(1, 8))
+        self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/pnj/chat/grey_walking_west.png").images(1, 8))
         self.animation.frame_interval = 24
         self.animation.direction = None
 
         # On récupère son image de base
-        self.image = pygame.image.load("assets/Spritesheets/chat/grey_walking_west_single.png").convert_alpha()
+        self.image = pygame.image.load("assets/Spritesheets/pnj/chat/grey_walking_west_single.png").convert_alpha()
+
+        self.rect = self.image.get_rect()
+
+
+class Maman(PNJ):
+    def __init__(self, game, x, y, map):
+        # Coordonnées du joueur (au centre par défaut)
+        super().__init__(game)
+        self.pos = Vector(x, y)
+        self.map = map  # La map sur laquelle il doit apparaitre
+        self.can_update = False
+
+        # On définit ses animations
+        self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/pnj/maman/idle_maman.png").images(1, 1))
+        self.animation.frame_interval = 24
+        self.animation.direction = None
+
+        # On récupère son image de base
+        self.image = pygame.image.load("assets/Spritesheets/pnj/maman/idle_maman.png").convert_alpha()
 
         self.rect = self.image.get_rect()
 
@@ -126,3 +147,4 @@ def create_all_pnjs(game):
         Crée tous les pnjs du jeu
     """
     game.pnjs["chat de test"] = GreyCat(game, 200, 220, "ville0")
+    game.pnjs["maman"] = Maman(game, 100, 100, "interieur_mc_salon0")
