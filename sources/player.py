@@ -22,7 +22,8 @@ class Player(pygame.sprite.Sprite):
         # Hitbox
         self.rect = self.image.get_rect()
         self.rect.inflate_ip(-5, 0)  # On réduit la taille de la hitbox du joueur pour résoudre le problème lié aux pixels entre deux frames
-        # self.rect.move_ip(0, 60)  # Souhaite déplacer la hitbox vers le bas pour que seuls les pieds aient des collisions
+        # print(self.rect.width, self.rect.height, self.rect.x, self.rect.y)
+        self.lower_rect = pygame.Rect(2, 12, 27, 10)
 
         # Autres attributs
         self.velocity = 1
@@ -98,6 +99,7 @@ class Player(pygame.sprite.Sprite):
             self.pos += path * self.velocity
             self.animation.direction = "E"
         self.rect.x, self.rect.y = self.pos.get()
+        self.lower_rect.x, self.lower_rect.y = self.pos.get()[0], self.pos.get()[1] + 12
 
     def update(self):
         """

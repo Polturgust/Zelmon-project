@@ -258,7 +258,7 @@ class Game:
 
     def chance_rencontre(self):
         for i in self.map.weeds:
-            if self.player.rect.colliderect(i.rect):
+            if self.player.lower_rect.colliderect(i.rect):
                 self.alearencontre = randint(0, 100)
                 if self.alearencontre < 2:
                     return True
