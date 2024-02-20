@@ -21049,19 +21049,47 @@
   </wangset>
   <wangset name="rasers" type="corner" tile="-1">
    <wangcolor name="snowy_razer" color="#ff0000" tile="-1" probability="1"/>
+   <wangcolor name="ice_razer" color="#00ff00" tile="-1" probability="1"/>
+   <wangcolor name="grey_razer" color="#0000ff" tile="-1" probability="1"/>
    <wangtile tileid="4484" wangid="0,0,0,1,0,0,0,0"/>
    <wangtile tileid="4485" wangid="0,0,0,1,0,1,0,0"/>
    <wangtile tileid="4486" wangid="0,0,0,0,0,1,0,0"/>
+   <wangtile tileid="4502" wangid="0,0,0,3,0,0,0,0"/>
+   <wangtile tileid="4503" wangid="0,0,0,3,0,3,0,0"/>
+   <wangtile tileid="4504" wangid="0,0,0,0,0,3,0,0"/>
+   <wangtile tileid="4547" wangid="0,0,0,2,0,0,0,0"/>
+   <wangtile tileid="4548" wangid="0,0,0,2,0,2,0,0"/>
+   <wangtile tileid="4549" wangid="0,0,0,0,0,2,0,0"/>
    <wangtile tileid="4624" wangid="0,1,0,1,0,0,0,0"/>
    <wangtile tileid="4625" wangid="0,1,0,1,0,1,0,1"/>
    <wangtile tileid="4626" wangid="0,0,0,0,0,1,0,1"/>
+   <wangtile tileid="4642" wangid="0,3,0,3,0,0,0,0"/>
+   <wangtile tileid="4643" wangid="0,3,0,3,0,3,0,3"/>
+   <wangtile tileid="4644" wangid="0,0,0,0,0,3,0,3"/>
+   <wangtile tileid="4687" wangid="0,2,0,2,0,0,0,0"/>
+   <wangtile tileid="4688" wangid="0,2,0,2,0,2,0,2"/>
+   <wangtile tileid="4689" wangid="0,0,0,0,0,2,0,2"/>
    <wangtile tileid="4764" wangid="0,1,0,0,0,0,0,0"/>
    <wangtile tileid="4765" wangid="0,1,0,0,0,0,0,1"/>
    <wangtile tileid="4766" wangid="0,0,0,0,0,0,0,1"/>
+   <wangtile tileid="4782" wangid="0,3,0,0,0,0,0,0"/>
+   <wangtile tileid="4783" wangid="0,3,0,0,0,0,0,3"/>
+   <wangtile tileid="4784" wangid="0,0,0,0,0,0,0,3"/>
+   <wangtile tileid="4827" wangid="0,2,0,0,0,0,0,0"/>
+   <wangtile tileid="4828" wangid="0,2,0,0,0,0,0,2"/>
+   <wangtile tileid="4829" wangid="0,0,0,0,0,0,0,2"/>
    <wangtile tileid="4904" wangid="0,1,0,0,0,1,0,1"/>
    <wangtile tileid="4905" wangid="0,1,0,1,0,0,0,1"/>
+   <wangtile tileid="4922" wangid="0,3,0,0,0,3,0,3"/>
+   <wangtile tileid="4923" wangid="0,3,0,3,0,0,0,3"/>
+   <wangtile tileid="4967" wangid="0,2,0,0,0,2,0,2"/>
+   <wangtile tileid="4968" wangid="0,2,0,2,0,0,0,2"/>
    <wangtile tileid="5044" wangid="0,0,0,1,0,1,0,1"/>
    <wangtile tileid="5045" wangid="0,1,0,1,0,1,0,0"/>
+   <wangtile tileid="5062" wangid="0,0,0,3,0,3,0,3"/>
+   <wangtile tileid="5063" wangid="0,3,0,3,0,3,0,0"/>
+   <wangtile tileid="5107" wangid="0,0,0,2,0,2,0,2"/>
+   <wangtile tileid="5108" wangid="0,2,0,2,0,2,0,0"/>
   </wangset>
   <wangset name="paths" type="corner" tile="-1">
    <wangcolor name="yello_tilted_bricks" color="#ff0000" tile="-1" probability="1"/>
