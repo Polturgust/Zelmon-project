@@ -23,9 +23,6 @@ class Map:
         self.changes = None  # Contiendra les collisions
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
-        # Lance le jeu sur la carte donnée (sera adapté plus tard)
-        self.switch_map("ville2")
-
     def switch_map(self, map):
         # load the wanted map
         self.tmx_data = pytmx.load_pygame(f"assets\\map\\{map}.tmx")
@@ -126,6 +123,7 @@ class Map:
         base_direction = pnj.animation.direction
         pnj.move("N")
         pnj.move("S")
+
         pnj.animation.direction = base_direction
         self.pnjs_list.append((pnj, name))
         print("pnj ajouté")
@@ -141,6 +139,7 @@ class Map:
             le pnj est retiré du groupe et de la liste des pnjs à l'écran
         """
         self.group.remove(pnj)
+        print(pnj, name)
         self.pnjs_list.remove((pnj, name))
         print("pnj retiré")
 

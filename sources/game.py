@@ -9,6 +9,7 @@ from player import Player
 from combat import Combat
 from pnj import *
 from SQL_requests import *
+from audio import SoundManager
 
 
 class Game:
@@ -73,11 +74,6 @@ class Game:
         # On crée les pnjs
         create_all_pnjs(self)
 
-        # On affiche les pnjs présents sur la map de spawn
-        for name, instance in self.pnjs.items():
-            if instance.map == self.map.zonearr:
-                self.map.add_pnj(instance, name)
-
         # Tant que le jeu tourne :
         while self.running:
             # On récupère toutes les actions de l'utilisateur
@@ -107,12 +103,19 @@ class Game:
                         elif selection_height == 200 and nb_sauvegardes == 3:
                             self.save_selected = Database("databases/sauvegarde3.db")
 
-                        self.loaded_info=self.save_selected.get_info_joueur(0)
+                        self.loaded_info = self.save_selected.get_info_joueur(0)
                         print(self.loaded_info)
                         self.player.set_coordonnees(self.loaded_info["X"],self.loaded_info["Y"])
                         self.map.switch_map(self.loaded_info["Carte"])
                         self.player.move("N")
                         self.player.move("S")
+
+                        # On affiche les pnjs présents sur la map de spawn
+                        for name, instance in self.pnjs.items():
+                            if instance.map == self.map.zonearr:
+                                self.map.add_pnj(instance, name)
+                        print(self.map.pnjs_list)
+
                         self.playing = True  # Une fois qu'une sauvegarde a été sélectionnée ou créée, on lance le jeu
                     elif event.key == pygame.K_DELETE:
                         # On récupère l'élément sélectionné comme pour quand on presse entrée et on supprime la sauvegarde correspondante
