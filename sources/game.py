@@ -244,7 +244,7 @@ class Game:
                     print(self.map.zonearr,self.save_selected.get_pnj_sur_carte(self.map.zonearr))
 
                 if self.pressed.get(pygame.K_0):
-                   print(self.save_selected.get_etat_histoire())
+                   print(self.save_selected.get_inventaire(0))
                 # update map
                 self.map.update()
 
