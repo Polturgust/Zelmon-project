@@ -9,9 +9,9 @@ class Dialogue():
         self.screen=screen
         self.map=map
         self.texte=[]
-        while len(self.textedonne)>50:
-            self.texte.append(self.textedonne[:50])
-            self.textedonne=self.textedonne[50:]
+        while len(self.textedonne)>45:
+            self.texte.append(self.textedonne[:45])
+            self.textedonne=self.textedonne[45:]
         self.texte.append(self.textedonne)
         self.pressed={}
         print(len(self.texte),self.texte)

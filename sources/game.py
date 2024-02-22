@@ -245,7 +245,7 @@ class Game:
 
                 if self.pressed.get(pygame.K_0):
                     self.temp=self.save_selected.get_dialogue_pnj(1)
-                    Dialogue(self.temp,self.screen,self.map).afficher()
+                    Dialogue("WAH JE SUIS PUTAIN DE CONTENT DE TE RENCONTERR PAR ONTRE Y'A DES CHANCES JE SUIS COUPE AU MLIEU DONC SIKE AU PIRE",self.screen,self.map).afficher()
                     self.pressed={}
                 # update map
                 self.map.update()
