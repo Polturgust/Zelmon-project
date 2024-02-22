@@ -107,7 +107,7 @@ class Game:
                         self.loaded_info = self.save_selected.get_info_joueur(0)
                         print(self.loaded_info)
                         self.player.set_coordonnees(self.loaded_info["X"],self.loaded_info["Y"])
-                        self.map.switch_map(self.loaded_info["Carte"])
+                        self.map.switch_map(self.loaded_info["Carte"],False)
                         self.player.move("N")
                         self.player.move("S")
 
@@ -244,9 +244,7 @@ class Game:
                     print(self.map.zonearr,self.save_selected.get_pnj_sur_carte(self.map.zonearr))
 
                 if self.pressed.get(pygame.K_0):
-                    self.temp=self.save_selected.get_dialogue_pnj(1)
-                    Dialogue("WAH JE SUIS PUTAIN DE CONTENT DE TE RENCONTERR PAR ONTRE Y'A DES CHANCES JE SUIS COUPE AU MLIEU DONC SIKE AU PIRE",self.screen,self.map).afficher()
-                    self.pressed={}
+                   print(self.save_selected.get_etat_histoire())
                 # update map
                 self.map.update()
 
@@ -281,7 +279,7 @@ class Game:
 
     def chance_rencontre(self):
         for i in self.map.weeds:
-            if self.player.lower_rect.colliderect(i.rect):
+            if self.player.lower_rect.colliderect(i.image):
                 self.alearencontre = randint(0, 100)
                 if self.alearencontre < 2:
                     return True
