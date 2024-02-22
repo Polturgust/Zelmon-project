@@ -1996,11 +1996,11 @@
  </layer>
  <objectgroup id="35" name="changements_de_map">
   <object id="2" name="vers_route4" x="320" y="912" width="176" height="48"/>
-  <object id="3" name="vers_route?1" x="656" y="0" width="240" height="31"/>
+  <object id="3" name="vers_route5" x="656" y="0" width="240" height="31"/>
  </objectgroup>
  <objectgroup id="36" name="points_de_spawn">
   <object id="4" name="depuis_route4" x="394" y="882" width="16" height="16"/>
-  <object id="5" name="depuis_route?1" x="720" y="48" width="16" height="16"/>
+  <object id="5" name="depuis_route5" x="720" y="48" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="37" name="portes">
   <object id="7" name="pokemart" x="338" y="271.125" width="29.125" height="23.875"/>

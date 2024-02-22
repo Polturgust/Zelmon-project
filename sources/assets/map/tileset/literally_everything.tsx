@@ -10,6 +10,7 @@
    <wangcolor name="grass_path" color="#ff00d8" tile="-1" probability="1"/>
    <wangcolor name="dirty_dirt_path" color="#ffff00" tile="-1" probability="1"/>
    <wangcolor name="dirt_path" color="#ff0000" tile="-1" probability="1"/>
+   <wangcolor name="park_path" color="#a000ff" tile="-1" probability="1"/>
    <wangtile tileid="6" wangid="0,6,0,6,0,6,0,0"/>
    <wangtile tileid="7" wangid="0,0,0,6,0,6,0,6"/>
    <wangtile tileid="8" wangid="0,0,0,6,0,0,0,0"/>
@@ -76,14 +77,27 @@
    <wangtile tileid="189" wangid="0,0,0,4,0,0,0,0"/>
    <wangtile tileid="190" wangid="0,0,0,4,0,4,0,0"/>
    <wangtile tileid="191" wangid="0,0,0,0,0,4,0,0"/>
+   <wangtile tileid="192" wangid="0,0,0,8,0,0,0,0"/>
+   <wangtile tileid="193" wangid="0,0,0,8,0,8,0,0"/>
+   <wangtile tileid="194" wangid="0,0,0,0,0,8,0,0"/>
    <wangtile tileid="195" wangid="0,1,0,1,0,0,0,1"/>
    <wangtile tileid="196" wangid="0,1,0,0,0,1,0,1"/>
    <wangtile tileid="197" wangid="0,4,0,4,0,0,0,0"/>
    <wangtile tileid="198" wangid="0,4,0,4,0,4,0,4"/>
    <wangtile tileid="199" wangid="0,0,0,0,0,4,0,4"/>
+   <wangtile tileid="200" wangid="0,8,0,8,0,0,0,0"/>
+   <wangtile tileid="201" wangid="0,8,0,8,0,8,0,8"/>
+   <wangtile tileid="202" wangid="0,0,0,0,0,8,0,8"/>
+   <wangtile tileid="203" wangid="0,8,0,8,0,8,0,0"/>
+   <wangtile tileid="204" wangid="0,0,0,8,0,8,0,8"/>
    <wangtile tileid="205" wangid="0,4,0,0,0,0,0,0"/>
    <wangtile tileid="206" wangid="0,4,0,0,0,0,0,4"/>
    <wangtile tileid="207" wangid="0,0,0,0,0,0,0,4"/>
+   <wangtile tileid="208" wangid="0,8,0,0,0,0,0,0"/>
+   <wangtile tileid="209" wangid="0,8,0,0,0,0,0,8"/>
+   <wangtile tileid="210" wangid="0,0,0,0,0,0,0,8"/>
+   <wangtile tileid="211" wangid="0,8,0,8,0,0,0,8"/>
+   <wangtile tileid="212" wangid="0,8,0,0,0,8,0,8"/>
    <wangtile tileid="213" wangid="0,4,0,4,0,4,0,0"/>
    <wangtile tileid="214" wangid="0,0,0,4,0,4,0,4"/>
    <wangtile tileid="219" wangid="0,3,0,0,0,3,0,3"/>
