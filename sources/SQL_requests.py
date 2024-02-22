@@ -178,9 +178,11 @@ class Database:
         self.c=self.database.cursor()
         self.c.execute("""SELECT COUNT(id_pokemon) FROM Equipe WHERE id_joueur=?""",(id_joueur,))
         self.results=self.c.fetchall()
+        # S'il reste de la place dans son équipe, on vérifie que le pokémon demandé n'est pas déjà dans l'équipe
         if self.results[0][0]<6:
             self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=?""",(id_joueur,))
             self.results=self.c.fetchall()
+            # Si ce n'est pas le cas, on déplace le Pokémon
             if id_pokemon not in self.results[0]:
                 self.info_pokemon=self.get_info_pokemon(id_pokemon)
                 self.c.execute("""INSERT INTO Equipe VALUES (?,?)""",(id_pokemon,self.info_pokemon["ID"]))
@@ -193,6 +195,10 @@ class Database:
             return None
 
     def get_dialogue_pnj(self,ID_pnj):
+        """
+        Récupère une ligne de dialogue à partir de l'ID du PNJ associé
+        Renvoie une chaîne de caractères contenant la ligne de dialogue
+        """
         self.c.execute("""SELECT id_dialogue,condition FROM peut_parler WHERE id_joueur=?""", (ID_pnj,))
         self.results=self.c.fetchall()
         self.final=[]
@@ -212,11 +218,14 @@ class Database:
         return self.results
 
     def sauvegarder(self, player, map):
+        """
+        Récupère la position du joueur (coordonnées et carte sur laquelle il se trouve) pour les enregistrer dans la
+        base de données pour les sauvegarder.
+        """
         self.c = self.database.cursor()
         self.c.execute("""UPDATE Joueurs SET (coord_x,coord_y,carte)=(?,?,?)""",
                        (player.pos.get()[0], player.pos.get()[1], map.zonearr))
         self.database.commit()
-        print(map.zonearr, player.pos.get())
 
 
 def create_save(nb):
