@@ -127,6 +127,17 @@ class Database:
         else :
             return None
 
+    def get_dialogue_pnj(self,ID_pnj):
+        self.c.execute("""SELECT id_dialogue,condition FROM peut_parler WHERE id_joueur=?""", (ID_pnj,))
+        self.results=self.c.fetchall()
+        self.final=[]
+        for i in self.results:
+            self.c.execute("""SELECT dialogue FROM Dialogues WHERE id_dialogue=?""",(i[0],))
+            self.resulttemp=self.c.fetchall()
+            self.final.append(self.resulttemp[0][0])
+        return self.final[0]
+
+
     def sauvegarder(self, player, map):
         self.c = self.database.cursor()
         self.c.execute("""UPDATE Joueurs SET (coord_x,coord_y,carte)=(?,?,?)""",
