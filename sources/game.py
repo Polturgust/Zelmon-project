@@ -9,6 +9,7 @@ from player import Player
 from combat import Combat
 from pnj import *
 from SQL_requests import *
+from dialogue import *
 from audio import SoundManager
 
 
@@ -243,7 +244,9 @@ class Game:
                     print(self.map.zonearr,self.save_selected.get_pnj_sur_carte(self.map.zonearr))
 
                 if self.pressed.get(pygame.K_0):
-                    print(self.save_selected.deplacer_PC_vers_equipe(0,0))
+                    self.dia=Dialogue("Bonjour ! Je suis honoré de te rencontrer. Je suis jean-kévin de la roja, et ceci est un dialogue. Y'a des chance que je sois coupé au milieu d'un mot",self.screen,self.map)
+                    self.dia.afficher()
+                    self.pressed= {}
                 # update map
                 self.map.update()
 
