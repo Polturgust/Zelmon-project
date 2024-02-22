@@ -119,12 +119,13 @@ class Map:
         Post-conditions :
             le pnj a bien été ajouté au groupe et sera affiché lors du prochain appel de la fonction update
         """
-        self.group.add(pnj)
+        self.group.add(pnj)  # On ajoute le pnj au groupe pour qu'il soit affiché à l'écran
+        # On le fait bouger pour qu'il n'apparaisse pas en haut à gauche puis on lui remet sa position initiale
         base_direction = pnj.animation.direction
         pnj.move("N")
         pnj.move("S")
-
         pnj.animation.direction = base_direction
+        # On ajoute le pnj à la liste des pnjs présents sur la carte
         self.pnjs_list.append((pnj, name))
         print("pnj ajouté")
 
