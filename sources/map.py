@@ -23,7 +23,7 @@ class Map:
         self.changes = None  # Contiendra les collisions
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
-    def switch_map(self, map):
+    def switch_map(self, map, forcer_apparition=True):
         # load the wanted map
         self.tmx_data = pytmx.load_pygame(f"assets\\map\\{map}.tmx")
         # get the map for pyscroll
@@ -86,7 +86,7 @@ class Map:
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_prof" + dest[1]))
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
-                    if i.name == "points_de_spawn":
+                    if i.name == "points_de_spawn" and forcer_apparition:
                         print(self.zonearr, j.name)
                         # Si le nom correspond à la zone d'où vient le joueur, on déplace le joueur vers cette zone
                         if self.zonearr is not None and self.zonearr in j.name:
@@ -119,12 +119,13 @@ class Map:
         Post-conditions :
             le pnj a bien été ajouté au groupe et sera affiché lors du prochain appel de la fonction update
         """
-        self.group.add(pnj)
+        self.group.add(pnj)  # On ajoute le pnj au groupe pour qu'il soit affiché à l'écran
+        # On le fait bouger pour qu'il n'apparaisse pas en haut à gauche puis on lui remet sa position initiale
         base_direction = pnj.animation.direction
         pnj.move("N")
         pnj.move("S")
-
         pnj.animation.direction = base_direction
+        # On ajoute le pnj à la liste des pnjs présents sur la carte
         self.pnjs_list.append((pnj, name))
         print("pnj ajouté")
 

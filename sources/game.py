@@ -25,13 +25,12 @@ class Game:
         # initialise the screen
         self.map = Map(self.screen, self.player)
 
-        # On tente de créer un chat
         # On crée un dictionnaire qui contient tous les pnjs sous la forme : {"Nom-pnj" : Instance_classe_pnj}
         self.pnjs = dict()
 
         # On initialise les variables pour le mouvement du joueur :
-        # Son dernier mouvement (qui par défaut est un déplacement vers la droite)
-        self.last_move = "E"
+        # Son dernier mouvement (qui par défaut est un déplacement vers le bas)
+        self.last_move = "S"
         # La liste des mouvements inverses, utile dans la gestion des collisions
         self.inverse = {"NW": "SE", "NE": "SW", "SW": "NE", "SE": "NW", "N": "S", "S": "N", "E": "W", "W": "E"}
         # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche → utile pour se déplacer)
@@ -106,8 +105,8 @@ class Game:
 
                         self.loaded_info = self.save_selected.get_info_joueur(0)
                         print(self.loaded_info)
-                        self.player.set_coordonnees(self.loaded_info["X"],self.loaded_info["Y"])
-                        self.map.switch_map(self.loaded_info["Carte"])
+                        self.player.set_coordonnees(self.loaded_info["X"], self.loaded_info["Y"])
+                        self.map.switch_map(self.loaded_info["Carte"], False)
                         self.player.move("N")
                         self.player.move("S")
 
@@ -216,6 +215,15 @@ class Game:
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.last_move)
 
+                # Vérifie si le joueur est en collision avec un PNJ
+                for i in self.map.group:
+                    if self.player.rect.colliderect(i.rect) and not isinstance(i, Player):
+                        # Si oui, on effectue deux fois le mouvement inverse de celui que vient d'effectuer le joueur puis une fois le même.
+                        # De cette façon, le joueur ne peut avancer et l'animation ne le montre pas comme allant dans le sens opposé à celui de la collision.
+                        self.player.move(self.inverse[self.last_move])
+                        self.player.move(self.inverse[self.last_move])
+                        self.player.move(self.last_move)
+
                 # Vérifie si le joueur touche une zone qui doit le faire changer d'endroit
                 for i in self.map.changes:
                     if self.player.rect.colliderect(i.rect):
@@ -228,7 +236,7 @@ class Game:
                                 self.map.add_pnj(instance, name)
                         # On retire les pnjs de la carte actuelle
                         for name, instance in self.pnjs.items():
-                            if instance.map == previous and len(self.map.group)>1:
+                            if instance.map == previous:
                                 self.map.remove_pnj(instance, name)
 
                 # update pnjs animation
@@ -237,16 +245,14 @@ class Game:
 
                 # Sauvegarde quand on appuie sur "*"
                 if self.pressed.get(pygame.K_ASTERISK):
-                    self.save_selected.sauvegarder(self.player,self.map)
-                    print("Sauvagarde effectuée !")
+                    self.save_selected.sauvegarder(self.player, self.map)
+                    print("Sauvegarde effectuée !")
 
                 if self.pressed.get(pygame.K_DELETE):
-                    print(self.map.zonearr,self.save_selected.get_pnj_sur_carte(self.map.zonearr))
+                    print(self.map.zonearr, self.save_selected.get_pnj_sur_carte(self.map.zonearr))
 
                 if self.pressed.get(pygame.K_0):
-                    self.temp=self.save_selected.get_dialogue_pnj(1)
-                    Dialogue("WAH JE SUIS PUTAIN DE CONTENT DE TE RENCONTERR PAR ONTRE Y'A DES CHANCES JE SUIS COUPE AU MLIEU DONC SIKE AU PIRE",self.screen,self.map).afficher()
-                    self.pressed={}
+                   print(self.save_selected.get_inventaire(0))
                 # update map
                 self.map.update()
 
