@@ -23,7 +23,7 @@ class Map:
         self.changes = None  # Contiendra les collisions
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
-    def switch_map(self, map):
+    def switch_map(self, map, forcer_apparition=True):
         # load the wanted map
         self.tmx_data = pytmx.load_pygame(f"assets\\map\\{map}.tmx")
         # get the map for pyscroll
@@ -86,7 +86,7 @@ class Map:
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_prof" + dest[1]))
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
-                    if i.name == "points_de_spawn":
+                    if i.name == "points_de_spawn" and forcer_apparition:
                         print(self.zonearr, j.name)
                         # Si le nom correspond à la zone d'où vient le joueur, on déplace le joueur vers cette zone
                         if self.zonearr is not None and self.zonearr in j.name:

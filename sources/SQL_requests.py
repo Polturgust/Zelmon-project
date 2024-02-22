@@ -137,6 +137,11 @@ class Database:
             self.final.append(self.resulttemp[0][0])
         return self.final[0]
 
+    def get_etat_histoire(self):
+        self.c.execute("""SELECT Inventaire.id_objet FROM Inventaire JOIN Objets ON Objets.id_objet=Inventaire.id_objet JOIN Type_objet ON Type_objet.id_type_objet=Objets.id_type_objet WHERE id_joueur=0 AND Objets.id_type_objet IN (1,2)""")
+        self.results=self.c.fetchall()
+        self.results=self.results
+        return self.results
 
     def sauvegarder(self, player, map):
         self.c = self.database.cursor()
