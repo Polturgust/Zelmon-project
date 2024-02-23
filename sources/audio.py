@@ -55,6 +55,13 @@ class SoundManager:
         """
         self.sounds[name].set_volume(volume)
 
+    def stop(self):
+        """
+        Fonction qui permet d'arrêter la lecture du thème actuel
+        """
+        self.current_theme[1].stop()
+        self.current_theme = None, None
+
     def get_current_theme(self):
         """
         Fonction qui renvoie le thème actuel
