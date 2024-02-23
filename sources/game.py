@@ -24,6 +24,8 @@ class Game:
         self.player = Player(self)
         # initialise the screen
         self.map = Map(self.screen, self.player)
+        # initialise the sound manager
+        self.sound_manager = SoundManager()
 
         # On crée un dictionnaire qui contient tous les pnjs sous la forme : {"Nom-pnj" : Instance_classe_pnj}
         self.pnjs = dict()
@@ -238,6 +240,8 @@ class Game:
                         for name, instance in self.pnjs.items():
                             if instance.map == previous:
                                 self.map.remove_pnj(instance, name)
+                        if i.command == "route0":
+                            self.sound_manager.transition("Hyrule at peace", -1)
 
                 # update pnjs animation
                 for pnj in self.map.pnjs_list:
@@ -250,6 +254,9 @@ class Game:
 
                 if self.pressed.get(pygame.K_DELETE):
                     print(self.map.zonearr, self.save_selected.get_pnj_sur_carte(self.map.zonearr))
+
+                if self.sound_manager.get_current_theme() == (None, None):
+                    self.sound_manager.play("Main adventure theme", -1)
 
                 if self.pressed.get(pygame.K_0):
                    print(self.save_selected.get_inventaire(0))

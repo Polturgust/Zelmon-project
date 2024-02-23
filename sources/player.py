@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
         self.lower_rect = pygame.Rect(2, 12, 27, 10)
 
         # Autres attributs
-        self.velocity = 1
+        self.velocity = 2
         self.is_moving = False
 
     def move(self, direction):
