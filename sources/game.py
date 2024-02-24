@@ -240,8 +240,7 @@ class Game:
                         for name, instance in self.pnjs.items():
                             if instance.map == previous:
                                 self.map.remove_pnj(instance, name)
-                        if i.command == "route0":
-                            self.sound_manager.transition("Hyrule at peace", -1)
+                        self.set_audio()
 
                 # update pnjs animation
                 for pnj in self.map.pnjs_list:
@@ -255,11 +254,11 @@ class Game:
                 if self.pressed.get(pygame.K_DELETE):
                     print(self.map.zonearr, self.save_selected.get_pnj_sur_carte(self.map.zonearr))
 
-                if self.sound_manager.get_current_theme() == (None, None):
-                    self.sound_manager.play("Main adventure theme", -1)
+                if self.sound_manager.get_current_theme() == (None, None):  # On lance l'audio
+                    self.set_audio()
 
                 if self.pressed.get(pygame.K_0):
-                   print(self.save_selected.get_inventaire(0))
+                    print(self.save_selected.get_inventaire(0))
                 # update map
                 self.map.update()
 
@@ -300,3 +299,24 @@ class Game:
                     return True
         return False
 
+    def set_audio(self):
+        """
+        Fonction qui permet de charger l'audio selon la zone dans laquelle se trouve le joueur
+        """
+        if "ville" in self.map.zonearr or "interieur" in self.map.zonearr:
+            if self.sound_manager.get_current_theme() == (None, None):
+                self.sound_manager.play("Village theme", -1)
+            elif self.sound_manager.get_current_theme()[0] != "Village theme":
+                self.sound_manager.transition("Village theme", -1)
+        elif "route" in self.map.zonearr:
+            if self.sound_manager.get_current_theme() == (None, None):
+                self.sound_manager.play("Main adventure theme", -1)
+            elif self.sound_manager.get_current_theme()[0] != "Main adventure theme":
+                self.sound_manager.transition("Main adventure theme", -1)
+        elif "pokemart" in self.map.zonearr:
+            if self.sound_manager.get_current_theme() == (None, None):
+                self.sound_manager.transition("PokeMart theme", -1)
+            elif self.sound_manager.get_current_theme()[0] != "PokeMart theme":
+                self.sound_manager.transition("PokeMart theme", -1)
+        elif "pokecentre" in self.map.zonearr:
+            pass
