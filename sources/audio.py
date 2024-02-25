@@ -4,7 +4,7 @@ import wave
 
 class SoundManager:
     def __init__(self):
-        # On définit un dictionnaire qui contient tous les sons du jeu
+        # On définit un dictionnaire qui contient tous les sons du jeu (pas de mp3 !!)
         self.sounds = {
             "PokeMart theme": pygame.mixer.Sound("assets/audio/Ravio_s_Theme_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
             "Final Purification theme": pygame.mixer.Sound("assets/audio/Zelda_s_Lullaby_Milk_Bar_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
@@ -29,7 +29,7 @@ class SoundManager:
             le son demandé est joué
         """
 
-        self.sounds[name].play(loops=-1)
+        self.sounds[name].play(loops=loops)
         self.current_theme = name, self.sounds[name]
 
     def transition(self, name, loops=0):
