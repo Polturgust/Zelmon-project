@@ -31,18 +31,18 @@ class Map:
         # render the mapdata
         self.map_layer = pyscroll.BufferedRenderer(self.map_data, self.screen.get_size(), zoom=2)
         # puts everything together
-        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         self.map_layer._x_offset = 240
 
         self.group.add(self.player)
 
         # Crée deux groupes de lutins pyscroll, un qui contiendra les collisions, l'autre les changements de carte
-        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
-        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
+        self.collisions = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
+        self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         # Crée un groupe qui contient les hautes herbes → quand un Pokémon sauvage peut apparaître
-        self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
+        self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         # Crée un groupe pour les personnages
-        self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=9)
+        self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:

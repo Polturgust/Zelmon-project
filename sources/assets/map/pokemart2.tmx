@@ -317,9 +317,9 @@
   <object id="32" name="mur0" x="296.85" y="56.581" width="11.5645" height="23.3925" rotation="135"/>
  </objectgroup>
  <objectgroup id="10" name="changements_de_map">
-  <object id="22" name="vers_ville2" x="114.957" y="197.043" width="26" height="15.9565"/>
+  <object id="22" name="vers_ville4" x="114.957" y="197.043" width="26" height="15.9565"/>
  </objectgroup>
  <objectgroup id="11" name="points_de_spawn">
-  <object id="23" name="depuis_ville2" x="114" y="166" width="16" height="16"/>
+  <object id="23" name="depuis_ville4" x="114" y="166" width="16" height="16"/>
  </objectgroup>
 </map>
