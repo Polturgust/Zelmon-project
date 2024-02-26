@@ -134,10 +134,10 @@ class Game:
                             delete_save(3)
                             nb_sauvegardes -= 1
 
-                elif event.type == pygame.KEYDOWN:  # Si une touche est pressée, on l'ajoute au dictionnaire des touches pressées
+                elif event.type == pygame.KEYDOWN:  # Si une touche est pressée et que le jeu tourne, on l'ajoute au dictionnaire des touches pressées
                     self.pressed[event.key] = True
                 elif event.type == pygame.KEYUP:
-                    self.pressed[event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
+                    self.pressed[event.key] = False  # Si une touche est relâchée et que le jeu tourne, on l'enlève du dictionnaire des touches pressées
 
             if self.playing:  # Si on est dans le jeu
                 # Player movement
@@ -225,6 +225,9 @@ class Game:
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.last_move)
+                        # Si on appuie sur ...
+                            # on vérifie si ce PNJ a une ligne de dialogue
+                            # Si oui, on instancie la classe Dialogue
 
                 # Vérifie si le joueur touche une zone qui doit le faire changer d'endroit
                 for i in self.map.changes:

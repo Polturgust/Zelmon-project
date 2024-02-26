@@ -111,7 +111,7 @@ class GreyCat(PNJ):
 
         # On définit ses animations
         self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/pnj/chat/grey_walking_west.png").images(1, 8))
-        self.animation.frame_interval = 12
+        self.animation.frame_interval = 24
         self.animation.direction = None
 
         # On récupère son image de base
@@ -130,7 +130,7 @@ class Maman(PNJ):
 
         # On définit ses animations
         self.animation = Animation(idle=SpriteSheet("assets/Spritesheets/pnj/maman/idle_maman.png").images(1, 1))
-        self.animation.frame_interval = 12
+        self.animation.frame_interval = 24
         self.animation.direction = None
 
         # On récupère son image de base

@@ -247,7 +247,7 @@ def delete_save(nb):
     Fonction qui permet de supprimer une sauvegarde
 
     Pré-conditions :
-        nb est tu type integer et est compris entre 1 et 3 inclus
+        nb est du type integer et est compris entre 1 et 3 inclus
     Post-conditions :
         Le fichier de sauvegarde correspondant est supprimé et les autres sont renommés de façon à ce que le
         numéro de sauvegarde soit le plus petit possible

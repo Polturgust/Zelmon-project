@@ -16,7 +16,7 @@ class Screen:
         # creates a clock
         self.clock = pygame.time.Clock()
         # sets framerate to 120
-        self.framerate = 60
+        self.framerate = 120
 
     def update(self):
         # show display
