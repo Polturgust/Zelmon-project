@@ -198,6 +198,7 @@ class Game:
                 else:
                     self.player.is_moving = False
 
+
                 if self.cooldown == 0:
                     if self.chance_rencontre() is True:
                         self.origin = self.map.zonearr
@@ -210,12 +211,37 @@ class Game:
 
                 # Vérifie si le joueur est en collision avec un élément du décor
                 for i in self.map.collisions:
-                    if self.player.rect.colliderect(i.rect) and not isinstance(i, Player):
+                    if self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "":
                         # Si oui, on effectue deux fois le mouvement inverse de celui que vient d'effectuer le joueur puis une fois le même.
                         # De cette façon, le joueur ne peut avancer et l'animation ne le montre pas comme allant dans le sens opposé à celui de la collision.
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.last_move)
+                    # Si c'est un bloqueur qui permet d'aller vers le bas
+                    elif self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "bas":
+                        # On vérifie que le joueur se dirige bien vers le bas selon son dernier mouvement
+                        if self.last_move == "S" or self.last_move == "SE" or self.last_move == "SW":
+                            pass
+                        # Sinon, on le bloque
+                        else:
+                            self.player.move(self.inverse[self.last_move])
+                            self.player.move(self.inverse[self.last_move])
+                            self.player.move(self.last_move)
+                    # On fait la même chose avec les trois autres directions
+                    elif self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "gauche":
+                        if self.last_move == "W" or self.last_move == "SW" or self.last_move == "NW":
+                            pass
+                        else:
+                            self.player.move(self.inverse[self.last_move])
+                            self.player.move(self.inverse[self.last_move])
+                            self.player.move(self.last_move)
+                    elif self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "droit":
+                        if self.last_move == "E" or self.last_move == "SE" or self.last_move == "NE":
+                            pass
+                        else:
+                            self.player.move(self.inverse[self.last_move])
+                            self.player.move(self.inverse[self.last_move])
+                            self.player.move(self.last_move)
 
                 # Vérifie si le joueur est en collision avec un PNJ
                 for i in self.map.group:
