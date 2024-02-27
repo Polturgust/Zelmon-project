@@ -46,7 +46,6 @@ class Map:
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
-
             # Si la couche est un groupe d'objets Tiled :
             if isinstance(i, pytmx.TiledObjectGroup):
                 # Pour chaque objet de cette couche :
@@ -54,6 +53,9 @@ class Map:
                     # Si c'est un objet de la couche qui contient les collisions, on crée une collision et on l'ajoute au groupe collisions
                     if i.name == "collisions":
                         self.collisions.add(Collisions(j.width, j.height, j.x, j.y, ""))
+                    # Si c'est un objet de la couche qui contient les bloqueurs, on crée une collision et on passe en commande le sens dans lequel on peut passer
+                    if i.name == "bloqueurs":
+                        self.collisions.add(Collisions(j.width, j.height, j.x, j.y, j.name))
 
                     # Si c'est un objet de la couche qui contient les changements de carte, on crée une collision et on l'ajoute au groupe des changements de carte
                     if i.name == "changements_de_map":
