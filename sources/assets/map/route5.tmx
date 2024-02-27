@@ -3747,7 +3747,7 @@
   <object id="315" x="640" y="320" width="144" height="32"/>
   <object id="316" x="656" y="304" width="112" height="16"/>
  </objectgroup>
- <objectgroup id="20" name="bloqueur">
+ <objectgroup id="20" name="bloqueurs">
   <object id="325" name="droit" x="736" y="272" width="16" height="16"/>
   <object id="327" name="droit" x="288" y="304" width="16" height="32"/>
   <object id="328" name="droit" x="928" y="2272" width="16" height="112"/>

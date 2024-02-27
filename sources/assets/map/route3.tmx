@@ -9211,7 +9211,7 @@
  </objectgroup>
  <objectgroup id="144" name="bloqueurs">
   <object id="55" name="gauche" x="256" y="1248" width="16" height="64"/>
-  <object id="56" name="droite" x="304" y="1120" width="16" height="48"/>
+  <object id="56" name="droit" x="304" y="1120" width="16" height="48"/>
   <object id="57" name="bas" x="176" y="1168" width="128" height="16"/>
   <object id="58" name="bas" x="256.125" y="1056" width="111.875" height="16"/>
   <object id="59" name="gauche" x="240" y="1008" width="16" height="48"/>
@@ -9220,7 +9220,7 @@
   <object id="62" name="gauche" x="240" y="688" width="16" height="48"/>
   <object id="63" name="bas" x="256" y="736" width="224" height="16"/>
   <object id="64" name="bas" x="272.182" y="1312" width="208" height="16"/>
-  <object id="65" name="droite" x="480" y="1296" width="16" height="16"/>
+  <object id="65" name="droit" x="480" y="1296" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="146" name="collisions">
   <object id="66" name="terrain31" x="0" y="0" width="640" height="144"/>

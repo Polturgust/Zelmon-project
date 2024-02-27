@@ -733,7 +733,7 @@
   <object id="57" name="gauche" x="1120" y="240" width="16" height="47"/>
   <object id="58" name="bas" x="1136" y="336" width="32" height="16"/>
   <object id="59" name="bas" x="1296" y="336" width="560.125" height="16"/>
-  <object id="60" name="gauche" x="1856" y="160" width="16" height="176"/>
+  <object id="60" name="droit" x="1856" y="160" width="16" height="176"/>
   <object id="136" name="bas" x="283.938" y="240.238" width="20.125" height="15.9492"/>
  </objectgroup>
 </map>
