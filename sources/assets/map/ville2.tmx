@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="156" nextobjectid="138">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="70" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="156" nextobjectid="140">
  <tileset firstgid="1" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21001" source="tileset/literally_everything.tsx"/>
  <tileset firstgid="25257" source="tileset/houses_arenas.tsx"/>
@@ -7050,6 +7050,7 @@
   <object id="122" name="vers_pokecentre1" x="394.063" y="287" width="27.9375" height="16.9375"/>
   <object id="130" name="vers_interieur_grand1" x="848" y="848" width="15.9375" height="21.4432"/>
   <object id="133" name="vers_interieur_grand3" x="208" y="576" width="15.9091" height="17.2727"/>
+  <object id="138" name="vers_arene0" x="548.75" y="287.5" width="21.5" height="21.75"/>
  </objectgroup>
  <objectgroup id="67" name="points_de_spawn">
   <object id="9" name="depuis_route3" x="48" y="400" width="16" height="16"/>
@@ -7059,5 +7060,6 @@
   <object id="126" name="depuis_pokemart1" x="682" y="307" width="16" height="16"/>
   <object id="136" name="depuis_interieur_grand3" x="202" y="594" width="16" height="16"/>
   <object id="137" name="depuis_interieur_grand1" x="842" y="872" width="16" height="16"/>
+  <object id="139" name="depuis_arene0" x="546" y="310" width="16" height="16"/>
  </objectgroup>
 </map>
