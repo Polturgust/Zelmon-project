@@ -288,6 +288,7 @@ class Game:
 
                 if self.pressed.get(pygame.K_0):
                     print(self.save_selected.get_inventaire(0))
+
                 # update map
                 self.map.update()
 
