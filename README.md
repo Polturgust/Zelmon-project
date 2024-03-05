@@ -12,6 +12,7 @@ Le Héros doit alors triompher des trois arènes tenues par les assistants les p
 Tous les graphismes du jeu (carte, personnages, etc) ne nous appartiennent pas.
 Nous avons dessiné les cartes à partir de tilesets composé d'éléments que nous n'avons pas dessiné nous-même
 1. Les spritesheets pour les personnages sont issues du site [The Spriters Resource](https://www.spriters-resource.com/game_boy_advance/thelegendofzeldatheminishcap/)
+2. Les sprites des Pokémons sont issus su site [Pokencyclopedia.info](https://www.pokencyclopedia.info/en/index.php?id=sprites/gen4/spr_hgss)
 
 Le logo a été dessiné par nos soins à partir d'assets qui ne nous appartiennent pas
 1. [Logo de la Triforce](https://gamepedia.cursecdn.com/zelda_gamepedia_en/9/9c/TLoZ_Series_Triforce_Artwork.png)
