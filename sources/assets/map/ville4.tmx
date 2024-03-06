@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="118">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="120">
  <tileset firstgid="1" source="tileset/jungle_trees.tsx"/>
  <tileset firstgid="273" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="21273" source="tileset/dark_for_caves.tsx"/>
@@ -708,6 +708,8 @@
   <object id="55" name="vers_pokecentre2" x="586.419" y="160" width="27.9565" height="16.0435"/>
   <object id="57" name="vers_pokemart2" x="174.833" y="158.125" width="18.625" height="19"/>
   <object id="63" name="vers_route6" x="784.333" y="272" width="16" height="48"/>
+  <object id="118" name="vers_arene2" x="374.125" y="95.0625" width="20.9375" height="16.875"/>
+  <object id="119" name="depuis_arene2" x="370" y="113" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="15" name="points_de_spawn">
   <object id="54" name="depuis_route5" x="394" y="752" width="16" height="16"/>
