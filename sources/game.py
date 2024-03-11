@@ -204,9 +204,8 @@ class Game:
                         self.origin = self.map.zonearr
                         self.map.switch_map("combat")
                         self.pressed = {}
-
-                        self.combat = Combat(self, self.screen, self.player, self.map, self.origin)
-                        if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(1)) is False:
+                        self.combat = Combat(self, self.screen, self.player, self.map, self.origin,self.save_selected)
+                        if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(1)[1][0]) is False:
                             self.running = False
                         self.cooldown = 120
 

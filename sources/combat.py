@@ -3,7 +3,7 @@ from vector import Vector
 
 
 class Combat:
-    def __init__(self, game, screen, player, map, origin):
+    def __init__(self, game, screen, player, map, origin,save):
         self.game = game
         self.screen = screen
         self.player = player
@@ -11,16 +11,18 @@ class Combat:
         self.map = map
         self.pressed = {}
         self.origin = origin
+        self.save=save
 
     def combat_sauvage(self, id_poke_adv):
         """
         Fonction qui lance un combat.
         Un combat prend fin quand un des deux Pokémon est K.O ou si le joueur fuit en appuyant sur "a"
         """
-        print(self.game.save_selected.get_info_pokemon(id_poke_adv) + " veut se battre !")
+        self.info_espece=self.game.save_selected.get_info_espece(id_poke_adv)
+        print(self.info_espece["Nom"] + " veut se battre !")
 
         self.winner = 0
-        self.pv = 20
+        self.pv = self.info_espece["PV"]
 
         while self.winner == 0 and self.running:
             self.screen.update()
@@ -41,13 +43,13 @@ class Combat:
                 (40, self.screen.get_display().get_size()[1] - 70))
             # On affiche le pokémon adverse
             self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load("assets\\images\\pokemon.jpg"), (40, 40)),
+                pygame.transform.scale(pygame.image.load(self.info_espece["Path"]+"\\face.png"), (40, 40)).convert_alpha(),
                 (self.screen.get_display().get_size()[0] - 70, 40))
             self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render("You", False, (0, 0, 0)),
                                            (40, self.screen.get_display().get_size()[1] - 120))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.name, False, (0, 0, 0)),
+            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_espece["Nom"], False, (0, 0, 0)),
                                            (self.screen.get_display().get_size()[0] - 200, 10))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.pv)+" / 20", False, (0, 0, 0)),
+            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.pv)+" /"+str(self.info_espece["PV"]), False, (0, 0, 0)),
                                            (self.screen.get_display().get_size()[0] - 200, 80))
             self.screen.get_display().blit(
                 pygame.font.SysFont('Comic Sans MS', 30).render("Placeholder attack 1 : 5 dmg", False, (0, 0, 0)),

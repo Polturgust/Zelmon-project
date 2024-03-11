@@ -38,6 +38,21 @@ class Database:
         return {"ID": self.results[0], "ID_espece": self.results[1], "Nom": self.results[2], "Niveau": self.results[3],
                 "XP": self.results[4], "PV": self.results[5], "Statut": self.results[6]}
 
+    def get_info_espece(self,id_espece):
+        """
+        Récupère les informations sur un pokémon depuis la base de données sous la forme :
+        {"ID" : ID du Pokémon, "ID_espece" : ID de son espèce, "Nom" : Nom donné à ce Pokémon,
+        "Niveau" : niveau actuel du Pokémon, "XP" : nombre de points d'expérience de ce Pokémon,
+        "PV" : nombre de points de vie du Pokémon, "Statut" : Eventuelle altération de statut}.
+        """
+        self.c = self.database.cursor()
+        self.c.execute("""SELECT * FROM Especes WHERE id_espece=?""", (id_espece,))
+        self.results = self.c.fetchall()
+        self.results = self.results[0]
+        return {"ID_espece": self.results[0], "Nom": self.results[3], "Type1": self.results[1],
+                "Type2": self.results[2], "Path": self.results[4], "PV": self.results[5],"Attaque":self.results[6],
+                "Defense":self.results[7],"Vitesse":self.results[8],"Courbe":self.results[9]}
+
     def get_equipe(self, id_joueur):
         """
         Renvoie une liste composée des informations sur les Pokémons dans l'équipe du joueur, sous la forme d'une
@@ -144,6 +159,7 @@ class Database:
         c.execute(f"""SELECT id_espece, coefficient_apparition FROM Apparitions WHERE id_zone={id_zone}""")
         results = c.fetchall()
         selected_pokemon = choices([i[0] for i in results], [i[1] for i in results], k=1)
+        print(selected_pokemon)
         return results, selected_pokemon
 
     def capturer_pokemon(self, info, id_joueur):
