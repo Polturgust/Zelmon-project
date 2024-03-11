@@ -89,6 +89,9 @@ class Map:
                         elif j.name != None and "vers_temple_of_purification" in j.name:
                             dest = j.name.split("vers_temple_of_purification")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "temple_of_purification" + dest[1]))
+                        elif j.name != None and "vers_arene" in j.name:
+                            dest = j.name.split("vers_arene")
+                            self.changes.add(Collisions(j.width, j.height, j.x, j.y, "arene" + dest[1]))
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
                     if i.name == "points_de_spawn" and forcer_apparition:
