@@ -43,8 +43,8 @@ class Combat:
                 (40, self.screen.get_display().get_size()[1] - 70))
             # On affiche le pokémon adverse
             self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load(self.info_espece["Path"]+"\\face.png"), (40, 40)).convert_alpha(),
-                (self.screen.get_display().get_size()[0] - 70, 40))
+                pygame.transform.scale(pygame.image.load(self.info_espece["Path"]+"\\face.png"), (120, 120)).convert_alpha(),
+                (self.screen.get_display().get_size()[0] - 120, 40))
             self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render("You", False, (0, 0, 0)),
                                            (40, self.screen.get_display().get_size()[1] - 120))
             self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_espece["Nom"], False, (0, 0, 0)),
