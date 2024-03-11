@@ -6,7 +6,7 @@ class Animation:
         self.prev_dir = None  # Direction du dernier mouvement. Permet de savoir si le joueur à changé de direction
         self.direction = "S"  # par défaut le joueur regarde vers le bas (permet au joueur de voir son visage -> position neutre)
 
-        self.frame_interval = 8  # l'animation change toutes les 8 frames
+        self.frame_interval = 8 # l'animation change toutes les 8 frames
         self.current_frame = 0
 
         self.walking_north = walking_north

@@ -2,6 +2,7 @@ import sqlite3
 from shutil import copy
 from os import remove, rename
 from os.path import exists
+from random import choices
 
 
 class Database:
@@ -134,6 +135,17 @@ class Database:
             self.a_renvoyer.append(self.get_info_joueur(i[0]))
         return self.a_renvoyer
 
+    def get_savage_pokemon(self, id_zone):
+        """
+        Permet de récupérer sous forme de tuple, une liste des Pokémons qui peuvent apparaître dans la zone avec leur
+        coefficient d'apparition et l'id d'un Pokémon choisi aléatoirement selon ces coefficients
+        """
+        c = self.database.cursor()
+        c.execute(f"""SELECT id_espece, coefficient_apparition FROM Apparitions WHERE id_zone={id_zone}""")
+        results = c.fetchall()
+        selected_pokemon = choices([i[0] for i in results], [i[1] for i in results], k=1)
+        return results, selected_pokemon
+
     def capturer_pokemon(self, info, id_joueur):
         """
         Sauvegarde la capture d'un Pokémon par un joueur dans la base de données à partir des informations sur ce
@@ -156,55 +168,55 @@ class Database:
         self.c.execute("""INSERT INTO PC VALUES (?,?)""", (self.id_pokemon, id_joueur))
         self.database.commit()
 
-    def deplacer_equipe_vers_PC(self,id_pokemon):
+    def deplacer_equipe_vers_PC(self, id_pokemon):
         """
         Transfère un pokémon de l'équipe du joueur à son stockage PC (ce qui se traduit par un changement de table) dans
         la base de données
         """
         # On récupère les informations sur le Pokémon, puis on les insère dans la table PC
-        self.info_pokemon=self.get_info_pokemon(id_pokemon)
-        self.c.execute("""INSERT INTO PC VALUES (?,?)""",(id_pokemon,self.info_pokemon["ID"]))
+        self.info_pokemon = self.get_info_pokemon(id_pokemon)
+        self.c.execute("""INSERT INTO PC VALUES (?,?)""", (id_pokemon, self.info_pokemon["ID"]))
         self.database.commit()
         # On supprime ensuite le pokémon de la table Equipe
-        self.c.execute("""DELETE FROM Equipe WHERE id_pokemon=?""",(id_pokemon,))
+        self.c.execute("""DELETE FROM Equipe WHERE id_pokemon=?""", (id_pokemon,))
         self.database.commit()
 
-    def deplacer_PC_vers_equipe(self,id_pokemon,id_joueur):
+    def deplacer_PC_vers_equipe(self, id_pokemon, id_joueur):
         """
-            Transfère (si l'équipe du joueur n'est pas déjà pleine) un pokémon du stockage PC du joueur à son équipe
-            (ce qui se traduit par un changement de table) dans la base de données.
+        Transfère (si l'équipe du joueur n'est pas déjà pleine) un pokémon du stockage PC du joueur à son équipe
+        (ce qui se traduit par un changement de table) dans la base de données.
         """
         # On commence par vérifier que le joueur n'a pas déjà 6 pokémons dans son équipe
-        self.c=self.database.cursor()
-        self.c.execute("""SELECT COUNT(id_pokemon) FROM Equipe WHERE id_joueur=?""",(id_joueur,))
-        self.results=self.c.fetchall()
+        self.c = self.database.cursor()
+        self.c.execute("""SELECT COUNT(id_pokemon) FROM Equipe WHERE id_joueur=?""", (id_joueur,))
+        self.results = self.c.fetchall()
         # S'il reste de la place dans son équipe, on vérifie que le pokémon demandé n'est pas déjà dans l'équipe
-        if self.results[0][0]<6:
-            self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=?""",(id_joueur,))
-            self.results=self.c.fetchall()
+        if self.results[0][0] < 6:
+            self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=?""", (id_joueur,))
+            self.results = self.c.fetchall()
             # Si ce n'est pas le cas, on déplace le Pokémon
             if id_pokemon not in self.results[0]:
-                self.info_pokemon=self.get_info_pokemon(id_pokemon)
-                self.c.execute("""INSERT INTO Equipe VALUES (?,?)""",(id_pokemon,self.info_pokemon["ID"]))
+                self.info_pokemon = self.get_info_pokemon(id_pokemon)
+                self.c.execute("""INSERT INTO Equipe VALUES (?,?)""", (id_pokemon, self.info_pokemon["ID"]))
                 self.database.commit()
-                self.c.execute("""DELETE FROM PC WHERE id_pokemon=?""",(id_pokemon,))
+                self.c.execute("""DELETE FROM PC WHERE id_pokemon=?""", (id_pokemon,))
                 self.database.commit()
             else:
                 return None
-        else :
+        else:
             return None
 
-    def get_dialogue_pnj(self,ID_pnj):
+    def get_dialogue_pnj(self, ID_pnj):
         """
         Récupère une ligne de dialogue à partir de l'ID du PNJ associé
         Renvoie une chaîne de caractères contenant la ligne de dialogue
         """
         self.c.execute("""SELECT id_dialogue,condition FROM peut_parler WHERE id_joueur=?""", (ID_pnj,))
-        self.results=self.c.fetchall()
-        self.final=[]
+        self.results = self.c.fetchall()
+        self.final = []
         for i in self.results:
-            self.c.execute("""SELECT dialogue FROM Dialogues WHERE id_dialogue=?""",(i[0],))
-            self.resulttemp=self.c.fetchall()
+            self.c.execute("""SELECT dialogue FROM Dialogues WHERE id_dialogue=?""", (i[0],))
+            self.resulttemp = self.c.fetchall()
             self.final.append(self.resulttemp[0][0])
         return self.final[0]
 
@@ -212,15 +224,21 @@ class Database:
         """
         INCOMPLET : A COMPLETER UNE FOIS QUE LES OBJETS CLE AURONT ETE OBTENUS
         """
-        self.c.execute("""SELECT Inventaire.id_objet FROM Inventaire JOIN Objets ON Objets.id_objet=Inventaire.id_objet JOIN Type_objet ON Type_objet.id_type_objet=Objets.id_type_objet WHERE id_joueur=0 AND Objets.id_type_objet IN (1,2)""")
-        self.results=self.c.fetchall()
-        self.results=self.results
+        self.c.execute(
+            """SELECT Inventaire.id_objet FROM Inventaire JOIN Objets ON Objets.id_objet=Inventaire.id_objet JOIN Type_objet ON Type_objet.id_type_objet=Objets.id_type_objet WHERE id_joueur=0 AND Objets.id_type_objet IN (1,2)""")
+        self.results = self.c.fetchall()
+        self.results = self.results
         return self.results
+
+    def create_pokemon(self, id_pokemon, lvl, exp):
+        """
+        Fonction qui permet de créer un Pokémon dans la base de données
+        """
 
     def sauvegarder(self, player, map):
         """
         Récupère la position du joueur (coordonnées et carte sur laquelle il se trouve) pour les enregistrer dans la
-        base de données pour les sauvegarder.
+        base de données.
         """
         self.c = self.database.cursor()
         self.c.execute("""UPDATE Joueurs SET (coord_x,coord_y,carte)=(?,?,?)""",
