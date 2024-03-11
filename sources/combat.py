@@ -1,11 +1,10 @@
-
 import pygame
 from vector import Vector
 
 
 class Combat:
-    def __init__(self, name, screen, player, map, origin):
-        self.name = name  # nom du Pokémon adverse
+    def __init__(self, game, screen, player, map, origin):
+        self.game = game
         self.screen = screen
         self.player = player
         self.running = True
@@ -13,12 +12,12 @@ class Combat:
         self.pressed = {}
         self.origin = origin
 
-    def lancer_combat(self):
+    def combat_sauvage(self, id_poke_adv):
         """
         Fonction qui lance un combat.
         Un combat prend fin quand un des deux Pokémon est K.O ou si le joueur fuit en appuyant sur "a"
         """
-        print(self.name + " veut se battre !")
+        print(self.game.save_selected.get_info_pokemon(id_poke_adv) + " veut se battre !")
 
         self.winner = 0
         self.pv = 20
