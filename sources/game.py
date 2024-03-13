@@ -317,7 +317,7 @@ class Game:
                     pnj[0].update()
 
                 # Sauvegarde quand on appuie sur "*"
-                if self.pressed.get(pygame.K_ASTERISK):
+                if self.pressed.get(pygame.K_s):
                     self.save_selected.sauvegarder(self.player, self.map)
                     print("Sauvegarde effectuée !")
 

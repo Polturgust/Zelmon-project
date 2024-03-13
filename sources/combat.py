@@ -35,6 +35,28 @@ class Combat:
         while self.winner == 0 and self.running:
             self.screen.update()
             self.map.update()
+            self.bg_normal = pygame.image.load('assets\\images\\background_combat\\normal+bars.png')
+            self.bg_normal = pygame.transform.scale(self.bg_normal, (640,359))
+
+            self.bg_park = pygame.image.load('assets\\images\\background_combat\\park+bars.png')
+            self.bg_park = pygame.transform.scale(self.bg_park, (640,359))
+
+            self.bg_images = pygame.image.load('assets\\images\\background_combat\\neige+bars.png')
+            self.bg_images = pygame.transform.scale(self.bg_images, (640,359))
+
+            self.bg_grotte = pygame.image.load('assets\\images\\background_combat\\grotte+bars.png')
+            self.bg_grotte = pygame.transform.scale(self.bg_grotte, (640,359))
+
+            self.bg_roche = pygame.image.load('assets\\images\\background_combat\\roche+bars.png')
+            self.bg_roche = pygame.transform.scale(self.bg_roche, (640,359))
+
+            self.bg_jungle = pygame.image.load('assets\\images\\background_combat\\jungle+bars.png')
+            self.bg_jungle = pygame.transform.scale(self.bg_jungle, (640,359))
+
+            self.bg_eau = pygame.image.load('assets\\images\\background_combat\\eau+bars.png')
+            self.bg_eau = pygame.transform.scale(self.bg_eau, (640,359))
+
+            self.screen.get_display().blit(self.bg_normal, (0,0))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:  # On ferme le jeu si l'utilisateur ferme la fenêtre
@@ -46,15 +68,10 @@ class Combat:
                     self.pressed[event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
 
             # On affiche le pokémon du joueur
-            self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load(self.info_pokemon_joueur["Info_espece"]["Path"]+"\\dos.png"), (120, 120)),
-                (10, self.screen.get_display().get_size()[1] - 130))
+            self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_pokemon_joueur["Info_espece"]["Path"]+"\\dos.png"), (220, 220)),(50, 180))
             # On affiche le pokémon adverse
-            self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load(self.info_espece_adv["Path"]+"\\face.png"), (120, 120)).convert_alpha(),
-                (self.screen.get_display().get_size()[0] - 120, 40))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False, (0, 0, 0)),
-                                           (130, self.screen.get_display().get_size()[1] - 100))
+            self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_espece_adv["Path"]+"\\face.png"), (220, 220)).convert_alpha(),(380, 62))
+            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False, (0, 0, 0)),(130, self.screen.get_display().get_size()[1] - 100))
 
             self.screen.get_display().blit(
                 pygame.font.SysFont('Comic Sans MS', 30).render(str(self.pv_joueur)+" / "+str(self.info_pokemon_joueur["Info_pokemon"]["PV"]), False,
