@@ -141,64 +141,92 @@ class Game:
 
             if self.playing:  # Si on est dans le jeu
                 # Player movement
-                # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du carré (ses coordonnées sont le point en haut à gauche)
-                if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and \
-                        self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
-                    self.player.move("NE")
-                    self.last_move = "NE"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
-                elif self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] > 0 and \
-                        self.player.pos.get()[0] > 0:
-                    self.player.move("NW")
-                    self.last_move = "NW"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
+                if self.player.get_slipping_status() is False:
+                    # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du carré (ses coordonnées sont le point en haut à gauche)
+                    if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and \
+                            self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
+                        self.player.move("NE")
+                        self.last_move = "NE"
+                        self.player.is_moving = True
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
 
-                elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < \
-                        self.map.map_data.map_size[1] * 16 - 30 and self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
-                    self.player.move("SE")
-                    self.last_move = "SE"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
-                elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < \
-                        self.map.map_data.map_size[1] * 16 - 30 and self.player.pos.get()[0] > 0:
-                    self.player.move("SW")
-                    self.last_move = "SW"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
-                elif self.pressed.get(pygame.K_UP) and self.player.pos.get()[1] > 0:
-                    self.player.move("N")
-                    self.last_move = "N"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
-                elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.map.map_data.map_size[1] * 16 - 30:
-                    self.player.move("S")
-                    self.last_move = "S"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
-                elif self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[0] > 0:
-                    self.player.move("W")
-                    self.last_move = "W"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
-                elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16:
-                    self.player.move("E")
-                    self.last_move = "E"
-                    self.player.is_moving = True
-                    if self.cooldown != 0:
-                        self.cooldown -= 1
-                else:
-                    self.player.is_moving = False
+                    elif self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] > 0 and \
+                            self.player.pos.get()[0] > 0:
+                        self.player.move("NW")
+                        self.last_move = "NW"
+                        self.player.is_moving = True
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
 
+                    elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] < \
+                            self.map.map_data.map_size[1] * 16 - 30 and self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
+                        self.player.move("SE")
+                        self.last_move = "SE"
+                        self.player.is_moving = True
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
 
+                    elif self.pressed.get(pygame.K_DOWN) and self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[1] < \
+                            self.map.map_data.map_size[1] * 16 - 30 and self.player.pos.get()[0] > 0:
+                        self.player.move("SW")
+                        self.last_move = "SW"
+                        self.player.is_moving = True
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
+
+                    elif self.pressed.get(pygame.K_UP) and self.player.pos.get()[1] > 0:
+                        self.player.move("N")
+                        self.last_move = "N"
+                        self.player.is_moving = True
+                        print("glace ?", self.player.get_ice_status())
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
+                            print("On glisse", self.player.get_slipping_status())
+
+                    elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.map.map_data.map_size[1] * 16 - 30:
+                        self.player.move("S")
+                        self.last_move = "S"
+                        self.player.is_moving = True
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
+
+                    elif self.pressed.get(pygame.K_LEFT) and self.player.pos.get()[0] > 0:
+                        self.player.move("W")
+                        self.last_move = "W"
+                        self.player.is_moving = True
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
+
+                    elif self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16:
+                        self.player.move("E")
+                        self.last_move = "E"
+                        self.player.is_moving = True
+                        if self.cooldown != 0:
+                            self.cooldown -= 1
+                        if self.player.get_ice_status():
+                            self.player.set_slipping_status(True)
+                    else:
+                        self.player.is_moving = False
+
+                elif self.player.get_slipping_status() is True:
+                    self.player.move(self.last_move)
+
+                # Déclenche un combat
                 if self.cooldown == 0:
                     if self.chance_rencontre() is True:
                         self.origin = self.map.zonearr
@@ -217,6 +245,9 @@ class Game:
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.last_move)
+                        if self.player.get_slipping_status():
+                            self.player.set_slipping_status(False)
+
                     # Si c'est un bloqueur qui permet d'aller vers le bas
                     elif self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "bas":
                         # On vérifie que le joueur se dirige bien vers le bas selon son dernier mouvement
@@ -270,6 +301,16 @@ class Game:
                             if instance.map == previous:
                                 self.map.remove_pnj(instance, name)
                         self.set_audio()
+
+                # Vérifie si le joueur est sur de la glace
+                for i in self.map.ice:
+                    touches_ice = None
+                    if self.player.lower_rect.colliderect(i.rect):
+                        # Si oui, on définit le joueur comme étant sur de la glace
+                        self.player.set_ice_status(True)
+                        touches_ice = True
+                        # print("on_ice")
+
 
                 # update pnjs animation
                 for pnj in self.map.pnjs_list:

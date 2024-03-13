@@ -41,6 +41,8 @@ class Map:
         self.changes = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         # Crée un groupe qui contient les hautes herbes → quand un Pokémon sauvage peut apparaître
         self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
+        # Crée un groupe pour le sol glacé
+        self.ice = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         # Crée un groupe pour les personnages
         self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
 
@@ -111,6 +113,9 @@ class Map:
 
                     if i.name == "herbes":
                         self.weeds.add(Collisions(j.width, j.height, j.x, j.y, ""))
+
+                    if i.name == "glace":
+                        self.ice.add(Collisions(j.width, j.height, j.x, j.y, ""))
 
         # On change la zone d'origine du joueur à la zone actuelle
         self.zonearr = map

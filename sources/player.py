@@ -28,6 +28,8 @@ class Player(pygame.sprite.Sprite):
         # Autres attributs
         self.velocity = 1
         self.is_moving = False
+        self.on_ice = False  # Si le joueur est sur la glace
+        self.slipping = False  # Si le joueur est en glisse
 
     def move(self, direction):
         """
@@ -107,9 +109,16 @@ class Player(pygame.sprite.Sprite):
             - Si le joueur ne marche pas, on définit une image statique selon la direction de son dernier déplacement
             - Si le joueur bouge, on fait appel à la classe Animation pour faire défiler la Spritesheet correspondant à la direction du mouvement
         """
-        if self.is_moving:  # Si le joueur se déplace
+        if self.is_moving and not self.slipping:  # Si le joueur se déplace
+            self.animation.set_frame_interval(8)
             self.animation.update(1)
             self.image = self.animation.get_current_image()
+            self.velocity = 1
+        elif self.is_moving and self.slipping:
+            self.animation.set_frame_interval(32)
+            self.animation.update(1)
+            self.image = self.animation.get_current_image()
+            self.velocity = 2
         else:
             if self.animation.direction == "N":
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-North_Link.png")
@@ -121,5 +130,17 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-West_Link.png")
         # pygame.draw.rect(self.game.screen.get_display(), (255, 0, 0), self.rect)
 
-    def set_coordonnees(self,x,y):
-        self.pos=Vector(x,y)
+    def set_coordonnees(self, x, y):
+        self.pos = Vector(x, y)
+
+    def get_ice_status(self):
+        return self.on_ice
+
+    def set_ice_status(self, boolean):
+        self.on_ice = boolean
+
+    def get_slipping_status(self):
+        return self.slipping
+
+    def set_slipping_status(self, boolean):
+        self.slipping = boolean

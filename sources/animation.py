@@ -106,3 +106,9 @@ class Animation:
                     self.walking_index += step
                 else:
                     self.walking_index = 0
+
+    def set_frame_interval(self, interval):
+        self.frame_interval = interval
+
+    def get_frame_interval(self):
+        return self.frame_interval
