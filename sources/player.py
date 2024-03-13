@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
 
         # Autres attributs
         self.velocity = 1
-        self.is_moving = False
+        self.is_moving = False  # Si le joueur se déplace
         self.on_ice = False  # Si le joueur est sur la glace
         self.slipping = False  # Si le joueur est en glisse
 
@@ -114,12 +114,12 @@ class Player(pygame.sprite.Sprite):
             self.animation.update(1)
             self.image = self.animation.get_current_image()
             self.velocity = 1
-        elif self.is_moving and self.slipping:
+        elif self.is_moving and self.slipping:  # Si le joueur se déplace et glisse sur de la glace
             self.animation.set_frame_interval(32)
             self.animation.update(1)
             self.image = self.animation.get_current_image()
             self.velocity = 2
-        else:
+        else:  # Sinon, on affiche l'image qui correspond à la direction vers laquelle le joueur regarde
             if self.animation.direction == "N":
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-North_Link.png")
             elif self.animation.direction == "E":
@@ -128,7 +128,6 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-South_Link.png")
             elif self.animation.direction == "W":
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-West_Link.png")
-        # pygame.draw.rect(self.game.screen.get_display(), (255, 0, 0), self.rect)
 
     def set_coordonnees(self, x, y):
         self.pos = Vector(x, y)
@@ -144,3 +143,6 @@ class Player(pygame.sprite.Sprite):
 
     def set_slipping_status(self, boolean):
         self.slipping = boolean
+
+    def set_moving_status(self, boolean):
+        self.is_moving = boolean
