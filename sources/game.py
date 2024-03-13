@@ -188,12 +188,10 @@ class Game:
                         self.player.move("N")
                         self.last_move = "N"
                         self.player.is_moving = True
-                        print("glace ?", self.player.get_ice_status())
                         if self.cooldown != 0:
                             self.cooldown -= 1
                         if self.player.get_ice_status():
                             self.player.set_slipping_status(True)
-                            print("On glisse", self.player.get_slipping_status())
 
                     elif self.pressed.get(pygame.K_DOWN) and self.player.pos.get()[1] < self.map.map_data.map_size[1] * 16 - 30:
                         self.player.move("S")
@@ -304,13 +302,14 @@ class Game:
                         self.set_audio()
 
                 # Vérifie si le joueur est sur de la glace
+                touches_ice = None
                 for i in self.map.ice:
-                    touches_ice = None
                     if self.player.lower_rect.colliderect(i.rect):
                         # Si oui, on définit le joueur comme étant sur de la glace
                         self.player.set_ice_status(True)
                         touches_ice = True
-                        # print("on_ice")
+                    if touches_ice is None:
+                        self.player.set_ice_status(False)
 
 
                 # update pnjs animation
