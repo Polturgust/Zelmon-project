@@ -35,7 +35,8 @@ class Game:
         self.last_move = "S"
         # La liste des mouvements inverses, utile dans la gestion des collisions
         self.inverse = {"NW": "SE", "NE": "SW", "SW": "NE", "SE": "NW", "N": "S", "S": "N", "E": "W", "W": "E"}
-        # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche → utile pour se déplacer)
+        # on crée un dictionnaire qui contient les touches pressées (permet de rester appuyé sur une touche → utile
+        # pour se déplacer)
         self.pressed = dict()
 
         self.cooldown = 0
