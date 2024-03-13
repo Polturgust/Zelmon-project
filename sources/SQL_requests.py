@@ -34,9 +34,17 @@ class Database:
         self.c = self.database.cursor()
         self.c.execute("""SELECT * FROM Pokemons WHERE id_pokemon=?""", (id_pokemon,))
         self.results = self.c.fetchall()
-        self.results = self.results[0]
-        return {"ID": self.results[0], "ID_espece": self.results[1], "Nom": self.results[2], "Niveau": self.results[3],
+        if len(self.results)!=0:
+            self.results = self.results[0]
+            return {"ID": self.results[0], "ID_espece": self.results[1], "Nom": self.results[2], "Niveau": self.results[3],
                 "XP": self.results[4], "PV": self.results[5], "Statut": self.results[6]}
+
+    def get_pokemon_equipe(self,id_joueur):
+        self.c=self.database.cursor()
+        self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=? AND est_equipe=1""",(id_joueur,))
+        self.results = self.c.fetchall()
+        if len(self.results)!=0 : return self.results[0][0]
+        return None
 
     def get_info_espece(self,id_espece):
         """
@@ -103,8 +111,8 @@ class Database:
         self.c.execute("""SELECT * FROM Attaques WHERE id_attaque=?""", (id_attaque,))
         self.results = self.c.fetchall()
         self.results = self.results[0]
-        return {"ID": self.results[0], "Type": self.results[1], "Effet": self.results[2], "Degats": self.results[3],
-                "Nom": self.results[4], "Description": self.results[5]}
+        return {"ID": self.results[0], "Nom": self.results[1], "Type": self.results[2], "Puissance": self.results[3],
+                "Precision": self.results[4], "Effet": self.results[5],"Qte_effet":self.results[6],"Pourcent_effet":self.results[7],"PP_max":self.results[8],"Description":self.results[9]}
 
     def get_details_objet(self, id_objet):
         """
