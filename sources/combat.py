@@ -18,11 +18,19 @@ class Combat:
         Fonction qui lance un combat.
         Un combat prend fin quand un des deux Pokémon est K.O ou si le joueur fuit en appuyant sur "a"
         """
-        self.info_espece=self.game.save_selected.get_info_espece(id_poke_adv)
-        print(self.info_espece["Nom"] + " veut se battre !")
+        self.equipe_joueur=self.game.save_selected.get_pokemon_equipe(0)
+        self.info_pokemon_joueur={"Info_pokemon":self.game.save_selected.get_info_pokemon(self.equipe_joueur)}
+        self.info_pokemon_joueur["Info_espece"]=self.game.save_selected.get_info_espece(self.info_pokemon_joueur["Info_pokemon"]["ID_espece"])
+        self.info_pokemon_joueur["Attaques"]=self.game.save_selected.get_attaques(self.info_pokemon_joueur["Info_pokemon"]["ID"])
+
+        print(self.info_pokemon_joueur)
+
+        self.info_espece_adv=self.game.save_selected.get_info_espece(id_poke_adv)
+        print(self.info_espece_adv["Nom"] + " veut se battre !")
 
         self.winner = 0
-        self.pv = self.info_espece["PV"]
+        self.pv_adv = self.info_espece_adv["PV"]
+        self.pv_joueur=self.info_pokemon_joueur["Info_pokemon"]["PV"]
 
         while self.winner == 0 and self.running:
             self.screen.update()
@@ -39,23 +47,34 @@ class Combat:
 
             # On affiche le pokémon du joueur
             self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load("assets\\images\\player.jpg"), (40, 40)),
-                (40, self.screen.get_display().get_size()[1] - 70))
+                pygame.transform.scale(pygame.image.load(self.info_pokemon_joueur["Info_espece"]["Path"]+"\\dos.png"), (120, 120)),
+                (10, self.screen.get_display().get_size()[1] - 130))
             # On affiche le pokémon adverse
             self.screen.get_display().blit(
-                pygame.transform.scale(pygame.image.load(self.info_espece["Path"]+"\\face.png"), (120, 120)).convert_alpha(),
+                pygame.transform.scale(pygame.image.load(self.info_espece_adv["Path"]+"\\face.png"), (120, 120)).convert_alpha(),
                 (self.screen.get_display().get_size()[0] - 120, 40))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render("You", False, (0, 0, 0)),
-                                           (40, self.screen.get_display().get_size()[1] - 120))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_espece["Nom"], False, (0, 0, 0)),
-                                           (self.screen.get_display().get_size()[0] - 200, 10))
-            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.pv)+" /"+str(self.info_espece["PV"]), False, (0, 0, 0)),
-                                           (self.screen.get_display().get_size()[0] - 200, 80))
-            self.screen.get_display().blit(
-                pygame.font.SysFont('Comic Sans MS', 30).render("Placeholder attack 1 : 5 dmg", False, (0, 0, 0)),
-                (10, self.screen.get_display().get_size()[1]/2))
+            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False, (0, 0, 0)),
+                                           (130, self.screen.get_display().get_size()[1] - 100))
 
-            if (pygame.K_a in self.pressed.keys() and self.pressed[pygame.K_a] is True) or self.pv <= 0:
+            self.screen.get_display().blit(
+                pygame.font.SysFont('Comic Sans MS', 30).render(str(self.pv_joueur)+" / "+str(self.info_pokemon_joueur["Info_pokemon"]["PV"]), False,
+                                                                (0, 0, 0)),
+                (130, self.screen.get_display().get_size()[1] - 50))
+
+            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_espece_adv["Nom"], False, (0, 0, 0)),
+                                           (self.screen.get_display().get_size()[0] - 200, 10))
+            self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(str(self.pv_adv)+" /"+str(self.info_espece_adv["PV"]), False, (0, 0, 0)),
+                                           (self.screen.get_display().get_size()[0] - 200, 80))
+            coord=self.screen.get_display().get_size()[1]/4
+            nb=1
+            for i in self.info_pokemon_joueur["Attaques"]:
+                self.screen.get_display().blit(
+                pygame.font.SysFont('Comic Sans MS', 30).render(str(nb)+" : "+str(i["Nom"])+" : "+str(i["Puissance"])+" dégâts", False, (0, 0, 0)),
+                (10, coord))
+                coord+=40
+                nb+=1
+
+            if (pygame.K_a in self.pressed.keys() and self.pressed[pygame.K_a] is True) or self.pv_adv <= 0:
                 self.pressed[pygame.K_a] = False
                 self.winner = 1
 
