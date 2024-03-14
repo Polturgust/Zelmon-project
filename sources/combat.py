@@ -1,4 +1,5 @@
 import pygame
+from random import *
 from vector import Vector
 from dialogue import Dialogue
 
@@ -32,6 +33,10 @@ class Combat:
             self.info_espece_adv["Attaques"]=self.game.save_selected.get_attaques_par_type(self.info_espece_adv["Info_espece"]["Type1"])
         print(self.info_espece_adv["Attaques"])
 
+        self.info_espece_adv["Info_pokemon"]={}
+        self.info_espece_adv["Info_pokemon"]["Vitesse"]=randint(0,100)
+
+
 
 
 
@@ -43,6 +48,7 @@ class Combat:
         self.id_poke_adv=id_poke_adv
         self.info_espece_adv={}
         self.get_info_pokemons()
+        self.info_espece_adv["Info_pokemon"]["PV"]=self.info_espece_adv["Info_espece"]["PV"]
         self.winner = 0
         self.pv_adv = self.info_espece_adv["Info_espece"]["PV"]
         self.pv_joueur=self.info_pokemon_joueur["Info_pokemon"]["PV"]
@@ -103,7 +109,7 @@ class Combat:
             #affiche le nom du pokemon adverse
             self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(self.info_espece_adv["Info_espece"]["Nom"], False, (73, 73, 73)), (10, 48))
             #affiche les PV du pokemon adverse
-            self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(str(self.pv_adv)+" /"+str(self.info_espece_adv["Info_espece"]["PV"]), False, (73, 73, 73)), (80, 80))
+            self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(str(self.info_espece_adv["Info_pokemon"]["PV"])+" /"+str(self.info_espece_adv["Info_espece"]["PV"]), False, (73, 73, 73)), (80, 80))
             #affiche le niveau du pokemon adverse
             self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_espece_adv["Info_espece"]["Path"]+"\\face.png"), (220, 220)).convert_alpha(),(380, 62))
             self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False, (0, 0, 0)),(130, self.screen.get_display().get_size()[1] - 100))
@@ -134,20 +140,60 @@ class Combat:
 
             if (pygame.K_a in self.pressed.keys() and self.pressed[pygame.K_a] is True) or self.pv_adv <= 0:
                 self.pressed[pygame.K_a] = False
-                self.winner = 1
+                self.winner = True
 
             if pygame.K_1 in self.pressed.keys() and self.pressed[pygame.K_1] is True:
                 self.pressed[pygame.K_1] = False
-                self.pv -= 5
+                self.attaquer(self.info_pokemon_joueur["Attaques"][0],self.info_espece_adv["Attaques"][randint(0,3)])
+
+            if pygame.K_2 in self.pressed.keys() and self.pressed[pygame.K_2] is True:
+                self.pressed[pygame.K_2] = False
+                self.attaquer(self.info_pokemon_joueur["Attaques"][1],self.info_espece_adv["Attaques"][randint(0,3)])
 
 
         self.pressed = {}
         self.map.switch_map(self.origin)
         self.player.pos = Vector(self.player.pos.get()[0], self.player.pos.get()[1])
         self.cooldown = 120
-        return None
+        return self.winner
 
 
     def attaquer(self,attaque_joueur,attaque_adv):
         self.attaque_joueur=attaque_joueur
         self.attaque_adv=attaque_adv
+
+        if self.info_espece_adv["Info_espece"]["Vitesse"]>self.info_pokemon_joueur["Info_espece"]["Vitesse"]:
+            reussi=randint(0,100)<=self.attaque_adv["Precision"]
+            if reussi:
+                self.info_pokemon_joueur["Info_pokemon"]["PV"]-=self.attaque_adv["Puissance"]
+                print("Pokemon advrese attaque en premier")
+                if self.info_pokemon_joueur["Info_pokemon"]["PV"]<=0:
+                    self.info_pokemon_joueur["Info_pokemon"]["PV"]=0
+                    self.winner=False
+
+            reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
+            if reussi:
+                self.info_espece_adv["Info_pokemon"]["PV"] -= self.attaque_joueur["Puissance"]
+                if self.info_espece_adv["Info_pokemon"]["PV"] <= 0:
+                    self.info_espece_adv["Info_pokemon"]["PV"] = 0
+                    self.winner = True
+
+            return None
+
+        else:
+            reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
+            if reussi:
+                self.info_espece_adv["Info_pokemon"]["PV"] -= self.attaque_joueur["Puissance"]
+                if self.info_espece_adv["Info_pokemon"]["PV"]<=0:
+                    self.info_espece_adv["Info_pokemon"]["PV"]=0
+                    self.winner=True
+
+            reussi = randint(0, 100) <= self.attaque_adv["Precision"]
+            if reussi:
+                self.info_pokemon_joueur["Info_pokemon"]["PV"] -= self.attaque_adv["Puissance"]
+                print("Pokemon advrese attaque en 2e")
+                if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0:
+                    self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
+                    self.winner = False
+
+            return None
