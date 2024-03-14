@@ -100,6 +100,19 @@ class Database:
             self.a_renvoyer.append(self.get_details_attaque(i[0]))
         return self.a_renvoyer
 
+    def get_attaques_par_type(self,type1,type2=None):
+        self.c=self.database.cursor()
+        if type2 is not None:
+            self.c.execute("""SELECT id_attaque FROM Attaques WHERE type IN (?,?)""",(type1,type2))
+            self.results=self.c.fetchall()
+        else:
+            self.c.execute("""SELECT id_attaque FROM Attaques WHERE type=?""", (type1,))
+            self.results=self.c.fetchall()
+        liste = choices(self.results, k=4)
+        for i in range(len(liste)):
+            liste[i]=liste[i][0]
+        return [self.get_details_attaque(i) for i in liste]
+
     def get_details_attaque(self, id_attaque):
         """
         Récupère les caractéritiques d'une attaque depuis la base de données et les renvoie sous la forme :
@@ -114,6 +127,14 @@ class Database:
         return {"ID": self.results[0], "Nom": self.results[1], "Type": self.results[2], "Puissance": self.results[3],
                 "Precision": self.results[4], "Effet": self.results[5],"Qte_effet":self.results[6],"Pourcent_effet":self.results[7],"PP_max":self.results[8],"Description":self.results[9]}
 
+    def get_pp_restants(self,id_pokemon,id_attaque):
+        self.c=self.database.cursor()
+        self.c.execute("""SELECT pp_restant FROM Attaques_possedees WHERE id_pokemon=? and id_attaque=?""",(id_pokemon,id_attaque))
+        self.results=self.c.fetchall()
+        print(self.results)
+        if len(self.results)!=0:
+            self.c.close()
+            return self.results[0][0]
     def get_details_objet(self, id_objet):
         """
         Renvoie des détails sur un objet depuis la base de données sous la forme :
