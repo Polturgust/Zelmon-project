@@ -107,7 +107,17 @@ class Combat:
             #affiche le niveau du pokemon adverse
             self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_espece_adv["Info_espece"]["Path"]+"\\face.png"), (220, 220)).convert_alpha(),(380, 62))
             self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False, (0, 0, 0)),(130, self.screen.get_display().get_size()[1] - 100))
+            #affiche le niveau du pokemon adverse
 
+            #gere la taille de la barre de pv
+            self.taille_conteneur_barre_pv_x = 120
+            self.ratio_barre_pv = self.taille_conteneur_barre_pv_x / self.info_espece_adv["Info_espece"]["PV"]
+            self.taille_voulue_x = self.pv_joueur * self.ratio_barre_pv
+
+            #essaye d'afficher une barre de pv
+            self.rect_bare_pv = pygame.Rect(600, 300, self.ratio_barre_pv, 7)
+            self.rect_bare_pv.inflate_ip(50,1)
+            self.green_hp_bar = pygame.draw.rect(self.screen.get_display(), (0, 255, 0), self.rect_bare_pv)
 
             self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_espece_adv["Info_espece"]["Nom"], False, (0, 0, 0)),
                                            (self.screen.get_display().get_size()[0] - 200, 10))
