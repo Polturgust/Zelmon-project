@@ -90,7 +90,7 @@ class Combat:
             # On affiche le pokémon du joueur
             self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_pokemon_joueur["Info_espece"]["Path"]+"\\dos.png"), (220, 220)),(50, 180))
             # On affiche le pokémon adverse
-            self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_espece_adv["Path"]+"\\face.png"), (220, 220)).convert_alpha(),(380, 62))
+            self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_espece_adv["Info_espece"]["Path"]+"\\face.png"), (220, 220)).convert_alpha(),(380, 62))
             #affiche les bars de PV
             self.screen.get_display().blit(self.hp_bars, (0,0))
             
@@ -101,9 +101,9 @@ class Combat:
             #affiche le niveau du pokemon du joueur
             self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(str(self.info_pokemon_joueur["Info_pokemon"]["Niveau"]), False, (73, 73, 73)), (590, 250))
             #affiche le nom du pokemon adverse
-            self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(self.info_espece_adv["Nom"], False, (73, 73, 73)), (10, 48))
+            self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(self.info_espece_adv["Info_espece"]["Nom"], False, (73, 73, 73)), (10, 48))
             #affiche les PV du pokemon adverse
-            self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(str(self.pv_adv)+" /"+str(self.info_espece_adv["PV"]), False, (73, 73, 73)), (80, 80))
+            self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(str(self.pv_adv)+" /"+str(self.info_espece_adv["Info_espece"]["PV"]), False, (73, 73, 73)), (80, 80))
             #affiche le niveau du pokemon adverse
             self.screen.get_display().blit(pygame.transform.scale(pygame.image.load(self.info_espece_adv["Info_espece"]["Path"]+"\\face.png"), (220, 220)).convert_alpha(),(380, 62))
             self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False, (0, 0, 0)),(130, self.screen.get_display().get_size()[1] - 100))
