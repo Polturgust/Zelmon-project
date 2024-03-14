@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.inflate_ip(-5, 0)  # On réduit la taille de la hitbox du joueur pour résoudre le problème lié aux pixels entre deux frames
         # print(self.rect.width, self.rect.height, self.rect.x, self.rect.y)
-        self.lower_rect = pygame.Rect(2, 12, 27, 10)
+        self.lower_rect = pygame.Rect(2, 15, 12, 10)
 
         # Autres attributs
         self.velocity = 1
@@ -110,6 +110,7 @@ class Player(pygame.sprite.Sprite):
             - Si le joueur ne marche pas, on définit une image statique selon la direction de son dernier déplacement
             - Si le joueur bouge, on fait appel à la classe Animation pour faire défiler la Spritesheet correspondant à la direction du mouvement
         """
+        pygame.draw.rect(self.game.screen.get_display(), (255, 0, 0), self.lower_rect)
         if self.is_moving and not self.slipping:  # Si le joueur se déplace
             self.animation.set_frame_interval(8)
             self.animation.update(1)
