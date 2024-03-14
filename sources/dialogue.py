@@ -17,7 +17,7 @@ class Dialogue:
         print(len(self.texte), self.texte)
         self.cooldown = 0
 
-    def afficher(self):
+    def afficher(self,update_map=True):
         """
         Méthode afficher():
 
@@ -52,8 +52,9 @@ class Dialogue:
             if len(self.texte) - i > 2:
                 self.surface = pygame.Surface((self.screen.get_size()[0], 100))
                 self.surface.fill((255, 255, 255))
-                self.screen.update()
-                self.map.update()
+                if update_map:
+                    self.screen.update()
+                    self.map.update()
                 self.screen.get_display().blit(self.surface, (0, self.screen.get_size()[1] - 150))
                 self.screen.get_display().blit(
                     pygame.font.SysFont('Comic Sans MS', 20).render(self.texte[i], False, (0, 0, 0)),
@@ -66,8 +67,9 @@ class Dialogue:
             else:
                 self.surface = pygame.Surface((self.screen.get_size()[0], 100))
                 self.surface.fill((255, 255, 255))
-                self.screen.update()
-                self.map.update()
+                if update_map:
+                    self.screen.update()
+                    self.map.update()
                 self.screen.get_display().blit(self.surface, (0, self.screen.get_size()[1] - 150))
                 self.screen.get_display().blit(
                     pygame.font.SysFont('Comic Sans MS', 20).render(self.texte[i], False, (0, 0, 0)),
