@@ -43,6 +43,8 @@ class Map:
         self.weeds = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         # Crée un groupe pour le sol glacé
         self.ice = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
+        # Crée un groupe pour les plaques mouvantes
+        self.moovers = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         # Crée un groupe pour les personnages
         self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
 
@@ -116,6 +118,9 @@ class Map:
 
                     if i.name == "glace":
                         self.ice.add(Collisions(j.width, j.height, j.x, j.y, ""))
+
+                    if i.name == "moovers":
+                        self.moovers.add(Collisions(j.width, j.height, j.x, j.y, j.name))
 
         # On change la zone d'origine du joueur à la zone actuelle
         self.zonearr = map

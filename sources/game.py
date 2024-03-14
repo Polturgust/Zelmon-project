@@ -144,7 +144,7 @@ class Game:
 
             if self.playing:  # Si on est dans le jeu
                 # ------------------------------------------------------------ Player movement ------------------------------------------------------------ #
-                if self.player.get_slipping_status() is False:
+                if self.player.get_slipping_status() is False and self.player.get_moover_effect() is None:
                     # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du carré (ses coordonnées sont le point en haut à gauche)
                     if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[
                         1] > 0 and \
@@ -229,10 +229,16 @@ class Game:
                         if self.player.get_ice_status():
                             self.player.set_slipping_status(True)
                     else:
-                        self.player.is_moving = False
+                        self.player.set_moving_status(False)
 
                 elif self.player.get_slipping_status() is True:
                     self.player.move(self.last_move)
+
+                elif self.player.get_moover_effect() is not None:
+                    self.player.move(self.player.get_moover_effect())
+
+                else:
+                    self.player.set_moving_status(False)
 
                 # ------------------------------------------------------------ Fight start ------------------------------------------------------------ #
                 # Déclenche un combat
@@ -255,8 +261,9 @@ class Game:
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.last_move)
-                        if self.player.get_slipping_status():
-                            self.player.set_slipping_status(False)
+
+                        self.player.set_slipping_status(False)  # Si on est en collision, on ne glisse plus
+                        self.player.set_moover_effect(None)  # Si on est en collision, on ne subit plus l'effet de la plaque
 
                     # Si c'est un bloqueur qui permet d'aller vers le bas
                     elif self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "bas":
@@ -268,6 +275,7 @@ class Game:
                             self.player.move(self.inverse[self.last_move])
                             self.player.move(self.inverse[self.last_move])
                             self.player.move(self.last_move)
+                        self.player.set_moover_effect(None)  # Si on est en collision, on ne subit plus l'effet de la plaque
                     # On fait la même chose avec les trois autres directions
                     elif self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "gauche":
                         if self.last_move == "W" or self.last_move == "SW" or self.last_move == "NW":
@@ -276,6 +284,7 @@ class Game:
                             self.player.move(self.inverse[self.last_move])
                             self.player.move(self.inverse[self.last_move])
                             self.player.move(self.last_move)
+                        self.player.set_moover_effect(None)  # Si on est en collision, on ne subit plus l'effet de la plaque
                     elif self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "droit":
                         if self.last_move == "E" or self.last_move == "SE" or self.last_move == "NE":
                             pass
@@ -283,6 +292,7 @@ class Game:
                             self.player.move(self.inverse[self.last_move])
                             self.player.move(self.inverse[self.last_move])
                             self.player.move(self.last_move)
+                        self.player.set_moover_effect(None)  # Si on est en collision, on ne subit plus l'effet de la plaque
 
                 # Vérifie si le joueur est en collision avec un PNJ
                 for i in self.map.group:
@@ -321,6 +331,21 @@ class Game:
                         touches_ice = True
                     if touches_ice is None:
                         self.player.set_ice_status(False)
+
+                # Vérifie si le joueur est sur un moover
+                for i in self.map.moovers:
+                    if self.player.lower_rect.colliderect(i.rect):
+                        # Si oui, on définit le joueur comme étant sur un moover et on précise sa direction
+                        if i.command == "bas":
+                            self.player.set_moover_effect("S")
+                        if i.command == "haut":
+                            self.player.set_moover_effect("N")
+                        if i.command == "droite":
+                            self.player.set_moover_effect("E")
+                        elif i.command == "gauche":
+                            self.player.set_moover_effect("W")
+
+                print(self.player.get_moover_effect(), self.player.is_moving, self.player.pos.get())
 
                 # ------------------------------------------------------------ Miscellaneous ------------------------------------------------------------ #
                 # update pnjs animation

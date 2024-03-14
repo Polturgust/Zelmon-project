@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="62">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="64">
  <tileset firstgid="1" source="tileset/literally_everything.tsx"/>
  <tileset firstgid="4257" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="25257" source="tileset/interior1.tsx"/>
@@ -228,6 +228,7 @@
   <object id="5" x="432" y="160" width="192" height="32"/>
   <object id="6" x="432" y="96" width="16" height="64"/>
   <object id="7" x="432" y="32" width="16" height="16"/>
+  <object id="62" x="583.5" y="54.5" width="4" height="24.5"/>
  </objectgroup>
  <objectgroup id="14" name="bloqueurs">
   <object id="10" name="bas" x="64" y="704" width="32" height="16"/>
@@ -245,47 +246,47 @@
   <object id="18" name="depuis_ville3" x="306" y="742" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="19" name="moovers">
-  <object id="20" name="haut" x="112" y="704" width="16" height="16"/>
-  <object id="21" name="haut" x="32" y="704" width="16" height="16"/>
-  <object id="22" name="haut" x="192" y="704" width="16" height="16"/>
-  <object id="23" name="haut" x="272" y="704" width="16" height="16"/>
-  <object id="24" name="haut" x="352" y="704" width="16" height="16"/>
-  <object id="25" name="haut" x="432" y="704" width="16" height="16"/>
-  <object id="26" name="haut" x="512" y="704" width="16" height="16"/>
-  <object id="27" name="haut" x="592" y="704" width="16" height="16"/>
-  <object id="28" name="haut" x="144" y="496" width="16" height="16"/>
-  <object id="29" name="haut" x="320" y="624" width="16" height="16"/>
-  <object id="30" name="haut" x="512" y="672" width="16" height="16"/>
-  <object id="31" name="haut" x="384" y="592" width="16" height="16"/>
-  <object id="32" name="haut" x="464" y="416" width="16" height="16"/>
-  <object id="33" name="haut" x="544" y="512" width="16" height="16"/>
-  <object id="34" name="haut" x="304" y="288" width="16" height="16"/>
-  <object id="35" name="haut" x="384" y="144" width="16" height="16"/>
-  <object id="36" name="bas" x="256" y="448" width="16" height="16"/>
-  <object id="37" name="bas" x="464" y="560" width="16" height="16"/>
-  <object id="38" name="bas" x="256" y="352" width="16" height="16"/>
-  <object id="39" name="bas" x="64" y="304" width="16" height="16"/>
-  <object id="40" name="bas" x="224" y="160" width="16" height="16"/>
-  <object id="41" name="bas" x="160" y="96" width="16" height="16"/>
-  <object id="42" name="bas" x="512" y="224" width="16" height="16"/>
-  <object id="43" name="droite" x="32" y="448" width="16" height="16"/>
-  <object id="44" name="droite" x="192" y="352" width="16" height="16"/>
-  <object id="45" name="droite" x="112" y="560" width="16" height="16"/>
-  <object id="46" name="droite" x="272" y="592" width="16" height="16"/>
-  <object id="47" name="droite" x="384" y="512" width="16" height="16"/>
-  <object id="48" name="droite" x="432" y="512" width="16" height="16"/>
-  <object id="49" name="droite" x="352" y="416" width="16" height="16"/>
-  <object id="50" name="droite" x="144" y="224" width="16" height="16"/>
-  <object id="51" name="droite" x="304" y="144" width="16" height="16"/>
-  <object id="52" name="droite" x="384" y="64" width="16" height="16"/>
-  <object id="53" name="droite" x="160" y="160" width="16" height="16"/>
-  <object id="54" name="droite" x="464" y="672" width="16" height="16"/>
-  <object id="55" name="gauche" x="512" y="624" width="16" height="16"/>
-  <object id="56" name="gauche" x="592" y="560" width="16" height="16"/>
-  <object id="57" name="gauche" x="256" y="496" width="16" height="16"/>
-  <object id="58" name="gauche" x="464" y="288" width="16" height="16"/>
-  <object id="59" name="gauche" x="544" y="336" width="16" height="16"/>
-  <object id="60" name="gauche" x="224" y="304" width="16" height="16"/>
-  <object id="61" name="gauche" x="320" y="96" width="16" height="16"/>
+  <object id="20" name="haut" x="119" y="711" width="1" height="1"/>
+  <object id="21" name="haut" x="39" y="711" width="1" height="1"/>
+  <object id="22" name="haut" x="199" y="711" width="1" height="1"/>
+  <object id="23" name="haut" x="279" y="711" width="1" height="1"/>
+  <object id="24" name="haut" x="359" y="711" width="1" height="1"/>
+  <object id="25" name="haut" x="439" y="710" width="1" height="1"/>
+  <object id="26" name="haut" x="519" y="711" width="1" height="1"/>
+  <object id="27" name="haut" x="599" y="711" width="1" height="1"/>
+  <object id="28" name="haut" x="151" y="503" width="1" height="1"/>
+  <object id="29" name="haut" x="327" y="631" width="1" height="1"/>
+  <object id="30" name="haut" x="519" y="679" width="1" height="1"/>
+  <object id="31" name="haut" x="391" y="599" width="1" height="1"/>
+  <object id="32" name="haut" x="471" y="423" width="1" height="1"/>
+  <object id="33" name="haut" x="551" y="519" width="1" height="1"/>
+  <object id="34" name="haut" x="311" y="295" width="1" height="1"/>
+  <object id="35" name="haut" x="391" y="151" width="1" height="1"/>
+  <object id="36" name="bas" x="263" y="456" width="1" height="1"/>
+  <object id="37" name="bas" x="471" y="568" width="1" height="1"/>
+  <object id="38" name="bas" x="263" y="360" width="1" height="1"/>
+  <object id="39" name="bas" x="72" y="312" width="1" height="1"/>
+  <object id="40" name="bas" x="231" y="168" width="1" height="1"/>
+  <object id="41" name="bas" x="167" y="104" width="1" height="1"/>
+  <object id="42" name="bas" x="519" y="232" width="1" height="1"/>
+  <object id="43" name="droite" x="40" y="455" width="1" height="1"/>
+  <object id="44" name="droite" x="200" y="359" width="1" height="1"/>
+  <object id="45" name="droite" x="120" y="567" width="1" height="1"/>
+  <object id="46" name="droite" x="280" y="599" width="1" height="1"/>
+  <object id="47" name="droite" x="392" y="519" width="1" height="1"/>
+  <object id="48" name="droite" x="440" y="519" width="1" height="1"/>
+  <object id="49" name="droite" x="360" y="423" width="1" height="1"/>
+  <object id="50" name="droite" x="152" y="231" width="1" height="1"/>
+  <object id="51" name="droite" x="312" y="151" width="1" height="1"/>
+  <object id="52" name="droite" x="392" y="71" width="1" height="1"/>
+  <object id="53" name="droite" x="167" y="167" width="1" height="1"/>
+  <object id="54" name="droite" x="472" y="679" width="1" height="1"/>
+  <object id="55" name="gauche" x="519" y="631" width="1" height="1"/>
+  <object id="56" name="gauche" x="599" y="567" width="1" height="1"/>
+  <object id="57" name="gauche" x="263" y="503" width="1" height="1"/>
+  <object id="58" name="gauche" x="471" y="296" width="1" height="1"/>
+  <object id="59" name="gauche" x="551" y="344" width="1" height="1"/>
+  <object id="60" name="gauche" x="231" y="311" width="1" height="1"/>
+  <object id="61" name="gauche" x="327" y="103" width="1" height="1"/>
  </objectgroup>
 </map>

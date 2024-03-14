@@ -30,6 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.is_moving = False  # Si le joueur se déplace
         self.on_ice = False  # Si le joueur est sur la glace
         self.slipping = False  # Si le joueur est en glisse
+        self.moover_effect = None  # Si le joueur subit l'effet d'un moover et si oui sa direction
 
     def move(self, direction):
         """
@@ -146,3 +147,9 @@ class Player(pygame.sprite.Sprite):
 
     def set_moving_status(self, boolean):
         self.is_moving = boolean
+
+    def set_moover_effect(self, dir):
+        self.moover_effect = dir
+
+    def get_moover_effect(self):
+        return self.moover_effect
