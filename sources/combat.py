@@ -134,7 +134,7 @@ class Combat:
                 self.pressed[pygame.K_4] = False
                 self.attaquer(self.info_pokemon_joueur["Attaques"][3],self.info_espece_adv["Attaques"][randint(0,3)])
 
-
+            print(self.info_espece_adv)
         self.pressed = {}
         self.map.switch_map(self.origin)
         self.player.pos = Vector(self.player.pos.get()[0], self.player.pos.get()[1])
@@ -156,7 +156,7 @@ class Combat:
             reussi=randint(0,100)<=self.attaque_adv["Precision"]
             Dialogue(self.nom_att+" utilise "+self.attaque_joueur['Nom']+" !",self.screen,self.map,self).afficher(True)
             if reussi:
-                self.info_pokemon_joueur["Info_pokemon"]["PV"]-=self.attaque_adv["Puissance"]
+                self.info_pokemon_joueur["Info_pokemon"]["PV"]-=self.get_puissance_attaque(self.attaque_adv,"S")
                 print("Pokemon advrese attaque en premier")
                 print(self.info_pokemon_joueur["Info_pokemon"]["PV"])
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"]<=0:
@@ -167,11 +167,10 @@ class Combat:
                 Dialogue("L'attaque a échoué...",self.screen,self.map,self).afficher(True)
 
 
-            #reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
-            reussi=False
+            reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
             Dialogue(self.nom_def + " utilise " + self.attaque_adv['Nom'] + " !", self.screen, self.map,self).afficher(True)
             if reussi:
-                self.info_espece_adv["Info_pokemon"]["PV"] -= self.attaque_joueur["Puissance"]
+                self.info_espece_adv["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_joueur,"S")
                 if self.info_espece_adv["Info_pokemon"]["PV"] <= 0:
                     self.info_espece_adv["Info_pokemon"]["PV"] = 0
                     self.winner = True
@@ -182,12 +181,11 @@ class Combat:
 
 
         else:
-            #reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
-            reussi=False
+            reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
             Dialogue(self.nom_def + " utilise " + self.attaque_adv['Nom'] + " !", self.screen, self.map,
                      self).afficher(True)
             if reussi:
-                self.info_espece_adv["Info_pokemon"]["PV"] -= self.attaque_joueur["Puissance"]
+                self.info_espece_adv["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_joueur,"S")
                 if self.info_espece_adv["Info_pokemon"]["PV"]<=0:
                     self.info_espece_adv["Info_pokemon"]["PV"]=0
                     self.winner=True
@@ -200,7 +198,7 @@ class Combat:
             Dialogue(self.nom_att + " utilise " + self.attaque_joueur['Nom'] + " !", self.screen, self.map,
                      self).afficher(True)
             if reussi:
-                self.info_pokemon_joueur["Info_pokemon"]["PV"] -= self.attaque_adv["Puissance"]
+                self.info_pokemon_joueur["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_adv,"S")
                 print("Pokemon advrese attaque en 2e")
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
@@ -218,6 +216,7 @@ class Combat:
 
         elif attaquant=="S":
             self.data_att=self.info_espece_adv
+            self.data_att["Info_pokemon"]["Niveau"]=3
             self.data_def=self.info_pokemon_joueur
 
         calcul = floor((self.data_att["Info_pokemon"]["Niveau"] * 0.4) + 1)
@@ -229,9 +228,8 @@ class Combat:
         self.data_att["Info_espece"]["Type1"], self.data_att["Info_espece"]["Type2"]):
             coeff = coeff * 1.5
         coeff=coeff*self.game.save_selected.get_avantages(attaque["Type"],self.data_def["Info_espece"]["Type1"])
-
         if self.data_def["Info_espece"]["Type2"] is not None:
-            coeff=coeff*self.game.save_selected.get_avantages(attaque["Type"],self.data_def["Info_espece"]["type2"])
+            coeff=coeff*self.game.save_selected.get_avantages(attaque["Type"],self.data_def["Info_espece"]["Type2"])
 
         return round(calcul*coeff)
 

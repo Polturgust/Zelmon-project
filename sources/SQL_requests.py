@@ -300,7 +300,8 @@ class Database:
         self.c=self.database.cursor()
         self.c.execute("""SELECT coeff FROM Avantages WHERE attaquant=? and defenseur=?""",(type_att,type_def))
         self.results=self.c.fetchall()
-        return self.results[0]
+        print(self.results)
+        return self.results[0][0]
 
     def create_pokemon(self, id_pokemon, lvl, exp):
         """
