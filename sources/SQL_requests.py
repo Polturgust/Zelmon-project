@@ -10,6 +10,17 @@ class Database:
         self.path = path
         self.database = sqlite3.connect(path)
 
+    def get_id_joueurs(self):
+        """
+        Fonction qui renvoie les id de tous les id de la classe joueur
+        """
+        c = self.database.cursor()
+        c.execute(f"""SELECT id_joueur FROM Joueurs""")
+        results = c.fetchall()
+        ids = [i[0] for i in results]
+        return ids
+
+
     def get_info_joueur(self, id_joueur):
         """
         Récupère les informations sur le joueur depuis la base de données sous la forme :
@@ -22,7 +33,7 @@ class Database:
         self.results = self.c.fetchall()
         self.results = self.results[0]
         return {"ID": self.results[0], "Nom": self.results[1], "X": self.results[2], "Y": self.results[3],
-                "Carte": self.results[4]}
+                "Carte": self.results[4], "Image_path": self.results[5]}
 
     def get_info_pokemon(self, id_pokemon):
         """
@@ -127,14 +138,15 @@ class Database:
         return {"ID": self.results[0], "Nom": self.results[1], "Type": self.results[2], "Puissance": self.results[3],
                 "Precision": self.results[4], "Effet": self.results[5],"Qte_effet":self.results[6],"Pourcent_effet":self.results[7],"PP_max":self.results[8],"Description":self.results[9]}
 
-    def get_pp_restants(self,id_pokemon,id_attaque):
+    def get_pp_restants(self, id_pokemon, id_attaque):
         self.c=self.database.cursor()
         self.c.execute("""SELECT pp_restant FROM Attaques_possedees WHERE id_pokemon=? and id_attaque=?""",(id_pokemon,id_attaque))
         self.results=self.c.fetchall()
         print(self.results)
-        if len(self.results)!=0:
+        if len(self.results) != 0:
             self.c.close()
             return self.results[0][0]
+
     def get_details_objet(self, id_objet):
         """
         Renvoie des détails sur un objet depuis la base de données sous la forme :
@@ -190,6 +202,15 @@ class Database:
         selected_pokemon = choices([i[0] for i in results], [i[1] for i in results], k=1)
         print(selected_pokemon)
         return results, selected_pokemon
+
+    def get_current_zone(self, map):
+        """
+        Permet de récupérer l'id de la zone actuelle
+        """
+        c = self.database.cursor()
+        c.execute(f"""SELECT id_zone FROM Zones WHERE {map}=1""")
+        results = c.fetchall()
+        return results[0][0]
 
     def capturer_pokemon(self, info, id_joueur):
         """
@@ -274,6 +295,12 @@ class Database:
         self.results = self.c.fetchall()
         self.results = self.results
         return self.results
+
+    def get_avantages(self,type_att,type_def):
+        self.c=self.database.cursor()
+        self.c.execute("""SELECT coeff FROM Avantages WHERE attaquant=? and defenseur=?""",(type_att,type_def))
+        self.results=self.c.fetchall()
+        return self.results[0]
 
     def create_pokemon(self, id_pokemon, lvl, exp):
         """

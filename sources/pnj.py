@@ -6,13 +6,20 @@ from spritesheet import SpriteSheet
 
 
 class PNJ(pygame.sprite.Sprite):
-    def __init__(self, game):
+    def __init__(self, game, x, y, map, image_path):
         self.game = game
 
         super().__init__()
 
-        # Coordonnées du joueur (au centre par défaut)
-        self.pos = Vector(200, 220)
+        self.pos = Vector(x, y)  # Coordonnées du PNJ
+        self.map = map  # Map d'apparition
+        self.image_path = image_path  # Chemin vers le dossier contenant les images du PNJ
+
+        # On définit son image
+        self.image = pygame.image.load(f"assets/Spritesheets/pnj/{image_path}.png")
+
+        # On définit sa hitbox
+        self.rect = self.image.get_rect()
 
         # Autres attributs
         self.velocity = 1
@@ -103,7 +110,7 @@ class PNJ(pygame.sprite.Sprite):
 class GreyCat(PNJ):
     def __init__(self, game, x, y, map):
         # Coordonnées du joueur (au centre par défaut)
-        super().__init__(game)
+        super().__init__(game, x, y, map, "")
         self.pos = Vector(x, y)
         self.map = map  # La map sur laquelle il doit apparaitre
 
@@ -123,7 +130,7 @@ class GreyCat(PNJ):
 class Maman(PNJ):
     def __init__(self, game, x, y, map):
         # Coordonnées du joueur (au centre par défaut)
-        super().__init__(game)
+        super().__init__(game, x, y, map, "")
         self.pos = Vector(x, y)
         self.map = map  # La map sur laquelle il doit apparaitre
         self.can_update = False
@@ -146,5 +153,8 @@ def create_all_pnjs(game):
     Post-conditions :
         Crée tous les pnjs du jeu
     """
-    #game.pnjs["chat de test"] = GreyCat(game, 200, 220, "ville0")
-    game.pnjs["maman"] = Maman(game, 130, 90, "interieur_mc_salon0")
+    for i in game.save_selected.get_id_joueurs():
+        pnj = game.save_selected.get_info_joueur(i)
+        game.pnjs[pnj["Nom"]] = PNJ(game, pnj["X"], pnj["Y"], pnj["Carte"], pnj["Image_path"])
+    # game.pnjs["chat de test"] = GreyCat(game, 200, 220, "ville0")
+    # game.pnjs["maman"] = Maman(game, 130, 90, "interieur_mc_salon0")

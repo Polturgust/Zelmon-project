@@ -57,33 +57,7 @@ class Combat:
         while self.winner is None and self.running:
             self.screen.update()
             self.map.update()
-            self.pokemon_font = pygame.font.Font("assets\\font\\pokemon-ds-font.ttf", 65)
-
-            self.bg_normal = pygame.image.load('assets\\images\\background_combat\\normal.png')
-            self.bg_normal = pygame.transform.scale(self.bg_normal, (640,359))
-
-            self.bg_park = pygame.image.load('assets\\images\\background_combat\\park.png')
-            self.bg_park = pygame.transform.scale(self.bg_park, (640,359))
-
-            self.bg_images = pygame.image.load('assets\\images\\background_combat\\neige.png')
-            self.bg_images = pygame.transform.scale(self.bg_images, (640,359))
-
-            self.bg_grotte = pygame.image.load('assets\\images\\background_combat\\grotte.png')
-            self.bg_grotte = pygame.transform.scale(self.bg_grotte, (640,359))
-
-            self.bg_roche = pygame.image.load('assets\\images\\background_combat\\roche.png')
-            self.bg_roche = pygame.transform.scale(self.bg_roche, (640,359))
-
-            self.bg_jungle = pygame.image.load('assets\\images\\background_combat\\jungle.png')
-            self.bg_jungle = pygame.transform.scale(self.bg_jungle, (640,359))
-
-            self.bg_eau = pygame.image.load('assets\\images\\background_combat\\eau.png')
-            self.bg_eau = pygame.transform.scale(self.bg_eau, (640,359))
-
-            self.barre_info = pygame.image.load('assets\\images\\background_combat\\hp_bars.png')
-            self.barre_info = pygame.transform.scale(self.barre_info, (640,359))
-
-            self.screen.get_display().blit(self.bg_normal, (0,0))
+            self.afficher()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:  # On ferme le jeu si l'utilisateur ferme la fenêtre
@@ -149,6 +123,7 @@ class Combat:
 
             if pygame.K_2 in self.pressed.keys() and self.pressed[pygame.K_2] is True and len(self.info_pokemon_joueur["Attaques"])>=2:
                 self.pressed[pygame.K_2] = False
+                print("Puissance : "+str(self.get_puissance_attaque(self.info_pokemon_joueur["Attaques"][1])))
                 self.attaquer(self.info_pokemon_joueur["Attaques"][1],self.info_espece_adv["Attaques"][randint(0,3)])
 
             if pygame.K_3 in self.pressed.keys() and self.pressed[pygame.K_3] is True and len(self.info_pokemon_joueur["Attaques"])>=3:
@@ -167,12 +142,19 @@ class Combat:
         return self.winner
 
 
-    def attaquer(self,attaque_joueur,attaque_adv):
+    def attaquer(self,attaque_joueur,attaque_adv,att="J"):
         self.attaque_joueur=attaque_joueur
         self.attaque_adv=attaque_adv
+        if att=="J":
+            self.nom_att=self.info_pokemon_joueur["Info_pokemon"]["Nom"]
+            self.nom_def=self.info_espece_adv["Info_espece"]["Nom"]
+        else:
+            self.nom_def = self.info_pokemon_joueur["Info_pokemon"]["Nom"]
+            self.nom_att = self.info_espece_adv["Info_espece"]["Nom"]
 
         if self.info_espece_adv["Info_espece"]["Vitesse"]>self.info_pokemon_joueur["Info_espece"]["Vitesse"]:
             reussi=randint(0,100)<=self.attaque_adv["Precision"]
+            Dialogue(self.nom_att+" utilise "+self.attaque_joueur['Nom']+" !",self.screen,self.map,self).afficher(True)
             if reussi:
                 self.info_pokemon_joueur["Info_pokemon"]["PV"]-=self.attaque_adv["Puissance"]
                 print("Pokemon advrese attaque en premier")
@@ -180,42 +162,163 @@ class Combat:
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"]<=0:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"]=0
                     self.winner=False
-                    return None
 
-            reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
+            else:
+                Dialogue("L'attaque a échoué...",self.screen,self.map,self).afficher(True)
+
+
+            #reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
+            reussi=False
+            Dialogue(self.nom_def + " utilise " + self.attaque_adv['Nom'] + " !", self.screen, self.map,self).afficher(True)
             if reussi:
                 self.info_espece_adv["Info_pokemon"]["PV"] -= self.attaque_joueur["Puissance"]
                 if self.info_espece_adv["Info_pokemon"]["PV"] <= 0:
                     self.info_espece_adv["Info_pokemon"]["PV"] = 0
                     self.winner = True
-                    return None
+
+            else:
+                Dialogue("L'attaque a échoué...",self.screen,self.map,self).afficher(True)
+
 
 
         else:
-            reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
+            #reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
+            reussi=False
+            Dialogue(self.nom_def + " utilise " + self.attaque_adv['Nom'] + " !", self.screen, self.map,
+                     self).afficher(True)
             if reussi:
                 self.info_espece_adv["Info_pokemon"]["PV"] -= self.attaque_joueur["Puissance"]
                 if self.info_espece_adv["Info_pokemon"]["PV"]<=0:
                     self.info_espece_adv["Info_pokemon"]["PV"]=0
                     self.winner=True
-                    return None
+
+            else:
+                Dialogue("L'attaque a échoué...",self.screen,self.map,self).afficher(True)
+
 
             reussi = randint(0, 100) <= self.attaque_adv["Precision"]
+            Dialogue(self.nom_att + " utilise " + self.attaque_joueur['Nom'] + " !", self.screen, self.map,
+                     self).afficher(True)
             if reussi:
                 self.info_pokemon_joueur["Info_pokemon"]["PV"] -= self.attaque_adv["Puissance"]
                 print("Pokemon advrese attaque en 2e")
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
                     self.winner = False
-                    return None
 
-    def get_puissance_attaque(self,attaque):
-        calcul=ceil((self.info_pokemon_joueur["Info_pokemon"]["Niveau"]*0.4)+1)
-        calcul=calcul*attaque["Puissance"]*self.info_pokemon_joueur["Info_espece"]["Attaque"]
-        calcul=ceil(calcul/self.info_espece_adv["Info_espece"]["Defense"])
-        calcul=ceil(calcul/50)+2
-        coeff=uniform(0.85,1)
-        if attaque["Type"] in (self.info_pokemon_joueur["Type1"],self.info_pokemon_joueur["Type2"]):
-            coeff=coeff*1.5
+            else:
+                print("L'attaque a échoué...")
 
-        return calcul
+
+    def get_puissance_attaque(self,attaque,attaquant="J"):
+        if attaquant=="J":
+            self.data_att=self.info_pokemon_joueur
+            self.data_def=self.info_espece_adv
+
+
+        elif attaquant=="S":
+            self.data_att=self.info_espece_adv
+            self.data_def=self.info_pokemon_joueur
+
+        calcul = floor((self.data_att["Info_pokemon"]["Niveau"] * 0.4) + 1)
+        calcul = calcul * attaque["Puissance"] * self.data_att["Info_espece"]["Attaque"]
+        calcul = floor(calcul / self.data_def["Info_espece"]["Defense"])
+        calcul = floor(calcul / 50) + 2
+        coeff = uniform(0.85, 1)
+        if attaque["Type"] in (
+        self.data_att["Info_espece"]["Type1"], self.data_att["Info_espece"]["Type2"]):
+            coeff = coeff * 1.5
+        coeff=coeff*self.game.save_selected.get_avantages(attaque["Type"],self.data_def["Info_espece"]["Type1"])
+
+        if self.data_def["Info_espece"]["Type2"] is not None:
+            coeff=coeff*self.game.save_selected.get_avantages(attaque["Type"],self.data_def["Info_espece"]["type2"])
+
+        return round(calcul*coeff)
+
+    def afficher(self):
+        self.pokemon_font = pygame.font.Font("assets\\font\\pokemon-ds-font.ttf", 65)
+
+        self.bg_normal = pygame.image.load('assets\\images\\background_combat\\normal.png')
+        self.bg_normal = pygame.transform.scale(self.bg_normal, (640, 359))
+
+        self.bg_park = pygame.image.load('assets\\images\\background_combat\\park.png')
+        self.bg_park = pygame.transform.scale(self.bg_park, (640, 359))
+
+        self.bg_images = pygame.image.load('assets\\images\\background_combat\\neige.png')
+        self.bg_images = pygame.transform.scale(self.bg_images, (640, 359))
+
+        self.bg_grotte = pygame.image.load('assets\\images\\background_combat\\grotte.png')
+        self.bg_grotte = pygame.transform.scale(self.bg_grotte, (640, 359))
+
+        self.bg_roche = pygame.image.load('assets\\images\\background_combat\\roche.png')
+        self.bg_roche = pygame.transform.scale(self.bg_roche, (640, 359))
+
+        self.bg_jungle = pygame.image.load('assets\\images\\background_combat\\jungle.png')
+        self.bg_jungle = pygame.transform.scale(self.bg_jungle, (640, 359))
+
+        self.bg_eau = pygame.image.load('assets\\images\\background_combat\\eau.png')
+        self.bg_eau = pygame.transform.scale(self.bg_eau, (640, 359))
+
+        self.barre_info = pygame.image.load('assets\\images\\background_combat\\hp_bars.png')
+        self.barre_info = pygame.transform.scale(self.barre_info, (640, 359))
+
+        self.screen.get_display().blit(self.bg_normal, (0, 0))
+        # On affiche le pokémon du joueur
+        self.screen.get_display().blit(
+            pygame.transform.scale(pygame.image.load(self.info_pokemon_joueur["Info_espece"]["Path"] + "\\dos.png"),
+                                   (220, 220)), (50, 180))
+        # On affiche le pokémon adverse
+        self.screen.get_display().blit(
+            pygame.transform.scale(pygame.image.load(self.info_espece_adv["Info_espece"]["Path"] + "\\face.png"),
+                                   (220, 220)).convert_alpha(), (380, 62))
+        # affiche les barres d'info
+        self.screen.get_display().blit(self.barre_info, (0, 0))
+
+        # affiche le nom du pokemon du joueur
+        self.screen.get_display().blit(
+            pygame.font.SysFont('pokemon_font', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False,
+                                                           (73, 73, 73)), (380, 250))
+        # affiche les PV du pokemon du joueur
+        self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(
+            str(self.info_pokemon_joueur["Info_pokemon"]["PV"]) + " / " + str(
+                self.info_pokemon_joueur["Info_espece"]["PV"]), False, (73, 73, 73)), (80, 100))
+        # affiche le niveau du pokemon du joueur
+        self.screen.get_display().blit(
+            pygame.font.SysFont('pokemon_font', 30).render(str(self.info_pokemon_joueur["Info_pokemon"]["Niveau"]),
+                                                           False, (73, 73, 73)), (590, 250))
+        # affiche le nom du pokemon adverse
+        self.screen.get_display().blit(
+            pygame.font.SysFont('pokemon_font', 30).render(self.info_espece_adv["Info_espece"]["Nom"], False,
+                                                           (73, 73, 73)), (10, 48))
+        # affiche les PV du pokemon adverse
+        self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(
+            str(self.info_espece_adv["Info_pokemon"]["PV"]) + " /" + str(self.info_espece_adv["Info_espece"]["PV"]),
+            False, (73, 73, 73)), (80, 80))
+        # affiche le niveau du pokemon adverse
+        self.screen.get_display().blit(
+            pygame.transform.scale(pygame.image.load(self.info_espece_adv["Info_espece"]["Path"] + "\\face.png"),
+                                   (220, 220)).convert_alpha(), (380, 62))
+        self.screen.get_display().blit(
+            pygame.font.SysFont('Comic Sans MS', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False,
+                                                            (0, 0, 0)),
+            (130, self.screen.get_display().get_size()[1] - 100))
+        # affiche le niveau du pokemon adverse
+
+        # gere la taille de la barre de pv
+        self.taille_conteneur_barre_pv_x = 120
+        self.ratio_barre_pv = self.taille_conteneur_barre_pv_x / self.info_espece_adv["Info_espece"]["PV"]
+        self.taille_voulue_x = self.pv_joueur * self.ratio_barre_pv
+
+        # essaye d'afficher une barre de pv
+        self.rect_bare_pv = pygame.Rect(600, 300, self.ratio_barre_pv, 7)
+        self.rect_bare_pv.inflate_ip(50, 1)
+        self.green_hp_bar = pygame.draw.rect(self.screen.get_display(), (0, 255, 0), self.rect_bare_pv)
+
+        self.screen.get_display().blit(
+            pygame.font.SysFont('Comic Sans MS', 30).render(self.info_espece_adv["Info_espece"]["Nom"], False,
+                                                            (0, 0, 0)),
+            (self.screen.get_display().get_size()[0] - 200, 10))
+        self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(
+            str(self.info_espece_adv["Info_pokemon"]["PV"]) + " /" + str(self.info_espece_adv["Info_espece"]["PV"]),
+            False, (0, 0, 0)),
+                                       (self.screen.get_display().get_size()[0] - 200, 80))
