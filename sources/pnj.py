@@ -146,5 +146,5 @@ def create_all_pnjs(game):
     Post-conditions :
         Crée tous les pnjs du jeu
     """
-    game.pnjs["chat de test"] = GreyCat(game, 200, 220, "ville0")
+    #game.pnjs["chat de test"] = GreyCat(game, 200, 220, "ville0")
     game.pnjs["maman"] = Maman(game, 130, 90, "interieur_mc_salon0")
