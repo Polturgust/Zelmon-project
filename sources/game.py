@@ -74,9 +74,6 @@ class Game:
 
         selection_height = 0
 
-        # On crée les pnjs
-        create_all_pnjs(self)
-
         # Tant que le jeu tourne :
         while self.running:
             # On récupère toutes les actions de l'utilisateur
@@ -107,12 +104,16 @@ class Game:
                         elif selection_height == 200 and nb_sauvegardes == 3:
                             self.save_selected = Database("databases/sauvegarde3.db")
 
+                        # On load sur la bonne map et au bon emplacement
                         self.loaded_info = self.save_selected.get_info_joueur(0)
-                        print(self.loaded_info)
                         self.player.set_coordonnees(self.loaded_info["X"], self.loaded_info["Y"])
                         self.map.switch_map(self.loaded_info["Carte"], False)
                         self.player.move("N")
                         self.player.move("S")
+                        print(self.save_selected.get_id_joueurs())
+
+                        # On crée les PNJs
+                        # create_all_pnjs(self)
 
                         # On affiche les pnjs présents sur la map de spawn
                         for name, instance in self.pnjs.items():
@@ -348,8 +349,10 @@ class Game:
 
                 # ------------------------------------------------------------ Miscellaneous ------------------------------------------------------------ #
                 # update pnjs animation
+                """
                 for pnj in self.map.pnjs_list:
                     pnj[0].update()
+                """
 
                 # Sauvegarde quand on appuie sur "*"
                 if self.pressed.get(pygame.K_s):

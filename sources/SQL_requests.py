@@ -10,6 +10,17 @@ class Database:
         self.path = path
         self.database = sqlite3.connect(path)
 
+    def get_id_joueurs(self):
+        """
+        Fonction qui renvoie les id de tous les id de la classe joueur
+        """
+        c = self.database.cursor()
+        c.execute(f"""SELECT id_joueur FROM Joueurs""")
+        results = c.fetchall()
+        ids = [i[0] for i in results]
+        return ids
+
+
     def get_info_joueur(self, id_joueur):
         """
         Récupère les informations sur le joueur depuis la base de données sous la forme :
@@ -22,7 +33,7 @@ class Database:
         self.results = self.c.fetchall()
         self.results = self.results[0]
         return {"ID": self.results[0], "Nom": self.results[1], "X": self.results[2], "Y": self.results[3],
-                "Carte": self.results[4]}
+                "Carte": self.results[4], "Image_path": self.results[5]}
 
     def get_info_pokemon(self, id_pokemon):
         """
