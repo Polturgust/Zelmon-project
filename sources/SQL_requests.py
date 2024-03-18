@@ -286,7 +286,7 @@ class Database:
         base de données.
         """
         self.c = self.database.cursor()
-        self.c.execute("""UPDATE Joueurs SET (coord_x,coord_y,carte)=(?,?,?)""",
+        self.c.execute("""UPDATE Joueurs SET (coord_x,coord_y,carte)=(?,?,?) WHERE id_joueur=0""",
                        (player.pos.get()[0], player.pos.get()[1], map.zonearr))
         self.database.commit()
 
