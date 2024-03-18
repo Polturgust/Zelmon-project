@@ -127,14 +127,15 @@ class Database:
         return {"ID": self.results[0], "Nom": self.results[1], "Type": self.results[2], "Puissance": self.results[3],
                 "Precision": self.results[4], "Effet": self.results[5],"Qte_effet":self.results[6],"Pourcent_effet":self.results[7],"PP_max":self.results[8],"Description":self.results[9]}
 
-    def get_pp_restants(self,id_pokemon,id_attaque):
+    def get_pp_restants(self, id_pokemon, id_attaque):
         self.c=self.database.cursor()
         self.c.execute("""SELECT pp_restant FROM Attaques_possedees WHERE id_pokemon=? and id_attaque=?""",(id_pokemon,id_attaque))
         self.results=self.c.fetchall()
         print(self.results)
-        if len(self.results)!=0:
+        if len(self.results) != 0:
             self.c.close()
             return self.results[0][0]
+
     def get_details_objet(self, id_objet):
         """
         Renvoie des détails sur un objet depuis la base de données sous la forme :
@@ -190,6 +191,15 @@ class Database:
         selected_pokemon = choices([i[0] for i in results], [i[1] for i in results], k=1)
         print(selected_pokemon)
         return results, selected_pokemon
+
+    def get_current_zone(self, map):
+        """
+        Permet de récupérer l'id de la zone actuelle
+        """
+        c = self.database.cursor()
+        c.execute(f"""SELECT id_zone FROM Zones WHERE {map}=1""")
+        results = c.fetchall()
+        return results[0][0]
 
     def capturer_pokemon(self, info, id_joueur):
         """

@@ -245,10 +245,11 @@ class Game:
                 if self.cooldown == 0:
                     if self.chance_rencontre() is True:
                         self.origin = self.map.zonearr
+                        self.save_selected.get_current_zone(self.origin)
                         self.map.switch_map("combat")
                         self.pressed = {}
                         self.combat = Combat(self, self.screen, self.player, self.map, self.origin, self.save_selected)
-                        if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(1)[1][0]) is False:
+                        if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(self.origin))[1][0]) is False:
                             self.running = False
                         self.cooldown = 120
 
@@ -344,8 +345,6 @@ class Game:
                             self.player.set_moover_effect("E")
                         elif i.command == "gauche":
                             self.player.set_moover_effect("W")
-
-                print(self.player.get_moover_effect(), self.player.is_moving, self.player.pos.get())
 
                 # ------------------------------------------------------------ Miscellaneous ------------------------------------------------------------ #
                 # update pnjs animation
