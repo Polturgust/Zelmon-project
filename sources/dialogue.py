@@ -4,11 +4,12 @@ import SQL_requests
 
 
 class Dialogue:
-    def __init__(self, dialogue, screen, map):
+    def __init__(self, dialogue, screen, map, combat=None):
         self.textedonne = dialogue
         self.screen = screen
         self.map = map
         self.texte = []
+        self.combat=combat
         while len(self.textedonne) > 45:
             self.texte.append(self.textedonne[:45])
             self.textedonne = self.textedonne[45:]
@@ -55,6 +56,9 @@ class Dialogue:
                 if update_map:
                     self.screen.update()
                     self.map.update()
+                if self.combat is not None:
+                    self.combat.afficher()
+
                 self.screen.get_display().blit(self.surface, (0, self.screen.get_size()[1] - 150))
                 self.screen.get_display().blit(
                     pygame.font.SysFont('Comic Sans MS', 20).render(self.texte[i], False, (0, 0, 0)),
@@ -70,6 +74,8 @@ class Dialogue:
                 if update_map:
                     self.screen.update()
                     self.map.update()
+                if self.combat is not None:
+                    self.combat.afficher()
                 self.screen.get_display().blit(self.surface, (0, self.screen.get_size()[1] - 150))
                 self.screen.get_display().blit(
                     pygame.font.SysFont('Comic Sans MS', 20).render(self.texte[i], False, (0, 0, 0)),
