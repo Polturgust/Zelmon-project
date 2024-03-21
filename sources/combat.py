@@ -35,7 +35,6 @@ class Combat:
         else:
             self.info_espece_adv["Attaques"] = self.game.save_selected.get_attaques_par_type(
                 self.info_espece_adv["Info_espece"]["Type1"])
-        print(self.info_espece_adv["Attaques"])
 
         self.info_espece_adv["Info_pokemon"] = {}
         self.info_espece_adv["Info_pokemon"]["Vitesse"] = randint(0, 100)
@@ -146,7 +145,6 @@ class Combat:
             if pygame.K_2 in self.pressed.keys() and self.pressed[pygame.K_2] is True and len(
                     self.info_pokemon_joueur["Attaques"]) >= 2:
                 self.pressed[pygame.K_2] = False
-                print("Puissance : " + str(self.get_puissance_attaque(self.info_pokemon_joueur["Attaques"][1])))
                 self.attaquer(self.info_pokemon_joueur["Attaques"][1], self.info_espece_adv["Attaques"][randint(0, 3)])
 
             if pygame.K_3 in self.pressed.keys() and self.pressed[pygame.K_3] is True and len(
@@ -159,14 +157,15 @@ class Combat:
                 self.pressed[pygame.K_4] = False
                 self.attaquer(self.info_pokemon_joueur["Attaques"][3], self.info_espece_adv["Attaques"][randint(0, 3)])
 
-            print(self.info_espece_adv)
+            if pygame.K_5 in self.pressed.keys() and self.pressed[pygame.K_5] is True:
+                self.pressed[pygame.K_5]=False
+                self.tenter_capture()
+
         self.pressed = {}
         self.map.switch_map(self.origin)
         self.player.pos = Vector(self.player.pos.get()[0], self.player.pos.get()[1])
         self.cooldown = 120
-        print(self.game.save_selected.a_pokemons_vivants(0))
         self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, self.info_pokemon_joueur["Attaques"])
-        self.game.save_selected.pokecenter()
         return self.winner
 
     def attaquer(self, attaque_joueur, attaque_adv, att="J"):
@@ -189,12 +188,14 @@ class Combat:
                 print(self.info_pokemon_joueur["Info_pokemon"]["PV"])
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0 and not self.game.save_selected.a_pokemons_vivants(0)[0]:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
                     self.winner = False
-                elif self.game.save_selected.a_pokemons_vivants(0)[0] and self.info_pokemon_joueur["Info_pokemon"]["PV"] <=0:
+                elif self.info_pokemon_joueur["Info_pokemon"]["PV"] <=0:
                     print("pokémon du joueur tué :(")
                     self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur,None)
-                    self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
-                    self.get_info_pokemons()
+                    if  self.game.save_selected.a_pokemons_vivants(0)[0] :
+                        self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
+                        self.get_info_pokemons()
 
 
             else:
@@ -206,6 +207,7 @@ class Combat:
             if reussi:
                 self.info_espece_adv["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_joueur, "S")
                 if self.info_espece_adv["Info_pokemon"]["PV"] <= 0:
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
                     self.info_espece_adv["Info_pokemon"]["PV"] = 0
                     self.winner = True
 
@@ -221,6 +223,7 @@ class Combat:
             if reussi:
                 self.info_espece_adv["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_joueur, "S")
                 if self.info_espece_adv["Info_pokemon"]["PV"] <= 0:
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
                     self.info_espece_adv["Info_pokemon"]["PV"] = 0
                     self.winner = True
 
@@ -235,12 +238,14 @@ class Combat:
                 print("Pokemon advrese attaque en 2e")
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0 and not self.game.save_selected.a_pokemons_vivants(0)[0]:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
                     self.winner = False
-                elif self.game.save_selected.a_pokemons_vivants(0)[0] and self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0:
+                elif self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0:
                     print("pokémon joueur tué :(")
                     self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur,None)
-                    self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
-                    self.get_info_pokemons()
+                    if self.game.save_selected.a_pokemons_vivants(0)[0]:
+                        self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
+                        self.get_info_pokemons()
 
             else:
                 print("L'attaque a échoué...")
@@ -357,3 +362,14 @@ class Combat:
         self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(
             str(self.info_espece_adv["Info_pokemon"]["PV"]) + " /" + str(self.info_espece_adv["Info_espece"]["PV"]),
             False, (0, 0, 0)), (self.screen.get_display().get_size()[0] - 200, 80))
+
+
+    def tenter_capture(self):
+
+        self.chance_capture=randint(0,self.info_espece_adv["Info_espece"]["PV"]-self.info_espece_adv["Info_pokemon"]["PV"])
+        if self.chance_capture<10:
+            Dialogue("Vous capturez le pokémon !",self.screen,self.map,self).afficher()
+            nom=input("Quel nom voulez-vous donner à votre Pokémon ? Laisser vide pour lui laisser le nom de l'espèce : ")
+            if nom=="":
+                nom=self.info_espece_adv["Info_espece"]["Nom"]
+            self.game.save_selected.capturer_pokemon(self.info_espece_adv["Info_espece"]["ID_espece"],nom,randint(0,10),0,self.info_espece_adv["Info_pokemon"]["PV"],"None")
