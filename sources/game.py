@@ -251,7 +251,11 @@ class Game:
                         self.pressed = {}
                         self.combat = Combat(self, self.screen, self.player, self.map, self.origin, self.save_selected)
                         if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(self.origin))[1][0]) is False:
-                            self.running = False
+                            self.player.set_coordonnees(185,139)
+                            self.map.switch_map("interieur_mc_chambre0")
+                            self.player.move("W")
+                            self.player.move("E")
+                            self.save_selected.pokecenter()
                         self.cooldown = 120
 
                 # ------------------------------------------------------------ Collisions ------------------------------------------------------------ #

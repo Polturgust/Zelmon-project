@@ -233,6 +233,7 @@ class Database:
         # Puis on dirige le pokémon vers le stockage PC du joueur
         self.c.execute("""INSERT INTO PC VALUES (?,?)""", (self.id_pokemon, id_joueur))
         self.database.commit()
+        return self.id_pokemon
 
     def deplacer_equipe_vers_PC(self, id_pokemon):
         """
