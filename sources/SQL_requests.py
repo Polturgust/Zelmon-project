@@ -303,6 +303,28 @@ class Database:
         print(self.results)
         return self.results[0][0]
 
+
+    def sauvegarder_info_pokemon(self,info_pokemon,attaques):
+        self.c=self.database.cursor()
+        self.c.execute("""UPDATE Pokemons SET nom=?, niveau=?, xp=?, pv=?, alterations_statut=? WHERE id_pokemon=?""",(info_pokemon["Info_pokemon"]["Nom"],info_pokemon["Info_pokemon"]["Niveau"],info_pokemon["Info_pokemon"]["XP"],info_pokemon["Info_pokemon"]["PV"],info_pokemon["Info_pokemon"]["Statut"],info_pokemon["Info_pokemon"]["ID"]))
+        self.database.commit()
+        """
+        for i in attaques:
+            self.c.execute(\"""UPDATE Attaques_possedees SET pp_restant=? WHERE id_pokemon=? and id_attaque=?"\"",(i["PP_restants"]))
+        """
+        print("Updated")
+
+    def a_pokemons_vivants(self,id_joueur):
+        self.c=self.database.cursor()
+        self.c.execute("""SELECT Equipe.id_pokemon,pv FROM Pokemons JOIN Equipe on Equipe.id_pokemon=Pokemons.id_pokemon WHERE Equipe.id_joueur=?""",(id_joueur,))
+        self.results=self.c.fetchall()
+        liste_vivants=[]
+        for i in self.results:
+            if i[1]!=0:
+                liste_vivants.append(i[0])
+        return len(liste_vivants)!=0,liste_vivants
+
+
     def create_pokemon(self, id_pokemon, lvl, exp):
         """
         Fonction qui permet de créer un Pokémon dans la base de données

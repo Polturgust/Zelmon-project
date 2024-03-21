@@ -139,6 +139,8 @@ class Combat:
         self.map.switch_map(self.origin)
         self.player.pos = Vector(self.player.pos.get()[0], self.player.pos.get()[1])
         self.cooldown = 120
+
+        self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur,self.info_pokemon_joueur["Attaques"])
         return self.winner
 
 
