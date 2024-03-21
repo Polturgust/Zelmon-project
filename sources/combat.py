@@ -50,8 +50,6 @@ class Combat:
         self.info_espece_adv = {}
         self.get_info_pokemons()
         self.winner = None
-        self.pv_adv = self.info_espece_adv["Info_espece"]["PV"]
-        self.pv_joueur = self.info_pokemon_joueur["Info_pokemon"]["PV"]
 
         while self.winner is None and self.running:
             self.screen.update()
@@ -112,7 +110,7 @@ class Combat:
             # gere la taille de la barre de pv
             self.taille_conteneur_barre_pv_x = 120
             self.ratio_barre_pv = self.taille_conteneur_barre_pv_x / self.info_espece_adv["Info_espece"]["PV"]
-            self.taille_voulue_x = self.pv_joueur * self.ratio_barre_pv
+            self.taille_voulue_x = self.info_pokemon_joueur["Info_pokemon"]["PV"] * self.ratio_barre_pv
 
             # essaye d'afficher une barre de pv
             self.rect_bare_pv = pygame.Rect(600, 300, self.ratio_barre_pv, 7)
@@ -137,7 +135,7 @@ class Combat:
                 coord += 40
                 nb += 1
 
-            if (pygame.K_a in self.pressed.keys() and self.pressed[pygame.K_a] is True) or self.pv_adv <= 0:
+            if (pygame.K_a in self.pressed.keys() and self.pressed[pygame.K_a] is True) or self.info_espece_adv["Info_espece"]["PV"] <= 0:
                 self.pressed[pygame.K_a] = False
                 self.winner = True
 
@@ -166,9 +164,9 @@ class Combat:
         self.map.switch_map(self.origin)
         self.player.pos = Vector(self.player.pos.get()[0], self.player.pos.get()[1])
         self.cooldown = 120
-        self.game.save_selected.equiper_pokemon(0, 1)
         print(self.game.save_selected.a_pokemons_vivants(0))
         self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, self.info_pokemon_joueur["Attaques"])
+        self.game.save_selected.pokecenter()
         return self.winner
 
     def attaquer(self, attaque_joueur, attaque_adv, att="J"):
@@ -193,6 +191,8 @@ class Combat:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
                     self.winner = False
                 elif self.game.save_selected.a_pokemons_vivants(0)[0] and self.info_pokemon_joueur["Info_pokemon"]["PV"] <=0:
+                    print("pokémon du joueur tué :(")
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur,None)
                     self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
                     self.get_info_pokemons()
 
@@ -233,11 +233,12 @@ class Combat:
             if reussi:
                 self.info_pokemon_joueur["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_adv, "S")
                 print("Pokemon advrese attaque en 2e")
-                if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0 and not \
-                self.game.save_selected.a_pokemons_vivants(0)[0]:
+                if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0 and not self.game.save_selected.a_pokemons_vivants(0)[0]:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
                     self.winner = False
                 elif self.game.save_selected.a_pokemons_vivants(0)[0] and self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0:
+                    print("pokémon joueur tué :(")
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur,None)
                     self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
                     self.get_info_pokemons()
 
@@ -342,7 +343,7 @@ class Combat:
         # gere la taille de la barre de pv
         self.taille_conteneur_barre_pv_x = 600
         self.ratio_barre_pv = self.taille_conteneur_barre_pv_x / self.info_espece_adv["Info_espece"]["PV"]
-        self.taille_voulue_x = self.pv_joueur * self.ratio_barre_pv
+        self.taille_voulue_x = self.info_pokemon_joueur["Info_pokemon"]["PV"] * self.ratio_barre_pv
 
         # essaye d'afficher une barre de pv
         self.rect_bare_pv = pygame.Rect(600, 300, self.ratio_barre_pv, 7)

@@ -325,13 +325,27 @@ class Database:
             self.database.commit()
         print("Switched pokemon")
 
+
+    def pokecenter(self):
+        self.c=self.database.cursor()
+        self.c.execute("""SELECT Pokemons.id_pokemon FROM Pokemons JOIN Equipe ON Equipe.id_pokemon=Equipe.id_pokemon WHERE Equipe.id_joueur=0""")
+        self.results=self.c.fetchall()
+        for i in self.results:
+            self.c.execute("""SELECT Especes.pv FROM Pokemons JOIN Especes ON Especes.id_espece = Pokemons.id_espece WHERE id_pokemon=?""",(i[0],))
+            pv=self.c.fetchall()[0][0]
+            self.c.execute("""UPDATE Pokemons SET pv=? WHERE id_pokemon=?""",(pv,i[0]))
+            self.database.commit()
+        print("Pokemons healed !")
+
+
+
     def a_pokemons_vivants(self,id_joueur):
         self.c=self.database.cursor()
         self.c.execute("""SELECT Equipe.id_pokemon,pv FROM Pokemons JOIN Equipe on Equipe.id_pokemon=Pokemons.id_pokemon WHERE Equipe.id_joueur=?""",(id_joueur,))
         self.results=self.c.fetchall()
         liste_vivants=[]
         for i in self.results:
-            if i[1]!=0:
+            if i[1]>0:
                 liste_vivants.append(i[0])
         return len(liste_vivants)!=0,liste_vivants
 
