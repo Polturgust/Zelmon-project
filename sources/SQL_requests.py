@@ -314,6 +314,17 @@ class Database:
         """
         print("Updated")
 
+    def equiper_pokemon(self,id_joueur,id_pokemon):
+        self.c=self.database.cursor()
+        self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=?""",(id_joueur,))
+        self.results=self.c.fetchall()
+        if (id_pokemon,) in self.results:
+            self.c.execute("""UPDATE Equipe SET est_equipe=0 WHERE est_equipe=1 AND id_joueur=?""",(id_joueur,))
+            self.database.commit()
+            self.c.execute("""UPDATE Equipe SET est_equipe=1 WHERE id_pokemon=?""",(id_pokemon,))
+            self.database.commit()
+        print("Switched pokemon")
+
     def a_pokemons_vivants(self,id_joueur):
         self.c=self.database.cursor()
         self.c.execute("""SELECT Equipe.id_pokemon,pv FROM Pokemons JOIN Equipe on Equipe.id_pokemon=Pokemons.id_pokemon WHERE Equipe.id_joueur=?""",(id_joueur,))
