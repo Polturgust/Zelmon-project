@@ -13,7 +13,8 @@ class SoundManager:
             "Purification theme": pygame.mixer.Sound("assets/audio/Great_Fairy_s_Fountain_Milk_Bar_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
             "Kingdom's Legend": pygame.mixer.Sound("assets/audio/A_Kingdom_s_Legend_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
             "Hyrule at peace": pygame.mixer.Sound("assets/audio/Hyrule_at_Peace_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
-            "Ruined Room": pygame.mixer.Sound("assets/audio/The_Ruined_Room_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg")
+            "Ruined Room": pygame.mixer.Sound("assets/audio/The_Ruined_Room_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
+            "Pokecentre theme": pygame.mixer.Sound("assets/audio/Pokemon-HeartGold-and-SoulSilver-Pokemon-Center.ogg")
         }
         self.current_theme = None, None
 
@@ -63,6 +64,6 @@ class SoundManager:
 
     def get_current_theme(self):
         """
-        Fonction qui renvoie le thème actuel
+        Fonction qui renvoie le thème en cours de lecture
         """
         return self.current_theme

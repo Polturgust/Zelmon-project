@@ -54,6 +54,7 @@ class Game:
             create_save(1)
             nb_sauvegardes += 1
 
+        # On importe et modifie les images de l'écran de lancement
         background = pygame.image.load("assets/images/zelda.webp")
         background = pygame.transform.scale(background, (640, 480))
 
@@ -112,7 +113,7 @@ class Game:
                         self.player.move("S")
                         print(self.save_selected.get_id_joueurs())
 
-                        # On crée les PNJs
+                        # On crée les PNJs → pour une prochaine MAJ
                         # create_all_pnjs(self)
 
                         # On affiche les pnjs présents sur la map de spawn
@@ -146,7 +147,7 @@ class Game:
             if self.playing:  # Si on est dans le jeu
                 # ------------------------------------------------------------ Player movement ------------------------------------------------------------ #
                 if self.player.get_slipping_status() is False and self.player.get_moover_effect() is None:
-                    # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du carré (ses coordonnées sont le point en haut à gauche)
+                    # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du joueur (ses coordonnées sont le point en haut à gauche)
                     if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[
                         1] > 0 and \
                             self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
@@ -335,8 +336,9 @@ class Game:
                         # Si oui, on définit le joueur comme étant sur de la glace
                         self.player.set_ice_status(True)
                         touches_ice = True
-                    if touches_ice is None:
-                        self.player.set_ice_status(False)
+                if touches_ice is None:
+                    self.player.set_ice_status(False)
+                    self.player.set_slipping_status(False)
 
                 # Vérifie si le joueur est sur un moover
                 for i in self.map.moovers:
@@ -429,8 +431,16 @@ class Game:
                 self.sound_manager.transition("Main adventure theme", -1)
         elif "pokemart" in self.map.zonearr:
             if self.sound_manager.get_current_theme() == (None, None):
-                self.sound_manager.transition("PokeMart theme", -1)
+                self.sound_manager.play("PokeMart theme", -1)
             elif self.sound_manager.get_current_theme()[0] != "PokeMart theme":
                 self.sound_manager.transition("PokeMart theme", -1)
         elif "pokecentre" in self.map.zonearr:
-            pass
+            if self.sound_manager.get_current_theme() == (None, None):
+                self.sound_manager.play("Pokecentre theme", -1)
+            elif self.sound_manager.get_current_theme()[0] != "Pokecentre theme":
+                self.sound_manager.transition("Pokecentre theme", -1)
+        elif "temple_of_purification" in self.map.zonearr:
+            if self.sound_manager.get_current_theme() == (None, None):
+                self.sound_manager.play("Purification theme", -1)
+            elif self.sound_manager.get_current_theme()[0] != "Purification theme":
+                self.sound_manager.transition("Purification theme", -1)

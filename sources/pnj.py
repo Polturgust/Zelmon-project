@@ -5,6 +5,7 @@ from animation import Animation
 from spritesheet import SpriteSheet
 
 
+# PNJs will be implemented in a future update
 class PNJ(pygame.sprite.Sprite):
     def __init__(self, game, x, y, map, image_path):
         self.game = game
@@ -107,6 +108,7 @@ class PNJ(pygame.sprite.Sprite):
         self.image = self.animation.get_current_image()
 
 
+"""
 class GreyCat(PNJ):
     def __init__(self, game, x, y, map):
         # Coordonnées du joueur (au centre par défaut)
@@ -144,6 +146,7 @@ class Maman(PNJ):
         self.image = pygame.image.load("assets/Spritesheets/pnj/maman/idle_maman.png").convert_alpha()
 
         self.rect = self.image.get_rect()
+"""
 
 
 def create_all_pnjs(game):

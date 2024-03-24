@@ -20,7 +20,6 @@ class Database:
         ids = [i[0] for i in results]
         return ids
 
-
     def get_info_joueur(self, id_joueur):
         """
         Récupère les informations sur le joueur depuis la base de données sous la forme :
@@ -45,19 +44,21 @@ class Database:
         self.c = self.database.cursor()
         self.c.execute("""SELECT * FROM Pokemons WHERE id_pokemon=?""", (id_pokemon,))
         self.results = self.c.fetchall()
-        if len(self.results)!=0:
+        if len(self.results) != 0:
             self.results = self.results[0]
-            return {"ID": self.results[0], "ID_espece": self.results[1], "Nom": self.results[2], "Niveau": self.results[3],
-                "XP": self.results[4], "PV": self.results[5], "Statut": self.results[6]}
+            return {"ID": self.results[0], "ID_espece": self.results[1], "Nom": self.results[2],
+                    "Niveau": self.results[3],
+                    "XP": self.results[4], "PV": self.results[5], "Statut": self.results[6]}
 
-    def get_pokemon_equipe(self,id_joueur):
-        self.c=self.database.cursor()
-        self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=? AND est_equipe=1""",(id_joueur,))
+    def get_pokemon_equipe(self, id_joueur):
+        self.c = self.database.cursor()
+        self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=? AND est_equipe=1""", (id_joueur,))
         self.results = self.c.fetchall()
-        if len(self.results)!=0 : return self.results[0][0]
+        if len(self.results) != 0:
+            return self.results[0][0]
         return None
 
-    def get_info_espece(self,id_espece):
+    def get_info_espece(self, id_espece):
         """
         Récupère les informations sur un pokémon depuis la base de données sous la forme :
         {"ID" : ID du Pokémon, "ID_espece" : ID de son espèce, "Nom" : Nom donné à ce Pokémon,
@@ -69,8 +70,8 @@ class Database:
         self.results = self.c.fetchall()
         self.results = self.results[0]
         return {"ID_espece": self.results[0], "Nom": self.results[3], "Type1": self.results[1],
-                "Type2": self.results[2], "Path": self.results[4], "PV": self.results[5],"Attaque":self.results[6],
-                "Defense":self.results[7],"Vitesse":self.results[8],"Courbe":self.results[9]}
+                "Type2": self.results[2], "Path": self.results[4], "PV": self.results[5], "Attaque": self.results[6],
+                "Defense": self.results[7], "Vitesse": self.results[8], "Courbe": self.results[9]}
 
     def get_equipe(self, id_joueur):
         """
@@ -111,17 +112,17 @@ class Database:
             self.a_renvoyer.append(self.get_details_attaque(i[0]))
         return self.a_renvoyer
 
-    def get_attaques_par_type(self,type1,type2=None):
-        self.c=self.database.cursor()
+    def get_attaques_par_type(self, type1, type2=None):
+        self.c = self.database.cursor()
         if type2 is not None:
-            self.c.execute("""SELECT id_attaque FROM Attaques WHERE type IN (?,?)""",(type1,type2))
-            self.results=self.c.fetchall()
+            self.c.execute("""SELECT id_attaque FROM Attaques WHERE type IN (?,?)""", (type1, type2))
+            self.results = self.c.fetchall()
         else:
             self.c.execute("""SELECT id_attaque FROM Attaques WHERE type=?""", (type1,))
-            self.results=self.c.fetchall()
+            self.results = self.c.fetchall()
         liste = choices(self.results, k=4)
         for i in range(len(liste)):
-            liste[i]=liste[i][0]
+            liste[i] = liste[i][0]
         return [self.get_details_attaque(i) for i in liste]
 
     def get_details_attaque(self, id_attaque):
@@ -136,12 +137,14 @@ class Database:
         self.results = self.c.fetchall()
         self.results = self.results[0]
         return {"ID": self.results[0], "Nom": self.results[1], "Type": self.results[2], "Puissance": self.results[3],
-                "Precision": self.results[4], "Effet": self.results[5],"Qte_effet":self.results[6],"Pourcent_effet":self.results[7],"PP_max":self.results[8],"Description":self.results[9]}
+                "Precision": self.results[4], "Effet": self.results[5], "Qte_effet": self.results[6],
+                "Pourcent_effet": self.results[7], "PP_max": self.results[8], "Description": self.results[9]}
 
     def get_pp_restants(self, id_pokemon, id_attaque):
-        self.c=self.database.cursor()
-        self.c.execute("""SELECT pp_restant FROM Attaques_possedees WHERE id_pokemon=? and id_attaque=?""",(id_pokemon,id_attaque))
-        self.results=self.c.fetchall()
+        self.c = self.database.cursor()
+        self.c.execute("""SELECT pp_restant FROM Attaques_possedees WHERE id_pokemon=? and id_attaque=?""",
+                       (id_pokemon, id_attaque))
+        self.results = self.c.fetchall()
         print(self.results)
         if len(self.results) != 0:
             self.c.close()
@@ -297,17 +300,18 @@ class Database:
         self.results = self.results
         return self.results
 
-    def get_avantages(self,type_att,type_def):
-        self.c=self.database.cursor()
-        self.c.execute("""SELECT coeff FROM Avantages WHERE attaquant=? and defenseur=?""",(type_att,type_def))
-        self.results=self.c.fetchall()
+    def get_avantages(self, type_att, type_def):
+        self.c = self.database.cursor()
+        self.c.execute("""SELECT coeff FROM Avantages WHERE attaquant=? and defenseur=?""", (type_att, type_def))
+        self.results = self.c.fetchall()
         print(self.results)
         return self.results[0][0]
 
-
-    def sauvegarder_info_pokemon(self,info_pokemon,attaques):
-        self.c=self.database.cursor()
-        self.c.execute("""UPDATE Pokemons SET nom=?, niveau=?, xp=?, pv=?, alterations_statut=? WHERE id_pokemon=?""",(info_pokemon["Info_pokemon"]["Nom"],info_pokemon["Info_pokemon"]["Niveau"],info_pokemon["Info_pokemon"]["XP"],info_pokemon["Info_pokemon"]["PV"],info_pokemon["Info_pokemon"]["Statut"],info_pokemon["Info_pokemon"]["ID"]))
+    def sauvegarder_info_pokemon(self, info_pokemon, attaques):
+        self.c = self.database.cursor()
+        self.c.execute("""UPDATE Pokemons SET nom=?, niveau=?, xp=?, pv=?, alterations_statut=? WHERE id_pokemon=?""", (
+        info_pokemon["Info_pokemon"]["Nom"], info_pokemon["Info_pokemon"]["Niveau"], info_pokemon["Info_pokemon"]["XP"],
+        info_pokemon["Info_pokemon"]["PV"], info_pokemon["Info_pokemon"]["Statut"], info_pokemon["Info_pokemon"]["ID"]))
         self.database.commit()
         """
         for i in attaques:
@@ -315,46 +319,42 @@ class Database:
         """
         print("Updated")
 
-    def equiper_pokemon(self,id_joueur,id_pokemon):
-        self.c=self.database.cursor()
-        self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=?""",(id_joueur,))
-        self.results=self.c.fetchall()
+    def equiper_pokemon(self, id_joueur, id_pokemon):
+        self.c = self.database.cursor()
+        self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=?""", (id_joueur,))
+        self.results = self.c.fetchall()
         if (id_pokemon,) in self.results:
-            self.c.execute("""UPDATE Equipe SET est_equipe=0 WHERE est_equipe=1 AND id_joueur=?""",(id_joueur,))
+            self.c.execute("""UPDATE Equipe SET est_equipe=0 WHERE est_equipe=1 AND id_joueur=?""", (id_joueur,))
             self.database.commit()
-            self.c.execute("""UPDATE Equipe SET est_equipe=1 WHERE id_pokemon=?""",(id_pokemon,))
+            self.c.execute("""UPDATE Equipe SET est_equipe=1 WHERE id_pokemon=?""", (id_pokemon,))
             self.database.commit()
         print("Switched pokemon")
 
-
     def pokecenter(self):
-        self.c=self.database.cursor()
-        self.c.execute("""SELECT Pokemons.id_pokemon FROM Pokemons JOIN Equipe ON Equipe.id_pokemon=Equipe.id_pokemon WHERE Equipe.id_joueur=0""")
-        self.results=self.c.fetchall()
+        self.c = self.database.cursor()
+        self.c.execute(
+            """SELECT Pokemons.id_pokemon FROM Pokemons JOIN Equipe ON Equipe.id_pokemon=Equipe.id_pokemon WHERE Equipe.id_joueur=0""")
+        self.results = self.c.fetchall()
         for i in self.results:
-            self.c.execute("""SELECT Especes.pv FROM Pokemons JOIN Especes ON Especes.id_espece = Pokemons.id_espece WHERE id_pokemon=?""",(i[0],))
-            pv=self.c.fetchall()[0][0]
-            self.c.execute("""UPDATE Pokemons SET pv=? WHERE id_pokemon=?""",(pv,i[0]))
+            self.c.execute(
+                """SELECT Especes.pv FROM Pokemons JOIN Especes ON Especes.id_espece = Pokemons.id_espece WHERE id_pokemon=?""",
+                (i[0],))
+            pv = self.c.fetchall()[0][0]
+            self.c.execute("""UPDATE Pokemons SET pv=? WHERE id_pokemon=?""", (pv, i[0]))
             self.database.commit()
         print("Pokemons healed !")
 
-
-
-    def a_pokemons_vivants(self,id_joueur):
-        self.c=self.database.cursor()
-        self.c.execute("""SELECT Equipe.id_pokemon,pv FROM Pokemons JOIN Equipe on Equipe.id_pokemon=Pokemons.id_pokemon WHERE Equipe.id_joueur=?""",(id_joueur,))
-        self.results=self.c.fetchall()
-        liste_vivants=[]
+    def a_pokemons_vivants(self, id_joueur):
+        self.c = self.database.cursor()
+        self.c.execute(
+            """SELECT Equipe.id_pokemon,pv FROM Pokemons JOIN Equipe on Equipe.id_pokemon=Pokemons.id_pokemon WHERE Equipe.id_joueur=?""",
+            (id_joueur,))
+        self.results = self.c.fetchall()
+        liste_vivants = []
         for i in self.results:
-            if i[1]>0:
+            if i[1] > 0:
                 liste_vivants.append(i[0])
-        return len(liste_vivants)!=0,liste_vivants
-
-
-    def create_pokemon(self, id_pokemon, lvl, exp):
-        """
-        Fonction qui permet de créer un Pokémon dans la base de données
-        """
+        return len(liste_vivants) != 0, liste_vivants
 
     def sauvegarder(self, player, map):
         """

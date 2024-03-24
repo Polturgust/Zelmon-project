@@ -16,7 +16,6 @@ class Map:
         self.tmx_data = None  # Contiendra le fichier carte utilisable par pygame
         self.map_layer = None  # Contiendra les données de la couche que l'on affiche
         self.group = None  # Contiendra le groupe de lutins permettant de centrer l'écran sur le joueur
-        self.pnjs = None  # Groupe qui contiendra tous les personnages non joueurs
         self.pnjs_list = list()
         self.map_data = None  # Contiendra les données du fichier carte utilisables par pyscroll
         self.zonearr = None  # Contiendra la zone d'origine du joueur (pour le changement de carte)
@@ -24,6 +23,14 @@ class Map:
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
 
     def switch_map(self, map, forcer_apparition=True):
+        """
+        Fonction qui permet de changer de carte
+
+        Pré-conditions :
+            map correspond au nom d'une carte au format .tmx et présente dans le dossier assets/map
+        Post-conditions :
+            la carte affichée à l'écran est modifiée
+        """
         # load the wanted map
         self.tmx_data = pytmx.load_pygame(f"assets\\map\\{map}.tmx")
         # get the map for pyscroll
@@ -45,8 +52,6 @@ class Map:
         self.ice = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
         # Crée un groupe pour les plaques mouvantes
         self.moovers = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
-        # Crée un groupe pour les personnages
-        self.pnjs = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=11)
 
         # Pour chaque couche de la carte actuelle :
         for i in self.tmx_data.visible_layers:
@@ -63,37 +68,37 @@ class Map:
 
                     # Si c'est un objet de la couche qui contient les changements de carte, on crée une collision et on l'ajoute au groupe des changements de carte
                     if i.name == "changements_de_map":
-                        if j.name != None and "vers_route" in j.name:
+                        if j.name is not None and "vers_route" in j.name:
                             dest = j.name.split("vers_route")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "route" + dest[1]))
-                        elif j.name != None and "vers_ville" in j.name:
+                        elif j.name is not None and "vers_ville" in j.name:
                             dest = j.name.split("vers_ville")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "ville" + dest[1]))
-                        elif j.name != None and "vers_interieur_simple" in j.name:
+                        elif j.name is not None and "vers_interieur_simple" in j.name:
                             dest = j.name.split("vers_interieur_simple")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_simple" + dest[1]))
-                        elif j.name != None and "vers_interieur_grand" in j.name:
+                        elif j.name is not None and "vers_interieur_grand" in j.name:
                             dest = j.name.split("vers_interieur_grand")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_grand" + dest[1]))
-                        elif j.name != None and "vers_pokecentre" in j.name:
+                        elif j.name is not None and "vers_pokecentre" in j.name:
                             dest = j.name.split("vers_pokecentre")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "pokecentre" + dest[1]))
-                        elif j.name != None and "vers_pokemart" in j.name:
+                        elif j.name is not None and "vers_pokemart" in j.name:
                             dest = j.name.split("vers_pokemart")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "pokemart" + dest[1]))
-                        elif j.name != None and "vers_interieur_mc_chambre" in j.name:
+                        elif j.name is not None and "vers_interieur_mc_chambre" in j.name:
                             dest = j.name.split("vers_interieur_mc_chambre")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_mc_chambre" + dest[1]))
-                        elif j.name != None and "vers_interieur_mc_salon" in j.name:
+                        elif j.name is not None and "vers_interieur_mc_salon" in j.name:
                             dest = j.name.split("vers_interieur_mc_salon")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_mc_salon" + dest[1]))
-                        elif j.name != None and "vers_interieur_prof" in j.name:
+                        elif j.name is not None and "vers_interieur_prof" in j.name:
                             dest = j.name.split("vers_interieur_prof")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "interieur_prof" + dest[1]))
-                        elif j.name != None and "vers_temple_of_purification" in j.name:
+                        elif j.name is not None and "vers_temple_of_purification" in j.name:
                             dest = j.name.split("vers_temple_of_purification")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "temple_of_purification" + dest[1]))
-                        elif j.name != None and "vers_arene" in j.name:
+                        elif j.name is not None and "vers_arene" in j.name:
                             dest = j.name.split("vers_arene")
                             self.changes.add(Collisions(j.width, j.height, j.x, j.y, "arene" + dest[1]))
 
@@ -163,9 +168,11 @@ class Map:
         print("pnj retiré")
 
     def update(self):
-        # show the map on screen with the player centered
-        self.group.center(self.player.pos.get())
-        self.group.draw(self.screen.get_display())
+        """
+        Fonction qui affiche la carte à l'écran avec le joueur centré
+        """
+        self.group.center(self.player.pos.get())  # on centre la carte sur le joueur
+        self.group.draw(self.screen.get_display())  # on affiche la carte
 
     def get_size(self):
         """

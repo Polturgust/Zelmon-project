@@ -21,9 +21,9 @@ class Player(pygame.sprite.Sprite):
 
         # Hitbox
         self.rect = self.image.get_rect()
-        self.rect.inflate_ip(-5, 0)  # On réduit la taille de la hitbox du joueur pour résoudre le problème lié aux pixels entre deux frames
-        # print(self.rect.width, self.rect.height, self.rect.x, self.rect.y)
-        self.lower_rect = pygame.Rect(2, 15, 12, 10)
+        self.rect.inflate_ip(-5, 0)  # On réduit la taille de la hitbox du joueur pour résoudre le problème lié aux pixels entre deux images de la spritesheet
+        self.lower_rect = pygame.Rect(9, 18, 12, 10)  # On définit une hitbox pour la partie inférieure du joueur pour la détection des hautes herbes / glace / plaques mouvantes
+        # print("base :", self.rect.x, self.rect.y, self.rect.width, self.rect.height, 'lower: ', self.lower_rect.x, self.lower_rect.y, self.lower_rect.width, self.lower_rect.height)
 
         # Autres attributs
         self.velocity = 1
@@ -42,12 +42,12 @@ class Player(pygame.sprite.Sprite):
             Le PNJ se déplace dans la direction voulue
         """
         if direction == "NE":
-            dest = Vector(self.pos.get()[0] + self.velocity, self.pos.get()[1] - self.velocity)
+            dest = Vector(self.pos.get()[0] + self.velocity, self.pos.get()[1] - self.velocity)  # On définit le point d'arrivée
 
-            path = dest - self.pos
-            path.normalize()
+            path = dest - self.pos  # On utilise l'overload pour calculer le vecteur de déplacement
+            path.normalize()  # On normalise le vecteur pour ne pas avancer plus vite en diagonale
 
-            self.pos += path * self.velocity
+            self.pos += path * self.velocity  # On met à jour les coordonnées du joueur
         elif direction == "NW":
             dest = Vector(self.pos.get()[0] - self.velocity, self.pos.get()[1] - self.velocity)
 
@@ -76,7 +76,7 @@ class Player(pygame.sprite.Sprite):
             path.normalize()
 
             self.pos += path * self.velocity
-            self.animation.direction = "N"
+            self.animation.direction = "N"  # Si on ne déplace pas en diagonale, on spécifie la direction de l'animation
         elif direction == "S":
             dest = Vector(self.pos.get()[0], self.pos.get()[1] + self.velocity)
 
@@ -101,8 +101,10 @@ class Player(pygame.sprite.Sprite):
 
             self.pos += path * self.velocity
             self.animation.direction = "E"
+        # On actualise l'emplacement des hitbox
         self.rect.x, self.rect.y = self.pos.get()
-        self.lower_rect.x, self.lower_rect.y = self.pos.get()[0], self.pos.get()[1] + 12
+        self.lower_rect.x, self.lower_rect.y = self.pos.get()[0] + 7, self.pos.get()[1] + 18
+        # print("base :", self.rect.x, self.rect.y, self.rect.width, self.rect.height, 'lower: ', self.lower_rect.x, self.lower_rect.y, self.lower_rect.width, self.lower_rect.height)
 
     def update(self):
         """
@@ -110,8 +112,8 @@ class Player(pygame.sprite.Sprite):
             - Si le joueur ne marche pas, on définit une image statique selon la direction de son dernier déplacement
             - Si le joueur bouge, on fait appel à la classe Animation pour faire défiler la Spritesheet correspondant à la direction du mouvement
         """
-        pygame.draw.rect(self.game.screen.get_display(), (255, 0, 0), self.lower_rect)
-        if self.is_moving and not self.slipping:  # Si le joueur se déplace
+        # pygame.draw.rect(self.game.screen.get_display(), (255, 0, 0), self.lower_rect)
+        if self.is_moving and not self.slipping:  # Si le joueur se déplace normalement
             self.animation.set_frame_interval(8)
             self.animation.update(1)
             self.image = self.animation.get_current_image()
@@ -132,25 +134,74 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.image.load("assets/Spritesheets/Link/Idle-West_Link.png")
 
     def set_coordonnees(self, x, y):
+        """
+        Fonction qui permet de définir les coordonnées du joueur
+
+        Pré-conditions :
+            x et y sont des nombres
+        Post_conditions :
+            L'attribut est actualisé
+        """
         self.pos = Vector(x, y)
 
     def get_ice_status(self):
+        """
+        Renvoie True si le joueur est sur de la glace, False sinon
+        """
         return self.on_ice
 
     def set_ice_status(self, boolean):
+        """
+        Permet de définir si le joueur est sur de la glace
+
+        Pré-conditions :
+            boolean vaut True ou False
+        Post_conditions :
+            L'attribut est actualisé
+        """
         self.on_ice = boolean
 
     def get_slipping_status(self):
+        """
+        Renvoie True si le joueur glisse sur de la glace, False sinon
+        """
         return self.slipping
 
     def set_slipping_status(self, boolean):
+        """
+        Permet de définir si le joueur glisse sur de la glace
+
+        Pré-conditions :
+            boolean vaut True ou False
+        Post_conditions :
+            L'attribut est actualisé
+        """
         self.slipping = boolean
 
     def set_moving_status(self, boolean):
+        """
+        Permet de définir si le joueur se déplace
+
+        Pré-conditions :
+            boolean vaut True ou False
+        Post_conditions :
+            L'attribut est actualisé
+        """
         self.is_moving = boolean
 
     def set_moover_effect(self, dir):
+        """
+        Permet de définir si le joueur est sur une plaque mouvante et sa direction
+
+        Pré-conditions :
+             dir correspond à une direction de mouvement ou None si le joueur n'est pas sur une plaque
+        Post_conditions :
+             L'attribut est actualisé
+        """
         self.moover_effect = dir
 
     def get_moover_effect(self):
+        """
+        Renvoie la direction de la dernière plaque touchée si le joueur en subit l'effet, None sinon
+        """
         return self.moover_effect
