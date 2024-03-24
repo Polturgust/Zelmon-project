@@ -58,6 +58,25 @@ class Database:
             return self.results[0][0]
         return None
 
+    def heal_equipe(self, id_joueur):
+        """
+        Fonction qui permet de soigner les Pokémons de l'équipe d'un joueur
+        """
+        c = self.database.cursor()
+        c.execute(f"""SELECT id_pokemon FROM Equipe WHERE id_joueur={id_joueur} AND est_equipe=1""")
+        results = c.fetchall()
+        pokemons_equipe = results[0]
+        especes_equipe = list()
+        for i in pokemons_equipe:
+            c.execute(f"""SELECT id_espece FROM Pokemons WHERE id_pokemon={i}""")
+            id_espece = c.fetchall()[0][0]
+            c.execute(f"""SELECT pv FROM Especes WHERE id_espece={id_espece}""")
+            pv = c.fetchall()[0][0]
+            c.execute(f"""UPDATE Pokemons SET pv={pv} WHERE id_pokemon={i}""")
+            # especes_equipe.append(c.fetchall()[0])
+        # print(results)
+        self.database.commit()
+
     def get_info_espece(self, id_espece):
         """
         Récupère les informations sur un pokémon depuis la base de données sous la forme :
