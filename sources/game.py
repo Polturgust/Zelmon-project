@@ -1,6 +1,6 @@
 import pygame
 from random import randint
-from moviepy.editor import VideoFileClip
+from moviepy.editor import *
 import os
 
 from screen import Screen
@@ -45,7 +45,7 @@ class Game:
 
     def run(self):
         # Lance la vidéo d'introduction au lancement du jeu → appuyer sur Esc permet d'interrompre la vidéo
-        VideoFileClip("assets/videos/Pokemon Heart Gold  Opening US_480p.mp4").resize((640, 480)).preview()
+        VideoFileClip("assets/videos/The Legend of Pokemon Zelda's Corruption.mp4").preview()
 
         # On vérifie si on a des sauvegardes, sinon on crée une sauvegarde nommée sauvegarde1
         nb_sauvegardes = len(os.listdir("databases")) - 1

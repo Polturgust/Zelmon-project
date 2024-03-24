@@ -1,5 +1,4 @@
-pygame~=2.0.1
+pygame>=2.0.1
 PyTMX~=3.32
 pyscroll~=2.31
 moviepy~=1.0.3
-opencv-python~=4.9.0.80
