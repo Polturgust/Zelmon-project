@@ -362,7 +362,7 @@ class Game:
 
                 # Si le joueur est dans un Pokecentre, on soigne son équipe (car pas de NPC ni potions pour le moment)
                 if "pokecentre" in self.map.zonearr:
-                    self.save_selected.heal_equipe(0)
+                    self.save_selected.pokecenter()
 
                 # Sauvegarde quand on appuie sur "*"
                 if self.pressed.get(pygame.K_s):

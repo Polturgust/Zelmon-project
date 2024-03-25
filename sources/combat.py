@@ -16,7 +16,20 @@ class Combat:
         self.origin = origin
         self.save = save
 
-    def get_info_pokemons(self):
+    def get_info_pokemons(self,update_pv=False):
+        """
+        Récupère les informations sur les pokémons en combat
+
+        Préconditions :
+            - update_pv doit être un booléen
+
+        Renvoie :
+            - Rien, les informations sont directement mises à jour dans les dictionnaires
+
+
+        """
+        if not update_pv:
+            pv=self.info_espece_adv["Info_pokemon"]["PV"]
         self.equipe_joueur = self.game.save_selected.get_pokemon_equipe(0)
         self.info_pokemon_joueur = {"Info_pokemon": self.game.save_selected.get_info_pokemon(self.equipe_joueur)}
         self.info_pokemon_joueur["Info_espece"] = self.game.save_selected.get_info_espece(
@@ -38,7 +51,10 @@ class Combat:
 
         self.info_espece_adv["Info_pokemon"] = {}
         self.info_espece_adv["Info_pokemon"]["Vitesse"] = randint(0, 100)
-        self.info_espece_adv["Info_pokemon"]["PV"] = self.info_espece_adv["Info_espece"]["PV"]
+        if update_pv:
+            self.info_espece_adv["Info_pokemon"]["PV"] = self.info_espece_adv["Info_espece"]["PV"]
+        else:
+            self.info_espece_adv["Info_pokemon"]["PV"]=pv
 
     def combat_sauvage(self, id_poke_adv):
         """
@@ -47,7 +63,7 @@ class Combat:
         """
         self.id_poke_adv = id_poke_adv
         self.info_espece_adv = {}
-        self.get_info_pokemons()
+        self.get_info_pokemons(True)
         self.winner = None
 
         while self.winner is None and self.running:
@@ -159,7 +175,8 @@ class Combat:
 
             if pygame.K_5 in self.pressed.keys() and self.pressed[pygame.K_5] is True:
                 self.pressed[pygame.K_5]=False
-                self.tenter_capture()
+                if self.tenter_capture():
+                    self.winner=True
 
         self.pressed = {}
         self.map.switch_map(self.origin)
@@ -277,6 +294,9 @@ class Combat:
         return round(calcul * coeff)
 
     def afficher(self):
+        """
+        Fonction permettant d'afficher le combat et les différentes informations
+        """
         self.pokemon_font = pygame.font.Font("assets\\font\\pokemon-ds-font.ttf", 65)
 
         self.bg_normal = pygame.image.load('assets\\images\\background_combat\\normal.png')
@@ -320,9 +340,9 @@ class Combat:
             pygame.font.SysFont('pokemon_font', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False,
                                                            (73, 73, 73)), (380, 250))
         # affiche les PV du pokemon du joueur
-        self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(
-            str(self.info_pokemon_joueur["Info_pokemon"]["PV"]) + " / " + str(
-                self.info_pokemon_joueur["Info_espece"]["PV"]), False, (73, 73, 73)), (80, 100))
+        self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(
+            str(self.info_pokemon_joueur["Info_pokemon"]["PV"]) + " /" + str(self.info_pokemon_joueur["Info_espece"]["PV"]),
+            False, (0, 0, 0)), (400, 270))
         # affiche le niveau du pokemon du joueur
         self.screen.get_display().blit(
             pygame.font.SysFont('pokemon_font', 30).render(str(self.info_pokemon_joueur["Info_pokemon"]["Niveau"]),
@@ -365,11 +385,25 @@ class Combat:
 
 
     def tenter_capture(self):
+        """
+        Fonction calculant si le pokémon est capturé lorsqu'on essaie de le capturer, et l'ajoute à la base de données si on réussit à la capturer
+        Sinon, on renvoie False.
+        """
 
         self.chance_capture=randint(0,self.info_espece_adv["Info_espece"]["PV"]-self.info_espece_adv["Info_pokemon"]["PV"])
-        if self.chance_capture<10:
+        if self.chance_capture<5:
             Dialogue("Vous capturez le pokémon !",self.screen,self.map,self).afficher()
             nom=input("Quel nom voulez-vous donner à votre Pokémon ? Laisser vide pour lui laisser le nom de l'espèce : ")
             if nom=="":
                 nom=self.info_espece_adv["Info_espece"]["Nom"]
-            self.game.save_selected.capturer_pokemon(self.info_espece_adv["Info_espece"]["ID_espece"],nom,randint(0,10),0,self.info_espece_adv["Info_pokemon"]["PV"],"None")
+            if len(self.game.save_selected.get_equipe(0))<6:
+                id=self.game.save_selected.capturer_pokemon({"ID":self.info_espece_adv["Info_espece"]["ID_espece"],"Nom":nom,"Niveau":randint(0,10),"XP":0,"PV":self.info_espece_adv["Info_pokemon"]["PV"],"Statut":"None"},0,self.info_espece_adv["Attaques"])
+                self.game.save_selected.deplacer_PC_vers_equipe(id,0)
+                self.game.save_selected.equiper_pokemon(0,id)
+            else:
+                self.game.save_selected.capturer_pokemon(
+                    {"ID": self.info_espece_adv["Info_espece"]["ID_espece"], "Nom": nom, "Niveau": randint(0, 10),
+                     "XP": 0, "PV": self.info_espece_adv["Info_pokemon"]["PV"], "Statut": "None"},0, self.info_espece_adv["Attaques"])
+            return True
+        else:
+            return False
