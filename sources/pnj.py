@@ -17,7 +17,9 @@ class PNJ(pygame.sprite.Sprite):
         self.image_path = image_path  # Chemin vers le dossier contenant les images du PNJ
 
         # On définit son image
-        self.image = pygame.image.load(f"assets/Spritesheets/pnj/{image_path}.png")
+        self.image = pygame.image.load(f"{self.image_path}")
+        self.animation = Animation(idle=SpriteSheet(f"{self.image_path}").images(1, 1))
+        self.animation.direction = None
 
         # On définit sa hitbox
         self.rect = self.image.get_rect()
@@ -158,6 +160,7 @@ def create_all_pnjs(game):
     """
     for i in game.save_selected.get_id_joueurs():
         pnj = game.save_selected.get_info_joueur(i)
-        game.pnjs[pnj["Nom"]] = PNJ(game, pnj["X"], pnj["Y"], pnj["Carte"], pnj["Image_path"])
+        if pnj["Image_path"] is not None:
+            game.pnjs[pnj["Nom"]] = PNJ(game, pnj["X"], pnj["Y"], pnj["Carte"], pnj["Image_path"])
     # game.pnjs["chat de test"] = GreyCat(game, 200, 220, "ville0")
     # game.pnjs["maman"] = Maman(game, 130, 90, "interieur_mc_salon0")

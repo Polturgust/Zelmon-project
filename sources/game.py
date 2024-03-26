@@ -114,7 +114,7 @@ class Game:
                         print(self.save_selected.get_id_joueurs())
 
                         # On crée les PNJs → pour une prochaine MAJ
-                        # create_all_pnjs(self)
+                        create_all_pnjs(self)
 
                         # On affiche les pnjs présents sur la map de spawn
                         for name, instance in self.pnjs.items():
@@ -359,6 +359,7 @@ class Game:
                 for pnj in self.map.pnjs_list:
                     pnj[0].update()
                 """
+
 
                 # Si le joueur est dans un Pokecentre, on soigne son équipe (car pas de NPC ni potions pour le moment)
                 if "pokecentre" in self.map.zonearr:
