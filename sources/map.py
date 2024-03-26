@@ -21,6 +21,9 @@ class Map:
         self.zonearr = None  # Contiendra la zone d'origine du joueur (pour le changement de carte)
         self.changes = None  # Contiendra les collisions
         self.collisions = None  # Contiendra les collisions qui font changer le joueur de carte
+        self.weeds = None  # Contiendra les hautes herbes
+        self.ice = None  # Contiendra la glace
+        self.moovers = None  # Contiendra les plaques mouvantes
 
     def switch_map(self, map, forcer_apparition=True):
         """

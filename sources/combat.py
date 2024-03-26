@@ -16,7 +16,7 @@ class Combat:
         self.origin = origin
         self.save = save
 
-    def get_info_pokemons(self,update_pv=False):
+    def get_info_pokemons(self, update_pv=False):
         """
         Récupère les informations sur les pokémons en combat
 
@@ -28,8 +28,10 @@ class Combat:
 
 
         """
+        """
         if not update_pv:
-            pv=self.info_espece_adv["Info_pokemon"]["PV"]
+            pv = self.info_espece_adv["Info_pokemon"]["PV"]
+        """
         self.equipe_joueur = self.game.save_selected.get_pokemon_equipe(0)
         self.info_pokemon_joueur = {"Info_pokemon": self.game.save_selected.get_info_pokemon(self.equipe_joueur)}
         self.info_pokemon_joueur["Info_espece"] = self.game.save_selected.get_info_espece(
@@ -51,10 +53,9 @@ class Combat:
 
         self.info_espece_adv["Info_pokemon"] = {}
         self.info_espece_adv["Info_pokemon"]["Vitesse"] = randint(0, 100)
-        if update_pv:
-            self.info_espece_adv["Info_pokemon"]["PV"] = self.info_espece_adv["Info_espece"]["PV"]
-        else:
-            self.info_espece_adv["Info_pokemon"]["PV"]=pv
+        self.info_espece_adv["Info_pokemon"]["PV"] = self.info_espece_adv["Info_espece"]["PV"]
+        if not update_pv:
+            pv = self.info_espece_adv["Info_pokemon"]["PV"]
 
     def combat_sauvage(self, id_poke_adv):
         """
@@ -63,7 +64,7 @@ class Combat:
         """
         self.id_poke_adv = id_poke_adv
         self.info_espece_adv = {}
-        self.get_info_pokemons(True)
+        self.get_info_pokemons()
         self.winner = None
 
         while self.winner is None and self.running:
@@ -122,14 +123,12 @@ class Combat:
                 (130, self.screen.get_display().get_size()[1] - 100))
             # affiche le niveau du pokemon adverse
 
-            # gere la taille de la barre de pv
+            # gere la taille de la barre de pv du Pokémon du joueur
             self.taille_conteneur_barre_pv_x = 120
-            self.ratio_barre_pv = self.taille_conteneur_barre_pv_x / self.info_espece_adv["Info_espece"]["PV"]
-            self.taille_voulue_x = self.info_pokemon_joueur["Info_pokemon"]["PV"] * self.ratio_barre_pv
+            self.taille_voulue_x = (self.info_pokemon_joueur["Info_pokemon"]["PV"] / self.info_pokemon_joueur["Info_espece"]["PV"] * 100) * 120 / 100
 
-            # essaye d'afficher une barre de pv
-            self.rect_bare_pv = pygame.Rect(600, 300, self.ratio_barre_pv, 7)
-            self.rect_bare_pv.inflate_ip(50, 1)
+            # on affiche la barre de pv du Pokémon du joueur
+            self.rect_bare_pv = pygame.Rect(500, 284, self.taille_voulue_x, 7)
             self.green_hp_bar = pygame.draw.rect(self.screen.get_display(), (0, 255, 0), self.rect_bare_pv)
 
             self.screen.get_display().blit(
@@ -175,8 +174,7 @@ class Combat:
 
             if pygame.K_5 in self.pressed.keys() and self.pressed[pygame.K_5] is True:
                 self.pressed[pygame.K_5]=False
-                if self.tenter_capture():
-                    self.winner=True
+                self.tenter_capture()
 
         self.pressed = {}
         self.map.switch_map(self.origin)
@@ -231,8 +229,6 @@ class Combat:
             else:
                 Dialogue("L'attaque a échoué...", self.screen, self.map, self).afficher(True)
 
-
-
         else:
             reussi = randint(0, 100) <= self.attaque_joueur["Precision"]
             Dialogue(self.nom_def + " utilise " + self.attaque_adv['Nom'] + " !", self.screen, self.map,
@@ -272,7 +268,6 @@ class Combat:
             self.data_att = self.info_pokemon_joueur
             self.data_def = self.info_espece_adv
 
-
         elif attaquant == "S":
             self.data_att = self.info_espece_adv
             self.data_att["Info_pokemon"]["Niveau"] = 3
@@ -294,9 +289,6 @@ class Combat:
         return round(calcul * coeff)
 
     def afficher(self):
-        """
-        Fonction permettant d'afficher le combat et les différentes informations
-        """
         self.pokemon_font = pygame.font.Font("assets\\font\\pokemon-ds-font.ttf", 65)
 
         self.bg_normal = pygame.image.load('assets\\images\\background_combat\\normal.png')
@@ -340,9 +332,9 @@ class Combat:
             pygame.font.SysFont('pokemon_font', 30).render(self.info_pokemon_joueur["Info_pokemon"]["Nom"], False,
                                                            (73, 73, 73)), (380, 250))
         # affiche les PV du pokemon du joueur
-        self.screen.get_display().blit(pygame.font.SysFont('Comic Sans MS', 30).render(
-            str(self.info_pokemon_joueur["Info_pokemon"]["PV"]) + " /" + str(self.info_pokemon_joueur["Info_espece"]["PV"]),
-            False, (0, 0, 0)), (400, 270))
+        self.screen.get_display().blit(pygame.font.SysFont('pokemon_font', 30).render(
+            str(self.info_pokemon_joueur["Info_pokemon"]["PV"]) + " / " + str(
+                self.info_pokemon_joueur["Info_espece"]["PV"]), False, (73, 73, 73)), (80, 100))
         # affiche le niveau du pokemon du joueur
         self.screen.get_display().blit(
             pygame.font.SysFont('pokemon_font', 30).render(str(self.info_pokemon_joueur["Info_pokemon"]["Niveau"]),
@@ -365,14 +357,13 @@ class Combat:
             (130, self.screen.get_display().get_size()[1] - 100))
         # affiche le niveau du pokemon adverse
 
-        # gere la taille de la barre de pv
-        self.taille_conteneur_barre_pv_x = 600
-        self.ratio_barre_pv = self.taille_conteneur_barre_pv_x / self.info_espece_adv["Info_espece"]["PV"]
-        self.taille_voulue_x = self.info_pokemon_joueur["Info_pokemon"]["PV"] * self.ratio_barre_pv
+        # gere la taille de la barre de pv du Pokémon du joueur
+        self.taille_conteneur_barre_pv_x = 120
+        self.taille_voulue_x = (self.info_pokemon_joueur["Info_pokemon"]["PV"] /
+                                self.info_pokemon_joueur["Info_espece"]["PV"] * 100) * 120 / 100
 
-        # essaye d'afficher une barre de pv
-        self.rect_bare_pv = pygame.Rect(600, 300, self.ratio_barre_pv, 7)
-        self.rect_bare_pv.inflate_ip(50, 1)
+        # on affiche la barre de pv du Pokémon du joueur
+        self.rect_bare_pv = pygame.Rect(500, 284, self.taille_voulue_x, 7)
         self.green_hp_bar = pygame.draw.rect(self.screen.get_display(), (0, 255, 0), self.rect_bare_pv)
 
         self.screen.get_display().blit(
@@ -383,27 +374,11 @@ class Combat:
             str(self.info_espece_adv["Info_pokemon"]["PV"]) + " /" + str(self.info_espece_adv["Info_espece"]["PV"]),
             False, (0, 0, 0)), (self.screen.get_display().get_size()[0] - 200, 80))
 
-
     def tenter_capture(self):
-        """
-        Fonction calculant si le pokémon est capturé lorsqu'on essaie de le capturer, et l'ajoute à la base de données si on réussit à la capturer
-        Sinon, on renvoie False.
-        """
-
-        self.chance_capture=randint(0,self.info_espece_adv["Info_espece"]["PV"]-self.info_espece_adv["Info_pokemon"]["PV"])
-        if self.chance_capture<5:
-            Dialogue("Vous capturez le pokémon !",self.screen,self.map,self).afficher()
-            nom=input("Quel nom voulez-vous donner à votre Pokémon ? Laisser vide pour lui laisser le nom de l'espèce : ")
-            if nom=="":
-                nom=self.info_espece_adv["Info_espece"]["Nom"]
-            if len(self.game.save_selected.get_equipe(0))<6:
-                id=self.game.save_selected.capturer_pokemon({"ID":self.info_espece_adv["Info_espece"]["ID_espece"],"Nom":nom,"Niveau":randint(0,10),"XP":0,"PV":self.info_espece_adv["Info_pokemon"]["PV"],"Statut":"None"},0,self.info_espece_adv["Attaques"])
-                self.game.save_selected.deplacer_PC_vers_equipe(id,0)
-                self.game.save_selected.equiper_pokemon(0,id)
-            else:
-                self.game.save_selected.capturer_pokemon(
-                    {"ID": self.info_espece_adv["Info_espece"]["ID_espece"], "Nom": nom, "Niveau": randint(0, 10),
-                     "XP": 0, "PV": self.info_espece_adv["Info_pokemon"]["PV"], "Statut": "None"},0, self.info_espece_adv["Attaques"])
-            return True
-        else:
-            return False
+        self.chance_capture = randint(0, self.info_espece_adv["Info_espece"]["PV"]-self.info_espece_adv["Info_pokemon"]["PV"])
+        if self.chance_capture < 10:
+            Dialogue("Vous capturez le pokémon !", self.screen, self.map, self).afficher()
+            nom = input("Quel nom voulez-vous donner à votre Pokémon ? Laisser vide pour lui laisser le nom de l'espèce : ")
+            if nom == "":
+                nom = self.info_espece_adv["Info_espece"]["Nom"]
+            self.game.save_selected.capturer_pokemon(self.info_espece_adv["Info_espece"]["ID_espece"],nom,randint(0,10),0,self.info_espece_adv["Info_pokemon"]["PV"],"None")

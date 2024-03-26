@@ -65,7 +65,7 @@ class Animation:
             step est un nombre entier qui correspond au déplacement sur la Spritesheet. Un nombre supérieur à 1 permet de sauter des images, ce qui peut donner une illusion de vitesse
         Post-condition :
             Le walking_index est mis à jour :
-                - Si il reste plus de step images dans la Spritesheet, on incrémente step au walking_index
+                - S'il reste plus de step images dans la Spritesheet, on incrémente step au walking_index
                 - Sinon, on remet le walking_index à 0
         """
         self.current_frame += 1

@@ -70,7 +70,6 @@ class Database:
             return self.results[0][0]
         return None
 
-
     def get_info_espece(self, id_espece):
         """
         Récupère les informations sur un pokémon depuis la base de données sous la forme :
@@ -126,16 +125,6 @@ class Database:
         return self.a_renvoyer
 
     def get_attaques_par_type(self, type1, type2=None):
-        """
-        Récupère puis renvoie une liste aléatoire d'attaques correspondant au(x) type(s) passé(s) en arguments.
-
-        Préconditions :
-            - type1 et type2 doivent être de type str
-
-        Renvoie :
-            - une liste d'attaques du type demandé contenant toutes les informations sur chaque attaque.
-
-        """
         self.c = self.database.cursor()
         if type2 is not None:
             self.c.execute("""SELECT id_attaque FROM Attaques WHERE type IN (?,?)""", (type1, type2))
@@ -164,16 +153,6 @@ class Database:
                 "Pourcent_effet": self.results[7], "PP_max": self.results[8], "Description": self.results[9]}
 
     def get_pp_restants(self, id_pokemon, id_attaque):
-        """
-        Renvoie le nombre de PP restants d'une attaque (= le nombre de fois où elle peut être utilisée) (inutilisée)
-
-        Préconditions :
-            - id_pokemon et id_attque doivent être des entiers naturels supérieurs ou égaux à zéro
-
-        Renvoie :
-            - une entier naturel correspondant au nombre de pp restants pour cette attaque
-
-        """
         self.c = self.database.cursor()
         self.c.execute("""SELECT pp_restant FROM Attaques_possedees WHERE id_pokemon=? and id_attaque=?""",
                        (id_pokemon, id_attaque))
@@ -189,7 +168,6 @@ class Database:
         {"ID" : ID de l'objet, "ID_type_objet" : ID du type de l'objet (est-ce un objet de soin ? Un objet à usage
         unique ? Un objet important pour l'histoire ?), "Type_objet" : Nom du type de l'objet, "Nom" : nom de l'objet,
         "Description" : description de l'objet, "Destinataire" : sur qui cet objet doit-il être utilisé ?}
-
         """
         self.c = self.database.cursor()
         self.c.execute(
@@ -248,7 +226,7 @@ class Database:
         results = c.fetchall()
         return results[0][0]
 
-    def capturer_pokemon(self, info, id_joueur,attaques):
+    def capturer_pokemon(self, info, id_joueur):
         """
         Sauvegarde la capture d'un Pokémon par un joueur dans la base de données à partir des informations sur ce
         Pokémon (dictionnaire sous la forme de ceux renvoyés par la méthode get_info_pokemon()) et l'ID du joueur ayant
@@ -266,15 +244,6 @@ class Database:
         # On ajoute les données du Pokémon à la table Pokemon
         self.c.execute("""INSERT INTO Pokemons VALUES (?,?,?,?,?,?,?)""", self.a_ajouter)
         self.database.commit()
-        liste_att=[]
-        for i in attaques:
-            if i["ID"] not in liste_att:
-                self.c.execute("""SELECT PP FROM Attaques WHERE id_attaque=?""",(i["ID"],))
-                pp_att=self.c.fetchall()[0][0]
-                self.c.execute("""INSERT INTO Attaques_possedees VALUES (?,?,?)""",(self.id_pokemon,i["ID"],pp_att))
-                self.database.commit()
-            else:
-                continue
         # Puis on dirige le pokémon vers le stockage PC du joueur
         self.c.execute("""INSERT INTO PC VALUES (?,?)""", (self.id_pokemon, id_joueur))
         self.database.commit()
@@ -309,7 +278,7 @@ class Database:
             # Si ce n'est pas le cas, on déplace le Pokémon
             if id_pokemon not in self.results[0]:
                 self.info_pokemon = self.get_info_pokemon(id_pokemon)
-                self.c.execute("""INSERT INTO Equipe VALUES (?,?,0)""", (id_pokemon, id_joueur))
+                self.c.execute("""INSERT INTO Equipe VALUES (?,?)""", (id_pokemon, self.info_pokemon["ID"]))
                 self.database.commit()
                 self.c.execute("""DELETE FROM PC WHERE id_pokemon=?""", (id_pokemon,))
                 self.database.commit()
@@ -343,43 +312,25 @@ class Database:
         return self.results
 
     def get_avantages(self, type_att, type_def):
-        """
-        Récupère puis renvoie un coefficient correspondant à la faiblesse/résistance d'un tuype par rapport à un autre
-
-        Préconditions :
-            - type_att et type_def doivent être de type str
-
-        Renvoie :
-            - un entier naturel entre 0 et 2 correspondant à la résistance/faiblesse d'un type par rapport à un autre
-
-
-        """
         self.c = self.database.cursor()
         self.c.execute("""SELECT coeff FROM Avantages WHERE attaquant=? and defenseur=?""", (type_att, type_def))
         self.results = self.c.fetchall()
         print(self.results)
         return self.results[0][0]
 
-    def sauvegarder_info_pokemon(self, info_pokemon):
-        """
-        Sauvegarde les informations d'un pokémon dans la base de données (par exemple après une capture)
-
-        Préconditions :
-            - info_pokemon doit être un dictionnaire
-        """
+    def sauvegarder_info_pokemon(self, info_pokemon, attaques):
         self.c = self.database.cursor()
         self.c.execute("""UPDATE Pokemons SET nom=?, niveau=?, xp=?, pv=?, alterations_statut=? WHERE id_pokemon=?""", (
         info_pokemon["Info_pokemon"]["Nom"], info_pokemon["Info_pokemon"]["Niveau"], info_pokemon["Info_pokemon"]["XP"],
         info_pokemon["Info_pokemon"]["PV"], info_pokemon["Info_pokemon"]["Statut"], info_pokemon["Info_pokemon"]["ID"]))
         self.database.commit()
+        """
+        for i in attaques:
+            self.c.execute(\"""UPDATE Attaques_possedees SET pp_restant=? WHERE id_pokemon=? and id_attaque=?"\"",(i["PP_restants"]))
+        """
+        print("Updated")
 
     def equiper_pokemon(self, id_joueur, id_pokemon):
-        """
-        Equipe un pokemon pour le combat
-
-        Préconditions :
-            - id_joueur et id_pokemon doivent être des entiers naturels
-        """
         self.c = self.database.cursor()
         self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=?""", (id_joueur,))
         self.results = self.c.fetchall()
@@ -388,12 +339,9 @@ class Database:
             self.database.commit()
             self.c.execute("""UPDATE Equipe SET est_equipe=1 WHERE id_pokemon=?""", (id_pokemon,))
             self.database.commit()
+        print("Switched pokemon")
 
     def pokecenter(self):
-        """
-        Soigne l'entièreté des pokémons du joueur, comme après une défaite par exemple.
-
-        """
         self.c = self.database.cursor()
         self.c.execute(
             """SELECT Pokemons.id_pokemon FROM Pokemons JOIN Equipe ON Equipe.id_pokemon=Equipe.id_pokemon WHERE Equipe.id_joueur=0""")
@@ -408,15 +356,6 @@ class Database:
         print("Pokemons healed !")
 
     def a_pokemons_vivants(self, id_joueur):
-        """
-        Renvoie la liste des pokemons vivants d'un joueur à partir de son ID.
-
-        Préconditions :
-            - id_joueur doit être un entier naturel
-
-        Renvoie :
-            - Un tuple (bool,list) où le bolléen est True si le joueur a encore des pokemons vivants, et où la liste contient les ID des pokémons encore vivants
-        """
         self.c = self.database.cursor()
         self.c.execute(
             """SELECT Equipe.id_pokemon,pv FROM Pokemons JOIN Equipe on Equipe.id_pokemon=Pokemons.id_pokemon WHERE Equipe.id_joueur=?""",
