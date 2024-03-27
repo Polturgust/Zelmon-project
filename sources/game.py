@@ -45,7 +45,7 @@ class Game:
 
     def run(self):
         # Lance la vidéo d'introduction au lancement du jeu → appuyer sur Esc permet d'interrompre la vidéo
-        VideoFileClip("assets/videos/The Legend of Pokemon Zelda's Corruption.mp4").preview()
+        VideoFileClip("assets/videos/The Legend of Pokemon Zelda's Corruption slow audio.mp4").preview()
 
         # On vérifie si on a des sauvegardes, sinon on crée une sauvegarde nommée sauvegarde1
         nb_sauvegardes = len(os.listdir("databases")) - 1

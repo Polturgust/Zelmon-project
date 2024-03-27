@@ -28,7 +28,6 @@ class SoundManager:
         Post-conditions :
             le son demandé est joué
         """
-
         self.sounds[name].play(loops=loops)
         self.current_theme = name, self.sounds[name]
 
