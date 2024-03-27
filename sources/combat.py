@@ -28,10 +28,9 @@ class Combat:
 
 
         """
-        """
-        if not update_pv:
+        if update_pv:
             pv = self.info_espece_adv["Info_pokemon"]["PV"]
-        """
+
         self.equipe_joueur = self.game.save_selected.get_pokemon_equipe(0)
         self.info_pokemon_joueur = {"Info_pokemon": self.game.save_selected.get_info_pokemon(self.equipe_joueur)}
         self.info_pokemon_joueur["Info_espece"] = self.game.save_selected.get_info_espece(
@@ -54,13 +53,19 @@ class Combat:
         self.info_espece_adv["Info_pokemon"] = {}
         self.info_espece_adv["Info_pokemon"]["Vitesse"] = randint(0, 100)
         self.info_espece_adv["Info_pokemon"]["PV"] = self.info_espece_adv["Info_espece"]["PV"]
-        if not update_pv:
-            pv = self.info_espece_adv["Info_pokemon"]["PV"]
+        if update_pv:
+            self.info_espece_adv["Info_pokemon"]["PV"]=pv
 
     def combat_sauvage(self, id_poke_adv):
         """
-        Fonction qui lance un combat.
-        Un combat prend fin quand un des deux Pokémon est K.O ou si le joueur fuit en appuyant sur "a"
+        Lance et gère un combat entre le joueur et un pokémon sauvage dont l'ID est donné en argument.
+
+        Précondition :
+            - id_poke_adv doit être un entier naturel correspondant à l'id d'un pokemon
+
+        Renvoie :
+            - True si le combat est gagné par le joueur
+            - False si le joueur perd
         """
         self.id_poke_adv = id_poke_adv
         self.info_espece_adv = {}
@@ -180,18 +185,23 @@ class Combat:
         self.map.switch_map(self.origin)
         self.player.pos = Vector(self.player.pos.get()[0], self.player.pos.get()[1])
         self.cooldown = 120
-        self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, self.info_pokemon_joueur["Attaques"])
+        self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur)
         return self.winner
 
-    def attaquer(self, attaque_joueur, attaque_adv, att="J"):
+    def attaquer(self, attaque_joueur, attaque_adv):
+        """
+        Lance un échange d'attaques une fois que le joueur a choisi une attaque : gère la priorité des attaques et la probabilité de réussite
+
+        Préconditions :
+            - attaque_joueur et attaque_adv doivent être des dictionnaires contenant les informations sur les capacités des attaques du joueur et du pokémon adverse
+
+        Renvoie :
+            - rien, les dégâts sont automatiquement appliqués dans les statistiques des pokémons.
+        """
         self.attaque_joueur = attaque_joueur
         self.attaque_adv = attaque_adv
-        if att == "J":
-            self.nom_att = self.info_pokemon_joueur["Info_pokemon"]["Nom"]
-            self.nom_def = self.info_espece_adv["Info_espece"]["Nom"]
-        else:
-            self.nom_def = self.info_pokemon_joueur["Info_pokemon"]["Nom"]
-            self.nom_att = self.info_espece_adv["Info_espece"]["Nom"]
+        self.nom_att = self.info_pokemon_joueur["Info_pokemon"]["Nom"]
+        self.nom_def = self.info_espece_adv["Info_espece"]["Nom"]
 
         if self.info_espece_adv["Info_espece"]["Vitesse"] > self.info_pokemon_joueur["Info_espece"]["Vitesse"]:
             reussi = randint(0, 100) <= self.attaque_adv["Precision"]
@@ -199,15 +209,12 @@ class Combat:
                      self).afficher(True)
             if reussi:
                 self.info_pokemon_joueur["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_adv, "S")
-                print("Pokemon advrese attaque en premier")
-                print(self.info_pokemon_joueur["Info_pokemon"]["PV"])
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0 and not self.game.save_selected.a_pokemons_vivants(0)[0]:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
-                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur)
                     self.winner = False
                 elif self.info_pokemon_joueur["Info_pokemon"]["PV"] <=0:
-                    print("pokémon du joueur tué :(")
-                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur,None)
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur)
                     if  self.game.save_selected.a_pokemons_vivants(0)[0] :
                         self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
                         self.get_info_pokemons()
@@ -222,7 +229,7 @@ class Combat:
             if reussi:
                 self.info_espece_adv["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_joueur, "S")
                 if self.info_espece_adv["Info_pokemon"]["PV"] <= 0:
-                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur)
                     self.info_espece_adv["Info_pokemon"]["PV"] = 0
                     self.winner = True
 
@@ -236,7 +243,7 @@ class Combat:
             if reussi:
                 self.info_espece_adv["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_joueur, "S")
                 if self.info_espece_adv["Info_pokemon"]["PV"] <= 0:
-                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur)
                     self.info_espece_adv["Info_pokemon"]["PV"] = 0
                     self.winner = True
 
@@ -248,22 +255,34 @@ class Combat:
                      self).afficher(True)
             if reussi:
                 self.info_pokemon_joueur["Info_pokemon"]["PV"] -= self.get_puissance_attaque(self.attaque_adv, "S")
-                print("Pokemon advrese attaque en 2e")
                 if self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0 and not self.game.save_selected.a_pokemons_vivants(0)[0]:
                     self.info_pokemon_joueur["Info_pokemon"]["PV"] = 0
-                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur, None)
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur)
                     self.winner = False
                 elif self.info_pokemon_joueur["Info_pokemon"]["PV"] <= 0:
-                    print("pokémon joueur tué :(")
-                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur,None)
+                    self.game.save_selected.sauvegarder_info_pokemon(self.info_pokemon_joueur)
                     if self.game.save_selected.a_pokemons_vivants(0)[0]:
                         self.game.save_selected.equiper_pokemon(0, self.game.save_selected.a_pokemons_vivants(0)[1][0])
                         self.get_info_pokemons()
 
             else:
-                print("L'attaque a échoué...")
+                Dialogue("L'attaque a échoué...", self.screen, self.map, self).afficher(True)
 
     def get_puissance_attaque(self, attaque, attaquant="J"):
+        """
+        Renvoie la puissance d'une attaque (calcul officiel prenant en compte, entre autres, le niveau du pokémon, le type de l'attaque, et les statistiques d'attaque et de défense des deux pokémons.
+
+        Valeurs en entrée :
+            - attaque : dictionnaire contenant les informations sur l'attaque dont on souhaite calculer la puissance
+            - attaquant : chaîne de caractère indiquant si l'attaquant est le joueur ou le pokémon sauvage
+
+        - Préconditions :
+            - attaque doit être un dictionnaire contenant les informations sur l'attaque du pokémon.
+            - attaquant doit être une chaîne de caractères égale à "J" ou "S"
+
+        Renvoie :
+            - Un entier naturel correspondant au nombre de points de dégâts infligés à l'adversaire
+        """
         if attaquant == "J":
             self.data_att = self.info_pokemon_joueur
             self.data_def = self.info_espece_adv
@@ -289,6 +308,13 @@ class Combat:
         return round(calcul * coeff)
 
     def afficher(self):
+        """
+        Affiche et met à jour l'affichage des informations et des images des pokémons durant le combat.
+
+        Ne prend aucun argument.
+
+        Ne renvoie rien.
+        """
         self.pokemon_font = pygame.font.Font("assets\\font\\pokemon-ds-font.ttf", 65)
 
         self.bg_normal = pygame.image.load('assets\\images\\background_combat\\normal.png')
@@ -374,10 +400,20 @@ class Combat:
             (self.screen.get_display().get_size()[0] - 200, 10))
 
     def tenter_capture(self):
-        self.chance_capture = randint(0, self.info_espece_adv["Info_espece"]["PV"]-self.info_espece_adv["Info_pokemon"]["PV"])
+        """
+        Choisit lors de l'appui sur la touche 5 si le pokémon est capturé ou non.
+
+        Ne prend aucun argument
+
+        """
+        self.chance_capture = randint(0, self.info_espece_adv["Info_espece"]["PV"]-(self.info_espece_adv["Info_espece"]["PV"]-self.info_espece_adv["Info_pokemon"]["PV"]))
         if self.chance_capture < 10:
             Dialogue("Vous capturez le pokémon !", self.screen, self.map, self).afficher()
             nom = input("Quel nom voulez-vous donner à votre Pokémon ? Laisser vide pour lui laisser le nom de l'espèce : ")
             if nom == "":
                 nom = self.info_espece_adv["Info_espece"]["Nom"]
-            self.game.save_selected.capturer_pokemon(self.info_espece_adv["Info_espece"]["ID_espece"],nom,randint(0,10),0,self.info_espece_adv["Info_pokemon"]["PV"],"None")
+            self.game.save_selected.capturer_pokemon({"1":self.info_espece_adv["Info_espece"]["ID_espece"],"2":nom,"3":randint(0,10),"4":0,"5":self.info_espece_adv["Info_pokemon"]["PV"],"6":"None"},0)
+            self.winner=True
+        else:
+            Dialogue("La capture a échoué...",self.screen,self.map,self).afficher()
+            self.attaquer(self.game.save_selected.get_details_attaque(100),self.info_espece_adv["Attaques"][randint(0, 3)])

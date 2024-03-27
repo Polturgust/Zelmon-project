@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="8">
+ <tileset firstgid="1" source="tileset/interior1.tsx"/>
+ <layer id="1" name="noir" width="10" height="10">
+  <data encoding="csv">
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72,
+72,72,72,72,72,72,72,72,72,72
+</data>
+ </layer>
+ <layer id="6" name="texte" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="3" name="collision">
+  <object id="3" x="-0.144196" y="0.144196" width="160.346" height="11.3915"/>
+  <object id="4" x="-0.144196" y="11.2473" width="14.8522" height="148.666"/>
+  <object id="5" x="141.745" y="10.9589" width="18.3129" height="148.955"/>
+ </objectgroup>
+ <objectgroup id="4" name="changements_de_map">
+  <object id="6" name="vers_route6" x="14.9964" y="151.694" width="126.748" height="7.93079"/>
+ </objectgroup>
+ <objectgroup id="5" name="points_de_spawn">
+  <object id="7" name="depuis_route6" x="72" y="124" width="16" height="16"/>
+ </objectgroup>
+</map>

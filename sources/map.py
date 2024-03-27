@@ -107,7 +107,6 @@ class Map:
 
                     # Si c'est un objet de la couche qui contient les points d'apparitions, on choisit le bon en fonction de la zone de laquelle le joueur arrive
                     if i.name == "points_de_spawn" and forcer_apparition:
-                        print(self.zonearr, j.name)
                         # Si le nom correspond à la zone d'où vient le joueur, on déplace le joueur vers cette zone
                         if self.zonearr is not None and self.zonearr in j.name:
                             self.player.rect.x, self.player.rect.y = j.x, j.y
@@ -153,7 +152,6 @@ class Map:
         pnj.animation.direction = base_direction
         # On ajoute le pnj à la liste des pnjs présents sur la carte
         self.pnjs_list.append((pnj, name))
-        print("pnj ajouté")
 
     def remove_pnj(self, pnj, name):
         """
@@ -166,9 +164,7 @@ class Map:
             le pnj est retiré du groupe et de la liste des pnjs à l'écran
         """
         self.group.remove(pnj)
-        print(pnj, name)
         self.pnjs_list.remove((pnj, name))
-        print("pnj retiré")
 
     def update(self):
         """

@@ -111,7 +111,7 @@ class Game:
                         self.map.switch_map(self.loaded_info["Carte"], False)
                         self.player.move("N")
                         self.player.move("S")
-                        print(self.save_selected.get_id_joueurs())
+
 
                         # On crée les PNJs → pour une prochaine MAJ
                         create_all_pnjs(self)
@@ -120,7 +120,6 @@ class Game:
                         for name, instance in self.pnjs.items():
                             if instance.map == self.map.zonearr:
                                 self.map.add_pnj(instance, name)
-                        print(self.map.pnjs_list)
 
                         self.playing = True  # Une fois qu'une sauvegarde a été sélectionnée ou créée, on lance le jeu
                     elif event.key == pygame.K_DELETE:
@@ -365,24 +364,19 @@ class Game:
                 if "pokecentre" in self.map.zonearr:
                     self.save_selected.pokecenter()
 
-                # Sauvegarde quand on appuie sur "*"
+                # Sauvegarde quand on appuie sur "S"
                 if self.pressed.get(pygame.K_s):
                     self.save_selected.sauvegarder(self.player, self.map)
-                    print("Sauvegarde effectuée !")
-
-                if self.pressed.get(pygame.K_DELETE):
-                    print(self.map.zonearr, self.save_selected.get_pnj_sur_carte(self.map.zonearr))
+                    self.pressed[pygame.K_s]=False
+                    Dialogue("Sauvegarde effectuée !",self.screen,self.map).afficher()
 
                 if self.sound_manager.get_current_theme() == (None, None):  # On lance l'audio
                     self.set_audio()
 
-                if self.pressed.get(pygame.K_0):
-                    print(self.save_selected.get_inventaire(0))
-
-                # update map
+                # Met à jour la carte
                 self.map.update()
 
-                # update player animation
+                # Anime le joueur
                 self.player.update()
 
             # ------------------------------------------------------------ Start screen interface ------------------------------------------------------------ #

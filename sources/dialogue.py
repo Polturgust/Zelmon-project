@@ -15,7 +15,6 @@ class Dialogue:
             self.textedonne = self.textedonne[45:]
         self.texte.append(self.textedonne)
         self.pressed = {}
-        print(len(self.texte), self.texte)
         self.cooldown = 0
 
     def afficher(self,update_map=True):

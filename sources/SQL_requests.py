@@ -65,7 +65,6 @@ class Database:
         self.c = self.database.cursor()
         self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=? AND est_equipe=1""", (id_joueur,))
         self.results = self.c.fetchall()
-        print("Info pokémon ",self.results)
         if len(self.results) != 0:
             return self.results[0][0]
         return None
@@ -157,7 +156,6 @@ class Database:
         self.c.execute("""SELECT pp_restant FROM Attaques_possedees WHERE id_pokemon=? and id_attaque=?""",
                        (id_pokemon, id_attaque))
         self.results = self.c.fetchall()
-        print(self.results)
         if len(self.results) != 0:
             self.c.close()
             return self.results[0][0]
@@ -186,7 +184,6 @@ class Database:
         self.c = self.database.cursor()
         self.c.execute("""SELECT id_objet FROM Inventaire WHERE id_joueur=?""", (ID_joueur,))
         self.results = self.c.fetchall()
-        print(self.results)
         self.a_renvoyer = []
         for i in self.results:
             self.a_renvoyer.append(self.get_details_objet(i[0]))
@@ -214,7 +211,6 @@ class Database:
         c.execute(f"""SELECT id_espece, coefficient_apparition FROM Apparitions WHERE id_zone={id_zone}""")
         results = c.fetchall()
         selected_pokemon = choices([i[0] for i in results], [i[1] for i in results], k=1)
-        print(selected_pokemon)
         return results, selected_pokemon
 
     def get_current_zone(self, map):
@@ -315,20 +311,14 @@ class Database:
         self.c = self.database.cursor()
         self.c.execute("""SELECT coeff FROM Avantages WHERE attaquant=? and defenseur=?""", (type_att, type_def))
         self.results = self.c.fetchall()
-        print(self.results)
         return self.results[0][0]
 
-    def sauvegarder_info_pokemon(self, info_pokemon, attaques):
+    def sauvegarder_info_pokemon(self, info_pokemon):
         self.c = self.database.cursor()
         self.c.execute("""UPDATE Pokemons SET nom=?, niveau=?, xp=?, pv=?, alterations_statut=? WHERE id_pokemon=?""", (
         info_pokemon["Info_pokemon"]["Nom"], info_pokemon["Info_pokemon"]["Niveau"], info_pokemon["Info_pokemon"]["XP"],
         info_pokemon["Info_pokemon"]["PV"], info_pokemon["Info_pokemon"]["Statut"], info_pokemon["Info_pokemon"]["ID"]))
         self.database.commit()
-        """
-        for i in attaques:
-            self.c.execute(\"""UPDATE Attaques_possedees SET pp_restant=? WHERE id_pokemon=? and id_attaque=?"\"",(i["PP_restants"]))
-        """
-        print("Updated")
 
     def equiper_pokemon(self, id_joueur, id_pokemon):
         self.c = self.database.cursor()
@@ -339,7 +329,6 @@ class Database:
             self.database.commit()
             self.c.execute("""UPDATE Equipe SET est_equipe=1 WHERE id_pokemon=?""", (id_pokemon,))
             self.database.commit()
-        print("Switched pokemon")
 
     def pokecenter(self):
         self.c = self.database.cursor()
@@ -353,7 +342,6 @@ class Database:
             pv = self.c.fetchall()[0][0]
             self.c.execute("""UPDATE Pokemons SET pv=? WHERE id_pokemon=?""", (pv, i[0]))
             self.database.commit()
-        print("Pokemons healed !")
 
     def a_pokemons_vivants(self, id_joueur):
         self.c = self.database.cursor()
