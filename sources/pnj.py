@@ -109,6 +109,12 @@ class PNJ(pygame.sprite.Sprite):
         self.animation.update(1)
         self.image = self.animation.get_current_image()
 
+    def get_pos(self):
+        return self.pos.get()
+
+    def get_rectangle(self):
+        return self.rect
+
 
 """
 class GreyCat(PNJ):

@@ -49,7 +49,7 @@ class Dialogue:
                     self.pressed[event.key] = False
 
             # S'il reste au moins deux lignes de texte à afficher, on les affiche
-            if len(self.texte) - i > 2:
+            if len(self.texte) - i >= 2:
                 self.surface = pygame.Surface((self.screen.get_size()[0], 100))
                 self.surface.fill((255, 255, 255))
                 if update_map:

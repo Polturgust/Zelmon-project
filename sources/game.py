@@ -241,6 +241,7 @@ class Game:
                 else:
                     self.player.set_moving_status(False)
 
+
                 # ------------------------------------------------------------ Fight start ------------------------------------------------------------ #
                 # Déclenche un combat
                 if self.cooldown == 0:
@@ -259,6 +260,23 @@ class Game:
                         self.cooldown = 120
 
                 # ------------------------------------------------------------ Collisions ------------------------------------------------------------ #
+                # Vérifie si le joueur veut parler à un PNJ
+                #(Pour l'instant, le dialogue est choisi aléatoirement)
+                for i in self.map.pnjs_list:
+                    if i[0].rect.colliderect(self.player.rect) and self.pressed[pygame.K_RETURN]==True:
+                        liste_dialogues=["Bonjour ! Comment ça va ? J'espère que tu    passes une bonne journée !","C'est vraiment super que tu sois là, tu es un vrai rayon de soleil !",
+                                         "Quelle est la réponse à la question de la    vie, de l'univers, et du reste ?","Comme tu as grandi depuis la dernière fois   que je t'ai vu !",
+                                         "Oh ! Un petit bonhomme vert ! Parles-tu notre langue ?","Je n'avais plus d'idées de dialogue, imaginez une conversation :-/",
+                                         "Hey bonjour ! Je t'attendais ! Figure toi que j'ai une histoire de dingue à te raconter : hier, j'ai croisé un chat, et il se trouve   que ce chat eh ben c'était le chat de mon    voisin qui se trouve être un chien mais il l'a toujours appelé un chat et je trouve cette    histoire fort cocasse et ce dialogue avait juste pour but de te faire perdre du temps <3",
+                                         "Aparemment, il y aurait un chat bizarre qui a trouvé son chemin jusuqu'au bout du monde...","Savais-tu que tu peux appuyer sur A pour fuir un combat ?",
+                                         "Si jamais tu es perdu, c'est dommage.","Mange bien cinq fruits et légumes par jour   pour rester en bonne santé !","ATCHOUM ! Excuse-moi, je crois que je suis   allergique aux bonhommes verts...",
+                                         "SELECT FROM Dialogue WHERE is_dialogue_useful=False... Oups, tu étais là ? Je faisais un  peu de poésie moderne...","Et si j'étais seulement un personnage non    joueur dans un jeu développé par trois       lycéens ? Ce serait terrifiant.",
+                                         "J'ai pas d'idée de dialogue -un grand homme, 28 mars 2023.","Le savais-tu ? 90% des dialogues sont        inutiles. Et 100% de ce message est faux."]
+                        r=choices(liste_dialogues)
+                        print(r)
+                        Dialogue(choices(liste_dialogues)[0],self.screen,self.map).afficher()
+                        self.pressed={}
+
                 # Vérifie si le joueur est en collision avec un élément du décor
                 for i in self.map.collisions:
                     if self.player.rect.colliderect(i.rect) and not isinstance(i, Player) and i.command == "":
@@ -352,6 +370,8 @@ class Game:
                         elif i.command == "gauche":
                             self.player.set_moover_effect("W")
 
+
+
                 # ------------------------------------------------------------ Miscellaneous ------------------------------------------------------------ #
                 # update pnjs animation (non utilisé)
                 """
@@ -401,6 +421,7 @@ class Game:
                     self.screen.get_display().blit(save3_btn, (120, 225))
                 self.screen.get_display().blit(return_instruction, (125, 320))
                 self.screen.get_display().blit(suppr_instruction, (400, 320))
+
 
             # update screen
             self.screen.update()
