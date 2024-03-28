@@ -473,6 +473,11 @@ class Game:
                 self.sound_manager.play("Purification theme", -1)
             elif self.sound_manager.get_current_theme()[0] != "Purification theme":
                 self.sound_manager.transition("Purification theme", -1)
+        elif "combat" in self.map.zonearr:
+            if self.sound_manager.get_current_theme() == (None, None):
+                self.sound_manager.play("Wild battle theme", -1)
+            elif self.sound_manager.get_current_theme()[0] != "combat":
+                self.sound_manager.transition("Wild battle theme", -1)
 
     def reset_pressed_keys(self):
         """
