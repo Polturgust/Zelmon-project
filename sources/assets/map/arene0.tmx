@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="79">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="84">
  <tileset firstgid="1" source="tileset/interior_floors.tsx"/>
  <tileset firstgid="1057" source="tileset/ice.tsx"/>
  <tileset firstgid="2145" source="tileset/interior1.tsx"/>
@@ -1184,8 +1184,6 @@
   <object id="65" x="112" y="80" width="400" height="480"/>
   <object id="66" x="160" y="656" width="352" height="480"/>
   <object id="67" x="112" y="688" width="48" height="448"/>
-  <object id="76" x="352" y="400" width="16" height="16"/>
-  <object id="77" x="480" y="464" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="11" name="collisions">
   <object id="2" x="0" y="2" width="640" height="78"/>
@@ -1245,6 +1243,9 @@
   <object id="74" x="272" y="144" width="16" height="16"/>
   <object id="75" x="352" y="144" width="16" height="16"/>
   <object id="78" x="144" y="528" width="16" height="16"/>
+  <object id="81" x="479.5" y="463" width="16" height="16"/>
+  <object id="82" x="352" y="400.5" width="16" height="16"/>
+  <object id="83" x="352" y="400.5" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="13" name="changements_de_map">
   <object id="62" name="vers_ville2" x="307.273" y="1189.27" width="25.6364" height="10.9091"/>

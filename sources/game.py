@@ -1,5 +1,5 @@
 import pygame
-from random import randint
+from random import randint, choice
 from moviepy.editor import *
 import os
 
@@ -112,8 +112,7 @@ class Game:
                         self.player.move("N")
                         self.player.move("S")
 
-
-                        # On crée les PNJs → pour une prochaine MAJ
+                        # On crée les PNJs
                         create_all_pnjs(self)
 
                         # On affiche les pnjs présents sur la map de spawn
@@ -242,7 +241,7 @@ class Game:
                     self.player.set_moving_status(False)
 
 
-                # ------------------------------------------------------------ Fight start ------------------------------------------------------------ #
+                # ------------------------------------------------------------ Fight ------------------------------------------------------------ #
                 # Déclenche un combat
                 if self.cooldown == 0:
                     if self.chance_rencontre() is True:
@@ -250,7 +249,7 @@ class Game:
                         self.save_selected.get_current_zone(self.origin)
                         self.map.switch_map("combat")
                         self.set_audio()
-                        self.pressed = {}
+                        self.reset_pressed_keys()
                         self.combat = Combat(self, self.screen, self.player, self.map, self.origin, self.save_selected)
                         if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(self.origin))[1][0]) is False:
                             self.player.set_coordonnees(185, 139)
@@ -259,25 +258,20 @@ class Game:
                             self.player.move("E")
                             self.save_selected.pokecenter()
                         self.cooldown = 120
+                        j = None
+                        k = None
+                        self.map.switch_map(self.origin)
+                        for i in self.map.changes:
+                            if i.command == self.origin:
+                                j = i
+                            elif i.command == "interieur_mc_chambre0":
+                                k = i
+                            if j is not None and k is not None:
+                                self.update_map_pnj(j, k)
+                        print(self.pnjs)
                         self.set_audio()
 
                 # ------------------------------------------------------------ Collisions ------------------------------------------------------------ #
-                # Vérifie si le joueur veut parler à un PNJ
-                #(Pour l'instant, le dialogue est choisi aléatoirement)
-                for i in self.map.pnjs_list:
-                    if i[0].rect.colliderect(self.player.rect) and self.pressed[pygame.K_RETURN]==True:
-                        liste_dialogues=["Bonjour ! Comment ça va ? J'espère que tu    passes une bonne journée !","C'est vraiment super que tu sois là, tu es un vrai rayon de soleil !",
-                                         "Quelle est la réponse à la question de la    vie, de l'univers, et du reste ?","Comme tu as grandi depuis la dernière fois   que je t'ai vu !",
-                                         "Oh ! Un petit bonhomme vert ! Parles-tu notre langue ?","Je n'avais plus d'idées de dialogue, imaginez une conversation :-/",
-                                         "Hey bonjour ! Je t'attendais ! Figure toi que j'ai une histoire de dingue à te raconter : hier, j'ai croisé un chat, et il se trouve   que ce chat eh ben c'était le chat de mon    voisin qui se trouve être un chien mais il l'a toujours appelé un chat et je trouve cette    histoire fort cocasse et ce dialogue avait juste pour but de te faire perdre du temps <3",
-                                         "Aparemment, il y aurait un chat bizarre qui a trouvé son chemin jusuqu'au bout du monde...","Savais-tu que tu peux appuyer sur A pour fuir un combat ?",
-                                         "Si jamais tu es perdu, c'est dommage.","Mange bien cinq fruits et légumes par jour   pour rester en bonne santé !","ATCHOUM ! Excuse-moi, je crois que je suis   allergique aux bonhommes verts...",
-                                         "SELECT FROM Dialogue WHERE is_dialogue_useful=False... Oups, tu étais là ? Je faisais un  peu de poésie moderne...","Et si j'étais seulement un personnage non    joueur dans un jeu développé par trois       lycéens ? Ce serait terrifiant.",
-                                         "J'ai pas d'idée de dialogue -un grand homme, 28 mars 2023.","Le savais-tu ? 90% des dialogues sont        inutiles. Et 100% de ce message est faux."]
-                        r=choices(liste_dialogues)
-                        print(r)
-                        Dialogue(choices(liste_dialogues)[0],self.screen,self.map).afficher()
-                        self.pressed={}
 
                 # Vérifie si le joueur est en collision avec un élément du décor
                 for i in self.map.collisions:
@@ -328,9 +322,31 @@ class Game:
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.inverse[self.last_move])
                         self.player.move(self.last_move)
-                        # Si on appuie sur ...
-                        # on vérifie si ce PNJ a une ligne de dialogue
-                        # Si oui, on instancie la classe Dialogue
+
+                        # Vérifie si le joueur veut parler à un PNJ
+                        # (Pour l'instant, le dialogue est choisi aléatoirement)
+                        if self.pressed[pygame.K_RETURN]:
+                            # On stoppe les déplacements du joueur
+                            self.reset_pressed_keys()
+                            liste_dialogues = [
+                                "Bonjour ! Comment ça va ? J'espère que tu    passes une bonne journée !",
+                                "C'est vraiment super que tu sois là, tu es un vrai rayon de soleil !",
+                                "Quelle est la réponse à la question de la    vie, de l'univers, et du reste ?",
+                                "Comme tu as grandi depuis la dernière fois   que je t'ai vu !",
+                                "Oh ! Un petit bonhomme vert ! Parles-tu notre langue ?",
+                                "Je n'avais plus d'idées de dialogue, imaginez une conversation :-/",
+                                "Hey bonjour ! Je t'attendais ! Figure toi que j'ai une histoire de dingue à te raconter : hier, j'ai croisé un chat, et il se trouve   que ce chat eh ben c'était le chat de mon    voisin qui se trouve être un chien mais il l'a toujours appelé un chat et je trouve cette    histoire fort cocasse et ce dialogue avait juste pour but de te faire perdre du temps <3",
+                                "Aparemment, il y aurait un chat bizarre qui a trouvé son chemin jusuqu'au bout du monde...",
+                                "Savais-tu que tu peux appuyer sur A pour fuir un combat ?",
+                                "Si jamais tu es perdu, c'est dommage.",
+                                "Mange bien cinq fruits et légumes par jour   pour rester en bonne santé !",
+                                "ATCHOUM ! Excuse-moi, je crois que je suis   allergique aux bonhommes verts...",
+                                "SELECT FROM Dialogue WHERE is_dialogue_useful=False... Oups, tu étais là ? Je faisais un  peu de poésie moderne...",
+                                "Et si j'étais seulement un personnage non    joueur dans un jeu développé par trois       lycéens ? Ce serait terrifiant.",
+                                "J'ai pas d'idée de dialogue -un grand homme, 28 mars 2023.",
+                                "Le savais-tu ? 90% des dialogues sont        inutiles. Et 100% de ce message est faux."]
+
+                            Dialogue(choice(liste_dialogues), self.screen, self.map).afficher()
 
                 # Vérifie si le joueur touche une zone qui doit le faire changer d'endroit
                 for i in self.map.changes:
@@ -338,14 +354,7 @@ class Game:
                         # Si oui, on change la carte affichée en appelant la méthode switch_map() de la classe Map avec le nom de la carte associée à la collision
                         previous = self.map.zonearr
                         self.map.switch_map(i.command)
-                        # On ajoute les pnjs qui doivent être sur cette carte
-                        for name, instance in self.pnjs.items():
-                            if instance.map == i.command:
-                                self.map.add_pnj(instance, name)
-                        # On retire les pnjs de la carte actuelle
-                        for name, instance in self.pnjs.items():
-                            if instance.map == previous:
-                                self.map.remove_pnj(instance, name)
+                        self.update_map_pnj(previous, i)
                         self.set_audio()
 
                 # Vérifie si le joueur est sur de la glace
@@ -373,14 +382,12 @@ class Game:
                             self.player.set_moover_effect("W")
 
 
-
                 # ------------------------------------------------------------ Miscellaneous ------------------------------------------------------------ #
                 # update pnjs animation
                 """
                 for pnj in self.map.pnjs_list:
                     pnj[0].update()
                 """
-
 
                 # Si le joueur est dans un Pokecentre, on soigne son équipe (car pas de NPC ni potions pour le moment)
                 if "pokecentre" in self.map.zonearr:
@@ -389,8 +396,8 @@ class Game:
                 # Sauvegarde quand on appuie sur "S"
                 if self.pressed.get(pygame.K_s):
                     self.save_selected.sauvegarder(self.player, self.map)
-                    self.pressed[pygame.K_s]=False
-                    Dialogue("Sauvegarde effectuée !",self.screen,self.map).afficher()
+                    self.pressed[pygame.K_s] = False
+                    Dialogue("Sauvegarde effectuée !", self.screen, self.map).afficher()
 
                 if self.sound_manager.get_current_theme() == (None, None):  # On lance l'audio
                     self.set_audio()
@@ -466,3 +473,30 @@ class Game:
                 self.sound_manager.play("Purification theme", -1)
             elif self.sound_manager.get_current_theme()[0] != "Purification theme":
                 self.sound_manager.transition("Purification theme", -1)
+
+    def reset_pressed_keys(self):
+        """
+        Fonction qui remet toutes les touches pressées à "False"
+
+        Post-conditions :
+            self.pressed a toutes ses valeurs sur False
+        """
+        for key in self.pressed:
+            self.pressed[key] = False
+
+    def update_map_pnj(self, previous, i):
+        """
+        Fonction qui met à jour les PNJs présents sur la carte
+        → On enlève les PNJs de la carte précédente et on ajoute ceux de la carte actuelle
+
+        Post-conditions :
+            Les PNJs affichés sur la carte sont les bons
+        """
+        # On retire les pnjs de la carte actuelle
+        for name, instance in self.pnjs.items():
+            if instance.map == previous:
+                self.map.remove_pnj(instance, name)
+        # On ajoute les pnjs qui doivent être sur cette carte
+        for name, instance in self.pnjs.items():
+            if instance.map == i.command:
+                self.map.add_pnj(instance, name)
