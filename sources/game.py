@@ -248,15 +248,17 @@ class Game:
                         self.origin = self.map.zonearr
                         self.save_selected.get_current_zone(self.origin)
                         self.map.switch_map("combat")
+                        self.set_audio()
                         self.pressed = {}
                         self.combat = Combat(self, self.screen, self.player, self.map, self.origin, self.save_selected)
                         if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(self.origin))[1][0]) is False:
-                            self.player.set_coordonnees(185,139)
+                            self.player.set_coordonnees(185, 139)
                             self.map.switch_map("interieur_mc_chambre0")
                             self.player.move("W")
                             self.player.move("E")
                             self.save_selected.pokecenter()
                         self.cooldown = 120
+                        self.set_audio()
 
                 # ------------------------------------------------------------ Collisions ------------------------------------------------------------ #
                 # Vérifie si le joueur est en collision avec un élément du décor
@@ -353,7 +355,7 @@ class Game:
                             self.player.set_moover_effect("W")
 
                 # ------------------------------------------------------------ Miscellaneous ------------------------------------------------------------ #
-                # update pnjs animation (non utilisé)
+                # update pnjs animation
                 """
                 for pnj in self.map.pnjs_list:
                     pnj[0].update()
@@ -367,7 +369,7 @@ class Game:
                 # Sauvegarde quand on appuie sur "S"
                 if self.pressed.get(pygame.K_s):
                     self.save_selected.sauvegarder(self.player, self.map)
-                    self.pressed={}
+                    self.pressed[pygame.K_s]=False
                     Dialogue("Sauvegarde effectuée !",self.screen,self.map).afficher()
 
                 if self.sound_manager.get_current_theme() == (None, None):  # On lance l'audio
