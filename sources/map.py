@@ -1,4 +1,3 @@
-import pygame
 import pytmx
 import pyscroll
 from collisions import Collisions

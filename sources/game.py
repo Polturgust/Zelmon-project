@@ -1,4 +1,3 @@
-import pygame
 from random import randint, choice
 from moviepy.editor import *
 import os
@@ -245,30 +244,27 @@ class Game:
                 # Déclenche un combat
                 if self.cooldown == 0:
                     if self.chance_rencontre() is True:
-                        self.origin = self.map.zonearr
-                        self.save_selected.get_current_zone(self.origin)
+                        origin = self.map.zonearr
+                        self.save_selected.get_current_zone(origin)
                         self.map.switch_map("combat")
+                        # On remove les PNJs de la carte
+                        for name, instance in self.pnjs.items():
+                            if instance.map == origin:
+                                self.map.remove_pnj(instance, name)
                         self.set_audio()
                         self.reset_pressed_keys()
-                        self.combat = Combat(self, self.screen, self.player, self.map, self.origin, self.save_selected)
-                        if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(self.origin))[1][0]) is False:
+                        combat = Combat(self, self.screen, self.player, self.map, origin, self.save_selected)
+                        if combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(origin))[1][0]) is False:
                             self.player.set_coordonnees(185, 139)
                             self.map.switch_map("interieur_mc_chambre0")
                             self.player.move("W")
                             self.player.move("E")
                             self.save_selected.pokecenter()
                         self.cooldown = 120
-                        j = None
-                        k = None
-                        self.map.switch_map(self.origin)
-                        for i in self.map.changes:
-                            if i.command == self.origin:
-                                j = i
-                            elif i.command == "interieur_mc_chambre0":
-                                k = i
-                            if j is not None and k is not None:
-                                self.update_map_pnj(j, k)
-                        print(self.pnjs)
+                        # On remet les PNJs de la carte
+                        for name, instance in self.pnjs.items():
+                            if instance.map == self.map.zonearr:
+                                self.map.add_pnj(instance, name)
                         self.set_audio()
 
                 # ------------------------------------------------------------ Collisions ------------------------------------------------------------ #
@@ -439,8 +435,8 @@ class Game:
     def chance_rencontre(self):
         for i in self.map.weeds:
             if self.player.lower_rect.colliderect(i.rect):
-                self.alearencontre = randint(0, 100)
-                if self.alearencontre < 2:
+                alearencontre = randint(0, 100)
+                if alearencontre < 2:
                     return True
         return False
 
