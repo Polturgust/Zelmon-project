@@ -353,7 +353,7 @@ class Game:
                             self.player.set_moover_effect("W")
 
                 # ------------------------------------------------------------ Miscellaneous ------------------------------------------------------------ #
-                # update pnjs animation
+                # update pnjs animation (non utilisé)
                 """
                 for pnj in self.map.pnjs_list:
                     pnj[0].update()
@@ -367,7 +367,7 @@ class Game:
                 # Sauvegarde quand on appuie sur "S"
                 if self.pressed.get(pygame.K_s):
                     self.save_selected.sauvegarder(self.player, self.map)
-                    self.pressed[pygame.K_s]=False
+                    self.pressed={}
                     Dialogue("Sauvegarde effectuée !",self.screen,self.map).afficher()
 
                 if self.sound_manager.get_current_theme() == (None, None):  # On lance l'audio
