@@ -14,7 +14,8 @@ class SoundManager:
             "Kingdom's Legend": pygame.mixer.Sound("assets/audio/A_Kingdom_s_Legend_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
             "Hyrule at peace": pygame.mixer.Sound("assets/audio/Hyrule_at_Peace_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
             "Ruined Room": pygame.mixer.Sound("assets/audio/The_Ruined_Room_-_The_Legend_of_Zelda__A_Link_Between_Worlds.ogg"),
-            "Pokecentre theme": pygame.mixer.Sound("assets/audio/Pokemon-HeartGold-and-SoulSilver-Pokemon-Center.ogg")
+            "Pokecentre theme": pygame.mixer.Sound("assets/audio/Pokemon-HeartGold-and-SoulSilver-Pokemon-Center.ogg"),
+            "Wild battle theme": pygame.mixer.Sound("assets/audio/Wild Battle Theme.wav")
         }
         self.current_theme = None, None
 

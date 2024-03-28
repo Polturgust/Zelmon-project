@@ -248,15 +248,17 @@ class Game:
                         self.origin = self.map.zonearr
                         self.save_selected.get_current_zone(self.origin)
                         self.map.switch_map("combat")
+                        self.set_audio()
                         self.pressed = {}
                         self.combat = Combat(self, self.screen, self.player, self.map, self.origin, self.save_selected)
                         if self.combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(self.origin))[1][0]) is False:
-                            self.player.set_coordonnees(185,139)
+                            self.player.set_coordonnees(185, 139)
                             self.map.switch_map("interieur_mc_chambre0")
                             self.player.move("W")
                             self.player.move("E")
                             self.save_selected.pokecenter()
                         self.cooldown = 120
+                        self.set_audio()
 
                 # ------------------------------------------------------------ Collisions ------------------------------------------------------------ #
                 # Vérifie si le joueur est en collision avec un élément du décor
