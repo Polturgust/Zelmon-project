@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" class="  " orientation="orthogonal" renderorder="right-down" width="80" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="36" nextobjectid="96">
+<map version="1.10" tiledversion="1.10.2" class="  " orientation="orthogonal" renderorder="right-down" width="80" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="36" nextobjectid="98">
  <tileset firstgid="1" source="tileset/literally_everything.tsx"/>
  <tileset firstgid="4257" source="tileset/trees+houses_GOOD.tsx"/>
  <tileset firstgid="25257" source="tileset/all_kinds_of_caves2.tsx"/>
@@ -2355,9 +2355,11 @@
  <objectgroup id="15" name="changements_de_map">
   <object id="77" name="vers_ville3" x="228" y="112" width="40.1818" height="19.4545"/>
   <object id="82" name="vers_route3" x="992" y="1200" width="96" height="16"/>
+  <object id="96" name="vers_room_of_the_MS" x="0" y="848" width="16" height="80"/>
  </objectgroup>
  <objectgroup id="16" name="points_de_spawn">
   <object id="79" name="depuis_ville3" x="233" y="132" width="16" height="16"/>
   <object id="83" name="depuis_route3" x="1026" y="1168" width="16" height="16"/>
+  <object id="97" name="depusi_room_of_the_MS" x="32" y="880" width="16" height="16"/>
  </objectgroup>
 </map>
