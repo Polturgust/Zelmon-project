@@ -42,6 +42,9 @@ class Game:
 
         self.save_selected = None  # Une sauvegarde est-elle sélectionnée ?
 
+        self.joystick = None
+        
+
     def run(self):
         # Lance la vidéo d'introduction au lancement du jeu → appuyer sur Esc permet d'interrompre la vidéo
         VideoFileClip("assets/videos/The Legend of Pokemon Zelda's Corruption slow audio.mp4").preview()
@@ -143,11 +146,12 @@ class Game:
 
             if self.playing:  # Si on est dans le jeu
                 # ------------------------------------------------------------ Player movement ------------------------------------------------------------ #
+                if event.type == pygame.JOYDEVICEADDED:
+                    self.joystick = pygame.joystick.Joystick(event.device_index)
+
                 if self.player.get_slipping_status() is False and self.player.get_moover_effect() is None:
                     # sans le -30 on peut sortir de l'écran je pense que c'est dû à la largeur du joueur (ses coordonnées sont le point en haut à gauche)
-                    if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[
-                        1] > 0 and \
-                            self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
+                    if self.pressed.get(pygame.K_UP) and self.pressed.get(pygame.K_RIGHT) and self.player.pos.get()[1] > 0 and self.player.pos.get()[0] < self.map.map_data.map_size[0] * 16 - 30:
                         self.player.move("NE")
                         self.last_move = "NE"
                         self.player.set_moving_status(True)
@@ -227,6 +231,30 @@ class Game:
                             self.cooldown -= 1
                         if self.player.get_ice_status():
                             self.player.set_slipping_status(True)
+                    
+                    elif self.joystick is not None:
+                        joy_x, joy_y = self.joystick.get_axis(0), self.joystick.get_axis(1)
+                        joy_dir = ""
+                        if joy_y < -0.2:
+                            joy_dir += "N"
+                        elif joy_y > 0.2:
+                            joy_dir += "S"
+                        if joy_x < -0.2:
+                            joy_dir += "W"
+                        elif joy_x > 0.2:
+                            joy_dir += "E"
+
+                        if len(joy_dir) == 0:
+                            self.player.set_moving_status(False)
+                        else:
+                            self.player.move(joy_dir)
+                            self.last_move = joy_dir
+                            self.player.set_moving_status(True)
+                            if self.cooldown != 0:
+                                self.cooldown -= 1
+                            if self.player.get_ice_status():
+                                self.player.set_slipping_status(True)
+                            
                     else:
                         self.player.set_moving_status(False)
 
