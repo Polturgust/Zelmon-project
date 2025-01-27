@@ -10,6 +10,7 @@ from pnj import *
 from SQL_requests import *
 from dialogue import *
 from audio import SoundManager
+from pokemon import Pokemon
 
 
 class Game:
@@ -21,6 +22,8 @@ class Game:
         self.screen = Screen()
         # create a player
         self.player = Player(self)
+        # create future list to store player's team of Pokemons
+        self.player_poke_info = None
         # initialise the screen
         self.map = Map(self.screen, self.player)
         # initialise the sound manager
@@ -38,12 +41,11 @@ class Game:
         # pour se déplacer)
         self.pressed = dict()
 
-        self.cooldown = 0
+        self.cooldown = 0  # cooldown pour l'apparition des pokemon
 
         self.save_selected = None  # Une sauvegarde est-elle sélectionnée ?
 
         self.joystick = None
-        
 
     def run(self):
         # Lance la vidéo d'introduction au lancement du jeu → appuyer sur Esc permet d'interrompre la vidéo
@@ -113,6 +115,8 @@ class Game:
                         self.map.switch_map(self.loaded_info["Carte"], False)
                         self.player.move("N")
                         self.player.move("S")
+
+                        self.create_player_poke_info()
 
                         # On crée les PNJs
                         create_all_pnjs(self)
@@ -271,7 +275,7 @@ class Game:
                 # ------------------------------------------------------------ Fight ------------------------------------------------------------ #
                 # Déclenche un combat
                 if self.cooldown == 0:
-                    if self.chance_rencontre() is True:
+                    if self.chance_rencontre():
                         origin = self.map.zonearr
                         self.save_selected.get_current_zone(origin)
                         self.map.switch_map("combat")
@@ -282,13 +286,18 @@ class Game:
                         self.set_audio()
                         self.reset_pressed_keys()
                         combat = Combat(self, self.screen, self.player, self.map, origin, self.save_selected)
+                        # Si le combat est perdu, on remet le joueur dans sa chambre.
                         if combat.combat_sauvage(self.save_selected.get_savage_pokemon(self.save_selected.get_current_zone(origin))[1][0]) is False:
-                            self.player.set_coordonnees(185, 139)
+                            print("On vou téléporte dans votre chambre")
                             self.map.switch_map("interieur_mc_chambre0")
+                            self.player.pos = Vector(185, 139)
                             self.player.move("W")
                             self.player.move("E")
-                            self.save_selected.pokecenter()
+                            print("Vos pokemon sont soignés")
+                            print(self.map.zonearr)
+                            self.pokecenter()  # On soigne les Pokemon du joueur
                         self.cooldown = 120
+
                         # On remet les PNJs de la carte
                         for name, instance in self.pnjs.items():
                             if instance.map == self.map.zonearr:
@@ -415,11 +424,11 @@ class Game:
 
                 # Si le joueur est dans un Pokecentre, on soigne son équipe (car pas de NPC ni potions pour le moment)
                 if "pokecentre" in self.map.zonearr:
-                    self.save_selected.pokecenter()
+                    self.pokecenter()
 
                 # Sauvegarde quand on appuie sur "S"
                 if self.pressed.get(pygame.K_s):
-                    self.save_selected.sauvegarder(self.player, self.map)
+                    self.save_selected.sauvegarder(self.player, self.map, self.player_poke_info)
                     self.pressed[pygame.K_s] = False
                     Dialogue("Sauvegarde effectuée !", self.screen, self.map).afficher()
 
@@ -518,7 +527,7 @@ class Game:
         Fonction qui met à jour les PNJs présents sur la carte
         → On enlève les PNJs de la carte précédente et on ajoute ceux de la carte actuelle
 
-        Post-conditions :
+        Post-condition :
             Les PNJs affichés sur la carte sont les bons
         """
         # On retire les pnjs de la carte actuelle
@@ -529,3 +538,66 @@ class Game:
         for name, instance in self.pnjs.items():
             if instance.map == i.command:
                 self.map.add_pnj(instance, name)
+
+    def get_player_poke_info_list(self):
+        """
+        Fonction qui renvoie la liste "player_poke_info" qui contient les instances de la classe Pokemon des
+        différents Pokemon du joueur
+        """
+        return self.player_poke_info
+
+    def create_player_poke_info(self):
+        """
+        Procédure qui permet de créer et remplir la liste player_poke_info avec les informations initiales
+        des Pokemons de l'équipe du joueur
+        """
+        # On crée des instances de Pokemon pour tous les membres de l'équipe
+        self.player_poke_info = [Pokemon(self, info) for info in self.save_selected.get_equipe(0)]
+
+        # On regarde lequel est le Pokemon équipé pour combattre afin de le définir comme tel
+        pokemon_equipe = self.save_selected.get_pokemon_equipe(0)
+        i = 0
+        trouve = False
+        while i < len(self.player_poke_info) and not trouve:
+            if self.player_poke_info[i].get_id() == pokemon_equipe:
+                trouve = True
+                self.player_poke_info[i].set_selectionne(True)
+            i += 1
+
+        # On définit leurs attaques et leurs pp_restants
+        for pokemon in self.player_poke_info:
+            for attaque in self.save_selected.get_attaques(pokemon.get_id()):
+                pokemon.add_attaque(attaque["ID"], self.save_selected.get_pp_restants(pokemon.get_id(), attaque["ID"]))
+
+    def set_specific_poke_info(self, index, pokemon):
+        """
+        Procédure qui permet de modifier un élément de la liste "player_poke_info"
+
+        Pré-conditions :
+            - index est un entier compris entre 0 et len(self.player_poke_info) - 1
+            - pokemon est une instance de la classe Pokemon du fichier pokemon.py
+
+        Post-condition :
+            l'élément à l'indice "index" de la liste est remplacé par la valeur spécifiée
+        """
+        self.player_poke_info[index] = pokemon
+
+    def add_to_player_poke_info(self, pokemon):
+        """
+        Procédure qui permet d'ajouter un élément à la fin de la liste "player_poke_info"
+
+        Pré-condition :
+            pokemon est une instance de la classe Pokemon du fichier pokemon.py
+        Post-condition :
+            pokemon est ajouté à la fin de la liste
+        """
+        self.player_poke_info.append(pokemon)
+
+    def pokecenter(self):
+        """
+        Procédure qui restaure les PV et PP des Pokemons présents dans la liste player_poke_info
+        """
+        for pokemon in self.player_poke_info:
+            pokemon.set_pv(self.save_selected.get_info_espece(pokemon.get_id_espece())["PV"])
+            for attaque in pokemon.get_attaques():
+                pokemon.reset_pp(attaque["ID"])

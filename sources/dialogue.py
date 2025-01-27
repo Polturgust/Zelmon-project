@@ -9,7 +9,7 @@ class Dialogue:
         self.screen = screen
         self.map = map
         self.texte = []
-        self.combat=combat
+        self.combat = combat
         while len(self.textedonne) > 45:
             self.texte.append(self.textedonne[:45])
             self.textedonne = self.textedonne[45:]
@@ -17,7 +17,7 @@ class Dialogue:
         self.pressed = {}
         self.cooldown = 0
 
-    def afficher(self,update_map=True):
+    def afficher(self, update_map=True):
         """
         Méthode afficher():
 
@@ -86,6 +86,6 @@ class Dialogue:
                 self.cooldown -= 1
             # Si le temps est écoulé et que le joueur presse la touche entrée, on ajoute deux à notre indice pour
             # pouvoir relancer une itération de la boucle avec les lignes de texte suivantes
-            if self.pressed.get(pygame.K_RETURN) == True and self.cooldown <= 0:
+            if self.pressed.get(pygame.K_RETURN) and self.cooldown <= 0:
                 i += 2
                 self.cooldown = 30

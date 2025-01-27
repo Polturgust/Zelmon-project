@@ -60,7 +60,6 @@ class Database:
         Renvoie :
             - L'ID du pokémon équipé par le joueur si le joueur a un pokémon équipé
             - None sinon
-
         """
         self.c = self.database.cursor()
         self.c.execute("""SELECT id_pokemon FROM Equipe WHERE id_joueur=? AND est_equipe=1""", (id_joueur,))
@@ -72,9 +71,10 @@ class Database:
     def get_info_espece(self, id_espece):
         """
         Récupère les informations sur un pokémon depuis la base de données sous la forme :
-        {"ID" : ID du Pokémon, "ID_espece" : ID de son espèce, "Nom" : Nom donné à ce Pokémon,
-        "Niveau" : niveau actuel du Pokémon, "XP" : nombre de points d'expérience de ce Pokémon,
-        "PV" : nombre de points de vie du Pokémon, "Statut" : Eventuelle altération de statut}.
+        {"ID" : ID de l'espèce, "Type1" : Type princnipal, "Type2" : Type secondaire,
+        "Nom" : nom de l'espèce, "Path" : chemin des images, "PV" : nombre de points de vie du Pokémon,
+        "Attaque" : Stat d'attaque de base, "Defense" : Stat de défense de base,
+        "Vitesse" : Stat de vitesse de base, "Courbe" : Courbe de gain de niveaux}.
         """
         self.c = self.database.cursor()
         self.c.execute("""SELECT * FROM Especes WHERE id_espece=?""", (id_espece,))
@@ -139,9 +139,9 @@ class Database:
     def get_details_attaque(self, id_attaque):
         """
         Récupère les caractéritiques d'une attaque depuis la base de données et les renvoie sous la forme :
-        {"ID" : ID de l'attaque, "Type" : Type de l'attaque, "Effet" : indique si l'attaque inflige des dégâts ou
-        provoque une altération de statut, "Degats" : quantité de dommages infligés au Pokémon attaqué,
-        "Description" : decription de l'attaque}.
+        {"ID" : ID de l'attaque, "Nom" : Nom de l'attaque, "Type" : type de l'attaque, "Puissance" : puissance de l'attaque,
+        "Précision" : précision de l'attaque, "Effet": définit une potentielle altération de statut infligée par l'attaque,
+        "Qte_effet": puissance de l'effet, "PP_max": pp maximum de l'attaque, "Description": description de l'attaque}.
         """
         self.c = self.database.cursor()
         self.c.execute("""SELECT * FROM Attaques WHERE id_attaque=?""", (id_attaque,))
@@ -159,6 +159,22 @@ class Database:
         if len(self.results) != 0:
             self.c.close()
             return self.results[0][0]
+
+    def set_pp_restants(self, id_pokemon, id_attaque, pp_restants):
+        """
+        Procédure qui actualise les pp restants pour l'attaque dont l'ID est id_attaque pour le
+        Pokemon dont l'ID est id_pokemon
+
+        Pré-conditions :
+            - id_pokemon est un entier qui correspond à l'ID d'un Pokemon
+            - id_attaque est un entier qui correspond à l'ID d'une attaque possédée par le Pokemon du joueur
+            - pp_restants est un entier positif qui correspond au PP restants de cette attaque
+        Post-condition :
+            La table Attaque_possedees est modifiée de telle sorte que les PP restants de l'attaque en question vale pp_restant
+        """
+        c = self.database.cursor()
+        c.execute("""UPDATE Attaques_possedees SET pp_restant=? WHERE id_pokemon=? and id_attaque=? """, (pp_restants, id_pokemon, id_attaque))
+        self.database.commit()
 
     def get_details_objet(self, id_objet):
         """
@@ -314,10 +330,19 @@ class Database:
         return self.results[0][0]
 
     def sauvegarder_info_pokemon(self, info_pokemon):
+        """
+        Procédure qui met à jour les information du Pokemon en question dans la base de données
+
+        Pré-condition :
+            info_pokemon est un dictionnaire du même type que celui généré par get_info_pokemon()
+        Post-condition :
+            la bdd est mise à jour
+        """
+        print(info_pokemon)
         self.c = self.database.cursor()
         self.c.execute("""UPDATE Pokemons SET nom=?, niveau=?, xp=?, pv=?, alterations_statut=? WHERE id_pokemon=?""", (
-        info_pokemon["Info_pokemon"]["Nom"], info_pokemon["Info_pokemon"]["Niveau"], info_pokemon["Info_pokemon"]["XP"],
-        info_pokemon["Info_pokemon"]["PV"], info_pokemon["Info_pokemon"]["Statut"], info_pokemon["Info_pokemon"]["ID"]))
+        info_pokemon["Nom"], info_pokemon["Niveau"], info_pokemon["XP"],
+        info_pokemon["PV"], info_pokemon["Statut"], info_pokemon["ID"]))
         self.database.commit()
 
     def equiper_pokemon(self, id_joueur, id_pokemon):
@@ -355,7 +380,7 @@ class Database:
                 liste_vivants.append(i[0])
         return len(liste_vivants) != 0, liste_vivants
 
-    def sauvegarder(self, player, map):
+    def sauvegarder(self, player, map, info_pokemon):
         """
         Récupère la position du joueur (coordonnées et carte sur laquelle il se trouve) pour les enregistrer dans la
         base de données.
@@ -364,33 +389,39 @@ class Database:
         self.c.execute("""UPDATE Joueurs SET (coord_x,coord_y,carte)=(?,?,?) WHERE id_joueur=0""",
                        (player.pos.get()[0], player.pos.get()[1], map.zonearr))
         self.database.commit()
+        # Si les informations du Pokemon ont changé, on les met à jour dans la DB
+        if len(info_pokemon) > 0:
+            for pokemon in info_pokemon:
+                self.sauvegarder_info_pokemon(pokemon.get_dict_infos())
+                # On actualise le Pokemon sélectionné pour le combat
+                if pokemon.get_selectionne() and pokemon.get_id() != self.get_pokemon_equipe(0):
+                    self.equiper_pokemon(0, pokemon.get_id())
+                # On met à jour les PP restants pour les attaques
+                for attaque in pokemon.get_attaques():
+                    self.set_pp_restants(pokemon.get_id(), attaque["ID"], attaque["PP_restants"])
 
 
 def create_save(nb):
     """
-    Fonction qui permet de créer une nouvelle sauvegarde vide
+    Procédure qui permet de créer une nouvelle sauvegarde vide
 
     Pré-conditions :
         nb est du type integer et est compris entre 1 et 3 inclus
     Post-conditions :
         Un nouveau fichier de sauvegarde est créé
-    Retourne :
-        Rien.
         """
     copy("databases/base.db", f"databases/sauvegarde{nb}.db")
 
 
 def delete_save(nb):
     """
-    Fonction qui permet de supprimer une sauvegarde
+    Procédure qui permet de supprimer une sauvegarde
 
     Pré-conditions :
         nb est du type integer et est compris entre 1 et 3 inclus
     Post-conditions :
         Le fichier de sauvegarde correspondant est supprimé et les autres sont renommés de façon à ce que le
         numéro de sauvegarde soit le plus petit possible
-    Retourne :
-        Rien
     """
     remove(f"databases/sauvegarde{nb}.db")
     if exists(f"databases/sauvegarde{nb + 1}.db"):
