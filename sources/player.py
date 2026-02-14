@@ -23,7 +23,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.inflate_ip(-5, 0)  # On réduit la taille de la hitbox du joueur pour résoudre le problème lié aux pixels entre deux images de la spritesheet
         self.lower_rect = pygame.Rect(9, 18, 12, 10)  # On définit une hitbox pour la partie inférieure du joueur pour la détection des hautes herbes / glace / plaques mouvantes
-        # print("base :", self.rect.x, self.rect.y, self.rect.width, self.rect.height, 'lower: ', self.lower_rect.x, self.lower_rect.y, self.lower_rect.width, self.lower_rect.height)
 
         # Autres attributs
         self.velocity = 1

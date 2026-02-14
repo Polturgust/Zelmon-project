@@ -21,7 +21,7 @@ class Dialogue:
         """
         Méthode afficher():
 
-        Affiche le dialogue d'un PNJ dans une fenêtre en bas de l'écran, s'arrangeant pour séparer le dialogue en
+        Affiche le dialogue dans une fenêtre en bas de l'écran, s'arrangeant pour séparer le dialogue en
         plusieurs morceaux s'il est trop long.
 
         Valeurs en entrée :

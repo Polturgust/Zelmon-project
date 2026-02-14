@@ -16,6 +16,22 @@ class Combat:
         self.origin = origin
         self.save = save
 
+    def get_player_entries(self):
+        """
+        Récupère les touches utilisées par le joueur et les met dans le dictionnaire self.pressed avec la valeur True
+        ou False selon si elles sont pressées ou relachées
+        """
+        # On traite note les actions du joueur
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # On ferme le jeu si l'utilisateur ferme la fenêtre
+                self.running = False
+                exit()
+            elif event.type == pygame.KEYDOWN:  # Si une touche est pressée, on l'ajoute au dictionnaire des touches pressées
+                self.pressed[event.key] = True
+            elif event.type == pygame.KEYUP:
+                self.pressed[
+                    event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
+
     def get_info_pokemons(self, update_pv=False):
         """
         Récupère les informations sur les pokémons en combat
@@ -29,15 +45,17 @@ class Combat:
         if update_pv:
             pv = self.info_espece_adv["Info_pokemon"].get_pv()
 
-        self.equipe_joueur = None
+        # On récupère le Pokémon équipé du joueur
+        equipe_joueur = None
         i = 0
-        while i < len(self.game.player_poke_info) and self.equipe_joueur is None:
+        while i < len(self.game.player_poke_info) and equipe_joueur is None:
             if self.game.player_poke_info[i].get_selectionne():
-                self.equipe_joueur = self.game.player_poke_info[i]
+                equipe_joueur = self.game.get_player_poke_info_list()[i]
 
-        self.info_pokemon_joueur = {"Info_pokemon": self.equipe_joueur}
+        self.info_pokemon_joueur = {"Info_pokemon": equipe_joueur}
         self.info_pokemon_joueur["Info_espece"] = self.game.save_selected.get_info_espece(self.info_pokemon_joueur["Info_pokemon"].get_id_espece())
 
+        # On récupère les informations du pokemon adverse
         self.info_espece_adv["Info_espece"] = self.game.save_selected.get_info_espece(self.id_poke_adv)
         if self.info_espece_adv["Info_espece"]["Type2"] is not None:
             self.info_espece_adv["Attaques"] = self.game.save_selected.get_attaques_par_type(self.info_espece_adv["Info_espece"]["Type1"], self.info_espece_adv["Info_espece"]["Type2"])
@@ -59,6 +77,45 @@ class Combat:
         if update_pv:
             self.info_espece_adv["Info_pokemon"].set_pv(pv)
 
+    def get_info_player_pokemon(self):
+        """
+        Récupère les informations sur le Pokémon qui combat pour le joueur et met à jour le dictionnaire correspondant
+        """
+        # On récupère le Pokémon équipé du joueur
+        equipe_joueur = None
+        i = 0
+        while i < len(self.game.player_poke_info) and equipe_joueur is None:
+            if self.game.player_poke_info[i].get_selectionne():
+                equipe_joueur = self.game.get_player_poke_info_list()[i]
+
+        # On met à jour le dictionnaire
+        self.info_pokemon_joueur = {"Info_pokemon": equipe_joueur}
+        self.info_pokemon_joueur["Info_espece"] = self.game.save_selected.get_info_espece(
+            self.info_pokemon_joueur["Info_pokemon"].get_id_espece())
+
+    def get_info_opponent_pokemon(self):
+        """
+        Récupère les informations sur le Pokémon adverse et met à jour le dictionnaire correspondant
+        """
+        self.info_espece_adv["Info_espece"] = self.game.save_selected.get_info_espece(self.id_poke_adv)
+        if self.info_espece_adv["Info_espece"]["Type2"] is not None:
+            self.info_espece_adv["Attaques"] = self.game.save_selected.get_attaques_par_type(
+                self.info_espece_adv["Info_espece"]["Type1"], self.info_espece_adv["Info_espece"]["Type2"])
+
+        else:
+            self.info_espece_adv["Attaques"] = self.game.save_selected.get_attaques_par_type(
+                self.info_espece_adv["Info_espece"]["Type1"])
+
+        self.info_espece_adv["Info_pokemon"] = Pokemon(self.game, {"ID": None,
+                                                                   "ID_espece": self.info_espece_adv["Info_espece"][
+                                                                       "ID_espece"],
+                                                                   "Nom": self.info_espece_adv['Info_espece']["Nom"],
+                                                                   "Niveau": str(randint(1, self.info_pokemon_joueur[
+                                                                       "Info_pokemon"].get_niveau())),
+                                                                   "XP": 0,
+                                                                   "PV": self.info_espece_adv["Info_espece"]["PV"],
+                                                                   "Statut": "None"})
+
     def combat_sauvage(self, id_poke_adv):
         """
         Lance et gère un combat entre le joueur et un pokémon sauvage dont l'ID est donné en argument.
@@ -72,22 +129,19 @@ class Combat:
         """
         self.id_poke_adv = id_poke_adv
         self.info_espece_adv = {}
-        self.get_info_pokemons()
+        self.get_info_player_pokemon()
+        self.get_info_opponent_pokemon()
+        # self.get_info_pokemons()
         self.winner = None
 
         while self.winner is None and self.running:
+            self.get_info_player_pokemon()
+
             self.screen.update()
             self.map.update()
             self.afficher()
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:  # On ferme le jeu si l'utilisateur ferme la fenêtre
-                    self.running = False
-                    return False
-                elif event.type == pygame.KEYDOWN:  # Si une touche est pressée, on l'ajoute au dictionnaire des touches pressées
-                    self.pressed[event.key] = True
-                elif event.type == pygame.KEYUP:
-                    self.pressed[event.key] = False  # Si une touche est relâchée, on l'enlève du dictionnaire des touches pressées
+            self.get_player_entries()  # On récupère les actions du joueur
 
             # Si le combat est terminé
             if (pygame.K_a in self.pressed.keys() and self.pressed[pygame.K_a]) or self.info_espece_adv["Info_pokemon"].get_pv() <= 0:
@@ -100,29 +154,66 @@ class Combat:
                     self.info_pokemon_joueur["Info_pokemon"].set_xp(self.info_pokemon_joueur["Info_pokemon"].get_xp() + round(experience))  # On incrémente l'expérience du Pokemon
 
             # Si le joueur souhaite utiliser la première attaque
-            if pygame.K_1 in self.pressed.keys() and self.pressed[pygame.K_1] and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[0]["PP_restants"] > 0:
+            if pygame.K_1 in self.pressed.keys() and self.pressed[pygame.K_1] and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[0]["PP_restants"] > 0 and not self.pressed[pygame.K_c]:
                 self.pressed[pygame.K_1] = False
                 self.attaquer(self.info_pokemon_joueur["Info_pokemon"].get_info_attaques()[0], self.info_espece_adv["Attaques"][randint(0, 3)])
 
             # Si le joueur souhaite utiliser la deuxième attaque
-            if pygame.K_2 in self.pressed.keys() and self.pressed[pygame.K_2] and self.info_pokemon_joueur["Info_pokemon"].get_nb_attaques() >= 2 and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[1]["PP_restants"] > 0:
+            if pygame.K_2 in self.pressed.keys() and self.pressed[pygame.K_2] and self.info_pokemon_joueur["Info_pokemon"].get_nb_attaques() >= 2 and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[1]["PP_restants"] > 0 and not self.pressed[pygame.K_c]:
                 self.pressed[pygame.K_2] = False
                 self.attaquer(self.info_pokemon_joueur["Info_pokemon"].get_info_attaques()[1], self.info_espece_adv["Attaques"][randint(0, 3)])
 
             # Si le joueur souhaite utiliser la troisième attaque
-            if pygame.K_3 in self.pressed.keys() and self.pressed[pygame.K_3] and self.info_pokemon_joueur["Info_pokemon"].get_nb_attaques() >= 3 and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[2]["PP_restants"] > 0:
+            if pygame.K_3 in self.pressed.keys() and self.pressed[pygame.K_3] and self.info_pokemon_joueur["Info_pokemon"].get_nb_attaques() >= 3 and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[2]["PP_restants"] > 0 and not self.pressed[pygame.K_c]:
                 self.pressed[pygame.K_3] = False
                 self.attaquer(self.info_pokemon_joueur["Info_pokemon"].get_info_attaques()[2], self.info_espece_adv["Attaques"][randint(0, 3)])
 
             # Si le joueur souhaite utiliser la quatrième attaque
-            if pygame.K_4 in self.pressed.keys() and self.pressed[pygame.K_4] and self.info_pokemon_joueur["Info_pokemon"].get_nb_attaques() >= 4 and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[3]["PP_restants"] > 0:
+            if pygame.K_4 in self.pressed.keys() and self.pressed[pygame.K_4] and self.info_pokemon_joueur["Info_pokemon"].get_nb_attaques() >= 4 and self.info_pokemon_joueur["Info_pokemon"].get_attaques()[3]["PP_restants"] > 0 and not self.pressed[pygame.K_c]:
                 self.pressed[pygame.K_4] = False
                 self.attaquer(self.info_pokemon_joueur["Info_pokemon"].get_info_attaques()[3], self.info_espece_adv["Attaques"][randint(0, 3)])
 
             # Si le joueur souhaite tenter de capturer le Pokémon adverse
-            if pygame.K_5 in self.pressed.keys() and self.pressed[pygame.K_5] is True:
+            if pygame.K_5 in self.pressed.keys() and self.pressed[pygame.K_5] is True and not self.pressed[pygame.K_c]:
                 self.pressed[pygame.K_5] = False
                 self.tenter_capture()
+
+            # Si le joueur souhaite changer de Pokémon
+            if pygame.K_c in self.pressed.keys() and self.pressed[pygame.K_c] is True:
+                self.pressed[pygame.K_c] = False
+                Dialogue("Quel est le numéro dans l'équipe du Pokémon qui doit combattre ?", self.screen, self.map, self).afficher(True)
+
+                choice_made = (pygame.K_1 in self.pressed.keys() and self.pressed[pygame.K_1]) or (pygame.K_2 in self.pressed.keys() and self.pressed[pygame.K_2]) or (pygame.K_3 in self.pressed.keys() and self.pressed[pygame.K_3]) \
+                            or (pygame.K_4 in self.pressed.keys() and self.pressed[pygame.K_4]) or (pygame.K_5 in self.pressed.keys() and self.pressed[pygame.K_5]) or (pygame.K_6 in self.pressed.keys() and self.pressed[pygame.K_6])
+                while not choice_made:
+                    print(choice_made)
+                    self.get_player_entries()
+                    # On récupère le Pokémon voulu et on opère le changement si possible
+                    if pygame.K_1 in self.pressed.keys() and self.pressed[pygame.K_1]:
+                        self.pressed[pygame.K_1] = False
+                        self.changer_pokemon(1)
+                        choice_made = True
+                    elif pygame.K_2 in self.pressed.keys() and self.pressed[pygame.K_2]:
+                        print("----------------------------------Pressed 2-------------------------------------")
+                        self.pressed[pygame.K_2] = False
+                        self.changer_pokemon(2)
+                        choice_made = True
+                    elif pygame.K_3 in self.pressed.keys() and self.pressed[pygame.K_3]:
+                        self.pressed[pygame.K_3] = False
+                        self.changer_pokemon(3)
+                        choice_made = True
+                    elif pygame.K_4 in self.pressed.keys() and self.pressed[pygame.K_4]:
+                        self.pressed[pygame.K_4] = False
+                        self.changer_pokemon(4)
+                        choice_made = True
+                    elif pygame.K_5 in self.pressed.keys() and self.pressed[pygame.K_5]:
+                        self.pressed[pygame.K_5] = False
+                        self.changer_pokemon(5)
+                        choice_made = True
+                    elif pygame.K_6 in self.pressed.keys() and self.pressed[pygame.K_6]:
+                        self.pressed[pygame.K_6] = False
+                        self.changer_pokemon(6)
+                        choice_made = True
 
         self.pressed = {}
         if self.winner:
@@ -308,6 +399,7 @@ class Combat:
         self.barre_info = pygame.transform.scale(self.barre_info, (640, 359))
 
         self.screen.get_display().blit(self.bg_normal, (0, 0))
+
         # On affiche le pokémon du joueur
         self.texture_pokemon_joueur = pygame.transform.scale(
             pygame.image.load(self.info_pokemon_joueur["Info_espece"]["Path"] + "\\dos.png"), (220, 220))
@@ -391,3 +483,20 @@ class Combat:
             Dialogue("La capture a échoué...", self.screen, self.map, self).afficher()
             self.attaquer(self.game.save_selected.get_details_attaque(99),
                           self.info_espece_adv["Attaques"][randint(0, 3)])
+
+    def changer_pokemon(self, nb_pokemon):
+        """
+        Permet au joueur de changer de Pokémon pendant le combat.
+        Pré-condition : nb_pokemon est un entier compris entre 1 et 6
+        Post-condition : le pokemon qui combat change si le pokemon demandé existe et n'est pas K.O.
+        """
+        # On vérifie si le changement de Pokémon est possible
+        player_pokemons = self.game.get_player_poke_info_list()
+        if len(player_pokemons) >= nb_pokemon and player_pokemons[nb_pokemon - 1].get_pv() > 0 and not player_pokemons[nb_pokemon - 1].get_selectionne():
+            # On change de Pokémon si possible
+            self.info_pokemon_joueur["Info_pokemon"].set_selectionne(False)
+            player_pokemons[nb_pokemon - 1].set_selectionne(True)
+            Dialogue(self.info_pokemon_joueur["Info_pokemon"].get_nom() + " va se reposer. " + player_pokemons[nb_pokemon - 1].get_nom() + " entre en piste !", self.screen, self.map, self).afficher(True)
+        else:
+            print("Impossible de sélectionner ce Pokémon !")
+            Dialogue("Impossible de sélectionner ce Pokémon !", self.screen, self.map, self).afficher(True)
